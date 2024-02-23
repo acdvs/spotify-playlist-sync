@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4, h5, h6, p, span, a, div, input, button {
+    font-family: 'Open Sans', Arial, sans-serif;
+    color: #ffffff;
+  }
+
+  h1, h2, h3 {
+    color: #ffffff;
+  }
+
+  h1 {
+    @apply text-2xl;
+    font-family: 'Montserrat', Arial, sans-serif;
+  }
+}
+
+@layer components {
+  .button {
+    @apply rounded-lg hover:cursor-pointer transition-colors;
+
+    &.primary {
+      @apply border-2 border-zinc-600;
+
+      &:hover {
+        @apply scale-105 border-white;
+      }
+    }
+
+    &.secondary {
+      @apply bg-zinc-800;
+
+      &:hover {
+        @apply scale-105 bg-zinc-700;
+      }
+    }
+
+    &.primary, &.secondary {
+      @apply flex items-center justify-center px-6 py-2 font-bold rounded-full transition-all;
+    }
+
+    &.tertiary {
+      p, span {
+        @apply transition-colors;
+      }
+
+      &:not(.plain) {
+        @apply p-2;
+      }
+
+      &:not(.disabled) {
+
+        &:hover {
+          @apply text-blue-500 fill-blue-500;
+
+          p, span {
+            @apply text-blue-500;
+          }
+        }
+      }
+
+      &.disabled {
+        @apply text-zinc-700 fill-zinc-700 cursor-default;
+
+        p, span {
+          @apply text-zinc-700;
+        }
+      }
+    }
+  }
+}
+
+@layer utilities {
+  .scroll-y {
+    @apply overflow-y-auto scrollbar scrollbar-w-2 scrollbar-track-transparent scrollbar-thumb-zinc-700 scrollbar-thumb-rounded-full;
+  }
+}
