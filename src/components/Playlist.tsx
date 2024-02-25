@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
+import Image from 'next/image';
 import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { RiLockLine } from '@remixicon/react';
 import cx from 'classnames';
@@ -38,8 +39,16 @@ const Playlist = ({
       onClick={unowned ? undefined : onClick}
     >
       <div className="flex max-w-[80%]">
-        <div className="aspect-square w-10 mr-3 rounded bg-zinc-800 flex-shrink-0">
-          {data.images.length > 0 && <img src={data.images[0].url} className="rounded" />}
+        <div className="mr-3 rounded bg-zinc-800 flex-shrink-0">
+          {data.images.length > 0 && (
+            <Image
+              src={data.images[0].url}
+              width={48}
+              height={48}
+              className="rounded"
+              alt="Playlist collage"
+            />
+          )}
         </div>
         <div className="overflow-hidden">
           <a
