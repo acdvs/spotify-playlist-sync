@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: { side: SideTy
           params.side === 'left'
             ? 'user-read-email user-read-private playlist-read-private'
             : 'user-read-email user-read-private playlist-modify-public playlist-modify-private',
-        redirect_uri: 'http://localhost:3000/api/token',
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         state: JSON.stringify({
           for: params.side,
           secret: process.env.AUTH_STATE_SECRET,

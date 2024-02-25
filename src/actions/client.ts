@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import axios from '@/axios';
 import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
 
 export async function getData<T>(endpoint: string) {

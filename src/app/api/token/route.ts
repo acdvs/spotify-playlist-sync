@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   let side: string;
 
   if (!code || !state) {
-    redirect('/');
+    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
   }
 
   try {
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
       throw Error;
     }
   } catch {
-    redirect('/');
+    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
   }
 
   try {
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
       'https://accounts.spotify.com/api/token',
       {
         code: code,
-        redirect_uri: 'http://localhost:3000/api/token',
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         grant_type: 'authorization_code',
       },
       {
@@ -63,6 +63,6 @@ export async function GET(req: NextRequest) {
       secure: true,
     });
   } finally {
-    redirect('/');
+    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
   }
 }

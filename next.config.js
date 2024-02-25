@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/spotify-playlist-sync' : '',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '/',
   images: {
     remotePatterns: [
       {
@@ -16,5 +16,22 @@ module.exports = {
         pathname: '/**',
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: process.env.ALLOW_ORIGIN,
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+        ],
+      },
+    ];
   },
 };
