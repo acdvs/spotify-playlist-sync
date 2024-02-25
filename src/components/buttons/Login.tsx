@@ -10,7 +10,7 @@ const LoginButton = () => {
   const side = useContext(SideContext) as SideType;
 
   return (
-    <Link href={`/api/${side}/auth`} className="button primary">
+    <Link href={`/api/${side}/auth`} className="button primary" prefetch={false}>
       <p>Login</p>
     </Link>
   );
