@@ -9,7 +9,6 @@ const Providers = ({ children }: React.PropsWithChildren) => {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
-          refetchInterval: false,
         },
       },
     }),

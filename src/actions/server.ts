@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import axios from 'axios';
 
 import type { SideType } from '@/store';
-import type { AccessToken } from '@/app/api/token/route';
 
 export interface PrerequestError {
   code: number;
