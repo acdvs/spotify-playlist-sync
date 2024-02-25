@@ -10,6 +10,3 @@ trim_trailing_whitespace = true
 [*.{js,ts,tsx}]
 indent_size = 2
 max_line_length = 90
-
-[*.rs]
-indent_size = 4
