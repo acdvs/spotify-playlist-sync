@@ -1,14 +1,16 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useQuery } from '@tanstack/react-query';
 
 import { getData } from '@/actions/client';
 import SideContext from './providers/SideContext';
-import Side from './Side';
 import Card from './Card';
 import LoginButton from './buttons/Login';
 import type { SideType } from '@/store';
 import type { AccessToken } from '@/app/api/token/route';
+
+const Side = dynamic(() => import('./Side'));
 
 const SideWrap = ({ side }: { side: SideType }) => {
   const token = useQuery({
