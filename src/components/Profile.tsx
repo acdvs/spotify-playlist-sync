@@ -1,8 +1,8 @@
+import Image from 'next/image';
 import { UserProfile } from '@spotify/web-api-ts-sdk';
 
 import RefreshButton from './buttons/Refresh';
 import LogoutButton from './buttons/Logout';
-import Image from 'next/image';
 
 const Profile = ({
   data,
@@ -13,11 +13,12 @@ const Profile = ({
 }) => (
   <div className="flex justify-between mb-3 ml-3">
     <div className="flex items-center">
-      <div className="w-10 aspect-square relative mr-3">
+      <div className="w-10 aspect-square mr-3">
         <Image
-          src={data?.images[0].url as string}
+          src={data?.images?.[0].url || ''}
           quality={25}
-          fill={true}
+          width={40}
+          height={40}
           className="rounded-full"
           alt="Profile image"
         />

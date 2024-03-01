@@ -2,8 +2,8 @@
 
 import { useContext } from 'react';
 import Image from 'next/image';
-import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { RiLockLine } from '@remixicon/react';
+import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import cx from 'classnames';
 
 import { useStore, SideType } from '@/store';
@@ -39,12 +39,13 @@ const Playlist = ({
       onClick={unowned ? undefined : onClick}
     >
       <div className="flex max-w-[80%]">
-        <div className="w-10 aspect-square relative mr-3 bg-zinc-800 flex-shrink-0">
+        <div className="w-10 aspect-square mr-3 bg-zinc-800 flex-shrink-0">
           {data.images.length > 0 && (
             <Image
               src={data.images[0].url}
               quality={25}
-              fill={true}
+              width={40}
+              height={40}
               className="rounded"
               alt="Playlist collage"
             />
