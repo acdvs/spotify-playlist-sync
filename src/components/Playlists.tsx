@@ -9,9 +9,11 @@ import Playlist from './Playlist';
 const Playlists = ({
   query,
   profileId,
+  sorted,
 }: {
   query: UseInfiniteQueryResult<InfiniteData<Page<SimplifiedPlaylist>, unknown>, Error>;
   profileId?: string;
+  sorted?: boolean;
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -36,15 +38,17 @@ const Playlists = ({
     }
   };
 
-  const sorted = query.data?.pages
-    .flatMap((x) => x.items)
-    .toSorted((a, b) => (a.name < b.name ? -1 : 1));
+  let items = query.data?.pages.flatMap((x) => x.items);
+
+  if (sorted) {
+    items?.sort((a, b) => (a.name < b.name ? -1 : 1));
+  }
 
   return (
-    <div className="pb-3 border-b-2 border-zinc-700">
+    <div className="py-3 mt-2 border-y-2 border-zinc-700">
       <div className="h-[45vh] scroll-y" ref={wrapRef} onScroll={onScroll}>
         <ul role="list" className="flex flex-col gap-3 border-zinc-700" ref={listRef}>
-          {sorted?.map((playlist) => (
+          {items?.map((playlist) => (
             <Playlist key={playlist.id} data={playlist} profileId={profileId} />
           ))}
         </ul>
