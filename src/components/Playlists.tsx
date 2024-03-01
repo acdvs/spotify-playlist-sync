@@ -9,11 +9,11 @@ import Playlist from './Playlist';
 const Playlists = ({
   query,
   profileId,
-  sorted,
+  sorting,
 }: {
   query: UseInfiniteQueryResult<InfiniteData<Page<SimplifiedPlaylist>, unknown>, Error>;
   profileId?: string;
-  sorted?: boolean;
+  sorting: number;
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -40,8 +40,8 @@ const Playlists = ({
 
   let items = query.data?.pages.flatMap((x) => x.items);
 
-  if (sorted) {
-    items?.sort((a, b) => (a.name < b.name ? -1 : 1));
+  if (sorting !== 0) {
+    items?.sort((a, b) => (a.name > b.name ? 0 + sorting : 0 - sorting));
   }
 
   return (

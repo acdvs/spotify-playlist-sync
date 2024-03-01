@@ -8,6 +8,8 @@ import { useStore, SideType } from '@/store';
 import Playlists from './Playlists';
 import Profile from './Profile';
 
+const SORT_OPTS = ['Z-A', 'None', 'A-Z'];
+
 const Account = ({
   side,
   profile,
@@ -20,10 +22,10 @@ const Account = ({
     Error
   >;
 }) => {
-  const [sorted, setSorted] = useState(false);
+  const [sorting, setSorting] = useState(0);
   const selectedPlaylist = useStore((state) => state.playlists[side]);
 
-  const toggleSorting = () => setSorted((state) => !state);
+  const toggleSorting = () => setSorting((state) => (state === 1 ? -1 : state + 1));
 
   return (
     <>
@@ -31,10 +33,10 @@ const Account = ({
       <div className="flex text-sm">
         <p className="text-zinc-500">Sorting:&nbsp;</p>
         <p className="button tertiary plain" onClick={toggleSorting}>
-          {sorted ? 'Alphabetical' : 'None'}
+          {SORT_OPTS[sorting + 1]}
         </p>
       </div>
-      <Playlists query={playlistQuery} profileId={profile?.id} sorted={sorted} />
+      <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
       <div className="h-5 mt-2 flex justify-between">
         <div className="max-w-[80%]">
           <Transition
