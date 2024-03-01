@@ -6,6 +6,8 @@ import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
 import { AuthState } from '../[side]/auth/route';
 
+const redirectPath = process.env.NEXT_PUBLIC_BASE_PATH || '/';
+
 export interface AccessToken extends BasicToken {
   refresh_token: string;
   expires_at: number;
@@ -17,7 +19,7 @@ export async function GET(req: NextRequest) {
   let side: string;
 
   if (!code || !state) {
-    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
+    redirect(redirectPath);
   }
 
   try {
@@ -28,7 +30,7 @@ export async function GET(req: NextRequest) {
       throw Error;
     }
   } catch {
-    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
+    redirect(redirectPath);
   }
 
   try {
@@ -63,6 +65,6 @@ export async function GET(req: NextRequest) {
       secure: true,
     });
   } finally {
-    redirect(process.env.NEXT_PUBLIC_BASE_PATH as string);
+    redirect(redirectPath);
   }
 }
