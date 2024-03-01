@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Transition } from '@headlessui/react';
 import { RiLoader4Line } from '@remixicon/react';
@@ -16,10 +16,7 @@ const SideTransition = ({
   show,
   afterLeave,
   children,
-}: React.PropsWithChildren & {
-  show: boolean;
-  afterLeave: (...args: any[]) => void;
-}) => (
+}: ComponentProps<typeof Transition>) => (
   <Transition
     show={show}
     enter="transition-opacity duration-200"
