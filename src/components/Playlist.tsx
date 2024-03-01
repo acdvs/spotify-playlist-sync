@@ -43,6 +43,7 @@ const Playlist = ({
           {data.images.length > 0 && (
             <Image
               src={data.images[0].url}
+              quality={25}
               fill={true}
               className="rounded"
               alt="Playlist collage"

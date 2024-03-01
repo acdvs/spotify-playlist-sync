@@ -16,6 +16,7 @@ const Profile = ({
       <div className="w-10 aspect-square relative mr-3">
         <Image
           src={data?.images[0].url as string}
+          quality={25}
           fill={true}
           className="rounded-full"
           alt="Profile image"
