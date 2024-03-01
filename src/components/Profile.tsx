@@ -13,13 +13,14 @@ const Profile = ({
 }) => (
   <div className="flex justify-between mb-3 ml-3">
     <div className="flex items-center">
-      <Image
-        src={data?.images[0].url as string}
-        width={48}
-        height={48}
-        className="mr-3 rounded-full"
-        alt="Profile image"
-      />
+      <div className="w-10 aspect-square relative mr-3">
+        <Image
+          src={data?.images[0].url as string}
+          fill={true}
+          className="rounded-full"
+          alt="Profile image"
+        />
+      </div>
       <div>
         <a href={data?.external_urls.spotify} target="_blank">
           <p className="button tertiary plain leading-none mb-1">{data?.display_name}</p>

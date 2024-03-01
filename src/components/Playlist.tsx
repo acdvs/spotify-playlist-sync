@@ -39,12 +39,11 @@ const Playlist = ({
       onClick={unowned ? undefined : onClick}
     >
       <div className="flex max-w-[80%]">
-        <div className="mr-3 rounded bg-zinc-800 flex-shrink-0">
+        <div className="w-10 aspect-square relative mr-3 bg-zinc-800 flex-shrink-0">
           {data.images.length > 0 && (
             <Image
               src={data.images[0].url}
-              width={48}
-              height={48}
+              fill={true}
               className="rounded"
               alt="Playlist collage"
             />
