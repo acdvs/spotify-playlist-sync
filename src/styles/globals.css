@@ -45,6 +45,8 @@
     }
 
     &.tertiary {
+      @apply rounded-none;
+
       p, span {
         @apply transition-colors;
       }
@@ -53,14 +55,11 @@
         @apply p-2;
       }
 
-      &:not(.disabled) {
+      &:not(.disabled):hover {
+        @apply text-blue-500 fill-blue-500;
 
-        &:hover {
-          @apply text-blue-500 fill-blue-500;
-
-          p, span {
-            @apply text-blue-500;
-          }
+        p, span {
+          @apply text-blue-500;
         }
       }
 
