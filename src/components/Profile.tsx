@@ -24,7 +24,7 @@ const Profile = ({
         />
       </div>
       <div>
-        <a href={data?.external_urls.spotify} target="_blank">
+        <a href={data?.external_urls?.spotify} target="_blank">
           <p className="button tertiary plain leading-none mb-1">{data?.display_name}</p>
         </a>
         <p className="text-sm text-zinc-400">{playlistCount} playlists</p>
