@@ -41,18 +41,20 @@ const SyncButton = ({ className }: { className?: string }) => {
   const syncEnabled = !syncing && diffsVisible && hasDiff;
 
   return (
-    <div className={cx(className, 'flex flex-col justify-center items-center')}>
+    <div
+      className={cx(className, 'flex flex-row lg:flex-col justify-center items-center')}
+    >
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsVisible} />
       <div
         className={cx(
           !syncEnabled && 'disabled',
-          'button tertiary flex flex-col items-center w-16 p-2 my-5',
+          'button tertiary flex flex-col items-center w-16 p-2 mx-5 my-2 lg:my-5',
         )}
         onClick={syncEnabled ? onClick : undefined}
       >
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
-          <RiArrowRightCircleLine className="w-10 h-10" />
+          <RiArrowRightCircleLine className="w-10 h-10 rotate-90 lg:rotate-0" />
         ) : (
           <RiRefreshLine className="w-10 h-10 animate-spin" />
         )}

@@ -20,7 +20,7 @@ const SideWrap = ({ side }: { side: SideType }) => {
 
   return (
     <SideContext side={side}>
-      <div className="w-[350px]">
+      <div className="flex flex-col w-full lg:w-[350px] h-2/3 lg:h-auto justify-center">
         {token.data ? (
           <Side side={side} />
         ) : (

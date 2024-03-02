@@ -46,7 +46,7 @@ const Playlists = ({
 
   return (
     <div className="py-3 mt-2 border-y-2 border-zinc-700">
-      <div className="h-[45vh] scroll-y" ref={wrapRef} onScroll={onScroll}>
+      <div className="h-[25vh] lg:h-[45vh] scroll-y" ref={wrapRef} onScroll={onScroll}>
         <ul role="list" className="flex flex-col gap-3 border-zinc-700" ref={listRef}>
           {items?.map((playlist) => (
             <Playlist key={playlist.id} data={playlist} profileId={profileId} />
