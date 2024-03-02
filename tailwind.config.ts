@@ -8,6 +8,11 @@ const config: Config = {
       preferredStrategy: 'pseudoelements',
     }),
   ],
+  theme: {
+    screens: {
+      lg: '900px',
+    },
+  },
 };
 
 export default config;
