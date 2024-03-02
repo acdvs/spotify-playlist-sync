@@ -13,7 +13,7 @@ const Diff = ({
     className={cx(
       sign === '+' ? 'text-green-500' : 'text-red-500',
       visible ? 'opacity-100' : 'opacity-0',
-      'font-bold transition-opacity',
+      'w-10 text-center font-bold transition-opacity',
     )}
   >
     {sign}
