@@ -1,6 +1,7 @@
 'use client';
 
 import { ComponentProps, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Transition } from '@headlessui/react';
 import { RiLoader4Line } from '@remixicon/react';
@@ -9,8 +10,9 @@ import type { Page, SimplifiedPlaylist, UserProfile } from '@spotify/web-api-ts-
 import { useStore, SideType } from '@/store';
 import { getData } from '@/actions/client';
 import Card from './Card';
-import LogoutCard from './LogoutCard';
-import Account from './Account';
+
+const Account = dynamic(() => import('./Account'));
+const LogoutCard = dynamic(() => import('./LogoutCard'));
 
 const SideTransition = ({
   show,
