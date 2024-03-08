@@ -13,7 +13,7 @@ import type { AccessToken } from '@/app/api/token/route';
 const Side = dynamic(() => import('./Side'));
 
 const SideWrap = ({ side }: { side: SideType }) => {
-  const token = useQuery({
+  const { data, isFetched } = useQuery({
     queryKey: [side, 'token'],
     queryFn: () => getData<AccessToken>(`/api/${side}/token`),
   });
@@ -21,7 +21,7 @@ const SideWrap = ({ side }: { side: SideType }) => {
   return (
     <SideContext side={side}>
       <div className="flex flex-col w-full lg:w-[350px] h-2/3 lg:h-auto justify-center">
-        {token.data ? (
+        {data && isFetched ? (
           <Side side={side} />
         ) : (
           <Card filled text="Not logged in to a Spotify account.">
