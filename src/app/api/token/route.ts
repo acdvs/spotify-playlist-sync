@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
+import axios from 'axios';
 
 import { AuthState } from '../[side]/auth/route';
 
@@ -10,7 +10,7 @@ const redirectPath = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
 export interface AccessToken extends BasicToken {
   refresh_token: string;
-  expires_at: number;
+  expires_at: Date;
 }
 
 export async function GET(req: NextRequest) {
@@ -22,14 +22,10 @@ export async function GET(req: NextRequest) {
     redirect(redirectPath);
   }
 
-  try {
-    const parsedState: AuthState = JSON.parse(state);
-    side = parsedState.for;
+  const parsedState: AuthState = JSON.parse(state);
+  side = parsedState.for;
 
-    if (parsedState.secret !== process.env.AUTH_STATE_SECRET) {
-      throw Error;
-    }
-  } catch {
+  if (parsedState.secret !== process.env.AUTH_STATE_SECRET) {
     redirect(redirectPath);
   }
 
@@ -53,12 +49,16 @@ export async function GET(req: NextRequest) {
       },
     );
 
-    tokenRes.data.expires_at = new Date();
-    tokenRes.data.expires_at.setSeconds(
-      tokenRes.data.expires_at.getSeconds() + tokenRes.data.expires_in,
+    const newToken = {
+      ...tokenRes.data,
+      expires_at: new Date(),
+    };
+
+    newToken.expires_at.setSeconds(
+      newToken.expires_at.getSeconds() + newToken.expires_in,
     );
 
-    cookies().set(`token-${side}`, JSON.stringify(tokenRes.data), {
+    cookies().set(`token-${side}`, JSON.stringify(newToken), {
       httpOnly: true,
       maxAge: 60 * 60 * 24,
       path: '/',
