@@ -2,8 +2,9 @@ import { NextRequest } from 'next/server';
 import { Page, PlaylistedTrack } from '@spotify/web-api-ts-sdk';
 import axios from 'axios';
 
-import { prerequest } from '@/actions/server';
+import { getToken } from '@/actions/server';
 import type { SideType } from '@/store';
+import type { AccessToken } from '@/app/api/token/route';
 
 export interface Playlist {
   items: {
@@ -18,7 +19,7 @@ export async function GET(
   { params }: { params: { side: SideType; id: string } },
 ) {
   try {
-    const tokenRes = await prerequest(params.side);
+    const token = (await getToken(params.side)) as AccessToken;
     let playlistRes = await axios.get<Page<PlaylistedTrack>>(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
@@ -26,7 +27,7 @@ export async function GET(
           fields: 'items.track.id',
         },
         headers: {
-          Authorization: 'Bearer ' + tokenRes.access_token,
+          Authorization: 'Bearer ' + token.access_token,
         },
       },
     );
@@ -46,7 +47,7 @@ export async function PUT(
   try {
     const data: Playlist = await req.json();
 
-    const tokenRes = await prerequest(params.side);
+    const token = (await getToken(params.side)) as AccessToken;
     const playlistRes = await axios.put(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
@@ -54,7 +55,7 @@ export async function PUT(
       },
       {
         headers: {
-          Authorization: 'Bearer ' + tokenRes.access_token,
+          Authorization: 'Bearer ' + token.access_token,
         },
       },
     );
