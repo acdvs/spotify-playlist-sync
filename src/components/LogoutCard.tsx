@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useStore } from '@/store';
 
 import { getData } from '@/actions/client';
@@ -16,22 +15,15 @@ const LogoutCard = ({ side }: { side: SideType }) => {
   };
 
   return (
-    <Card>
-      <>
-        <p className="mb-6 text-center">
-          Are you sure you want to
-          <br />
-          logout of this account?
-        </p>
-        <div className="flex gap-3">
-          <div className="button primary" onClick={logout}>
-            <p>Logout</p>
-          </div>
-          <div className="button secondary" onClick={() => setLoggingOut(side, false)}>
-            <p>Go back</p>
-          </div>
+    <Card text="Are you sure you want to logout of this account?">
+      <div className="flex gap-3">
+        <div className="button primary" onClick={logout}>
+          <p>Logout</p>
         </div>
-      </>
+        <div className="button secondary" onClick={() => setLoggingOut(side, false)}>
+          <p>Go back</p>
+        </div>
+      </div>
     </Card>
   );
 };
