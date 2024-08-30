@@ -17,8 +17,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="w-full h-full">
-      <body className="w-full h-full flex justify-center items-center bg-zinc-950 overflow-y-hidden p-6 lg:p-0">
+    <html lang="en" className="h-full">
+      <body className="h-full flex justify-center items-center bg-zinc-950 overflow-y-hidden">
         <QueryClient>{children}</QueryClient>
       </body>
     </html>
