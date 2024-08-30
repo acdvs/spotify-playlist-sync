@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
@@ -38,11 +38,15 @@ const Playlists = ({
     }
   };
 
-  let items = query.data?.pages.flatMap((x) => x.items);
+  let items = useMemo(() => {
+    let _items = query.data?.pages.flatMap((x) => x.items);
 
-  if (sorting !== 0) {
-    items?.sort((a, b) => (a.name > b.name ? 0 + sorting : 0 - sorting));
-  }
+    if (sorting !== 0) {
+      _items?.sort((a, b) => (a.name > b.name ? 0 + sorting : 0 - sorting));
+    }
+
+    return _items;
+  }, [query.data, sorting]);
 
   return (
     <div className="py-3 mt-2 border-y-2 border-zinc-700">
