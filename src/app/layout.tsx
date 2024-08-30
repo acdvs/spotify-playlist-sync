@@ -6,8 +6,9 @@ export const metadata: Metadata = {
   title: 'Spotify Playlist Sync',
   description:
     'Sync Spotify playlists across accounts without publicly sharing or collaborating.',
-  keywords: ['Spotify', 'playlist', 'copy', 'duplicate', 'clone'],
-  authors: [{ name: 'Adam Davies', url: 'https://adam-davies.me' }],
+  keywords: ['Spotify', 'playlist', 'copy', 'duplicate', 'clone', 'sync'],
+  authors: [{ name: 'Adam Davies', url: 'https://acdvs.dev' }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || ''),
 };
 
 export default async function RootLayout({
