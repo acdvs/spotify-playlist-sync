@@ -1,15 +1,19 @@
+import { getToken } from '@/actions/server';
 import Header from '@/components/Header';
-import SideWrap from '@/components/SideWrap';
+import Side from '@/components/side/Side';
 import SyncButton from '@/components/buttons/Sync';
 
-export default function Index() {
+export default async function Index() {
+  const tokenLeft = await getToken('left');
+  const tokenRight = await getToken('right');
+
   return (
-    <div className="w-[900px] p-6">
+    <div className="lg:w-[900px] p-6 h-full lg:h-auto">
       <Header />
-      <div className="flex flex-col lg:flex-row items-center justify-center h-full">
-        <SideWrap side="left" />
+      <div className="flex flex-row items-center justify-center h-full">
+        <Side side="left" />
         <SyncButton className="mx-8" />
-        <SideWrap side="right" />
+        <Side side="right" />
       </div>
     </div>
   );

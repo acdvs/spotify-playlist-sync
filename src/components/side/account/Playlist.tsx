@@ -7,7 +7,7 @@ import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import cx from 'classnames';
 
 import { useStore, SideType } from '@/store';
-import { Context as SideContext } from './providers/SideContext';
+import { Context as SideContext } from '@/components/providers/SideContext';
 
 const Playlist = ({
   data,

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { UserProfile } from '@spotify/web-api-ts-sdk';
 
-import RefreshButton from './buttons/Refresh';
-import LogoutButton from './buttons/Logout';
+import RefreshButton from '@/components/buttons/Refresh';
+import LogoutButton from '@/components/buttons/Logout';
 
 const Profile = ({
   data,

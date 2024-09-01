@@ -1,29 +1,47 @@
-import { Fragment, useState } from 'react';
-import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
-import { Page, SimplifiedPlaylist, UserProfile } from '@spotify/web-api-ts-sdk';
+'use client';
+
+import { Fragment, useContext, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Transition } from '@headlessui/react';
 import { RiLoader4Line } from '@remixicon/react';
+import { Page, SimplifiedPlaylist, UserProfile } from '@spotify/web-api-ts-sdk';
 
 import { useStore, SideType } from '@/store';
+import { getData } from '@/actions/client';
+import { Context as SideContext } from '@/components/providers/SideContext';
 import Playlists from './Playlists';
 import Profile from './Profile';
+import Loading from '../Loading';
+import Logout from '../Logout';
 
 const SORT_OPTS = ['Z-A', 'None', 'A-Z'];
 
-const Account = ({
-  side,
-  profile,
-  playlistQuery,
-}: {
-  side: SideType;
-  profile?: UserProfile;
-  playlistQuery: UseInfiniteQueryResult<
-    InfiniteData<Page<SimplifiedPlaylist>, unknown>,
-    Error
-  >;
-}) => {
-  const [sorting, setSorting] = useState(0);
+const Account = () => {
+  const side = useContext(SideContext) as SideType;
+
   const selectedPlaylist = useStore((state) => state.playlists[side]);
+  const loggingOut = useStore((state) => state.loggingOut[side]);
+  const [sorting, setSorting] = useState(0);
+
+  const { data: profile, isPending: profilePending } = useQuery({
+    queryKey: [side, 'profile'],
+    queryFn: () => getData<UserProfile>(`/api/${side}/profile`),
+  });
+
+  const playlistQuery = useInfiniteQuery({
+    queryKey: [side, 'playlists'],
+    queryFn: ({ pageParam }) =>
+      getData<Page<SimplifiedPlaylist>>(`/api/${side}/playlists?offset=${pageParam}`),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) =>
+      lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,
+  });
+
+  if (profilePending || playlistQuery.isPending) {
+    return <Loading />;
+  } else if (loggingOut) {
+    return <Logout />;
+  }
 
   const toggleSorting = () => setSorting((state) => (state === 1 ? -1 : state + 1));
 
