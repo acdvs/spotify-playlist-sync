@@ -1,7 +1,8 @@
 'use client';
 
-import { RiQuestionLine, RiQuestionMark } from '@remixicon/react';
+import { RiArrowLeftRightLine, RiQuestionLine, RiQuestionMark } from '@remixicon/react';
 import { useState } from 'react';
+import Tooltip from './Tooltip';
 
 const Header = () => {
   const [helpShown, showHelp] = useState(false);
@@ -11,12 +12,15 @@ const Header = () => {
       <div className="mb-3 flex gap-5 items-center">
         <h1 className="flex-shrink-0">Spotify Playlist Sync</h1>
         <div className="border-zinc-700 border-b-2 w-full" />
-        <div className="w-10" title={`${helpShown ? 'Hide' : 'Show'} help`}>
+        <Tooltip text="Change sync direction">
+          <RiArrowLeftRightLine className="fill-zinc-500 hover:fill-zinc-400 hover:cursor-pointer transition-colors" />
+        </Tooltip>
+        <Tooltip text={`${helpShown ? 'Hide' : 'Show'} help`}>
           <RiQuestionLine
             className="fill-zinc-500 hover:fill-zinc-400 hover:cursor-pointer transition-colors"
             onClick={() => showHelp((x) => !x)}
           />
-        </div>
+        </Tooltip>
       </div>
       {helpShown && (
         <p>
