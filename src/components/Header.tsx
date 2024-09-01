@@ -1,11 +1,18 @@
 'use client';
 
-import { RiArrowLeftRightLine, RiQuestionLine, RiQuestionMark } from '@remixicon/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { RiArrowLeftRightLine, RiQuestionLine } from '@remixicon/react';
+
 import Tooltip from './Tooltip';
 
 const Header = () => {
-  const [helpShown, showHelp] = useState(false);
+  const [helpActive, showHelp] = useState(false);
+  const helpRef = useRef<HTMLParagraphElement>(null);
+
+  const helpStyles = {
+    marginTop: helpActive ? '0px' : `-${helpRef.current?.clientHeight}px`,
+    opacity: helpActive ? 1 : 0,
+  };
 
   return (
     <div className="mb-10">
@@ -13,22 +20,28 @@ const Header = () => {
         <h1 className="flex-shrink-0">Spotify Playlist Sync</h1>
         <div className="border-zinc-700 border-b-2 w-full" />
         <Tooltip text="Change sync direction">
-          <RiArrowLeftRightLine className="fill-zinc-500 hover:fill-zinc-400 hover:cursor-pointer transition-colors" />
+          <RiArrowLeftRightLine className="w-10 h-10 button tertiary" />
         </Tooltip>
-        <Tooltip text={`${helpShown ? 'Hide' : 'Show'} help`}>
+        <Tooltip text={`${helpActive ? 'Hide' : 'Show'} help`}>
           <RiQuestionLine
-            className="fill-zinc-500 hover:fill-zinc-400 hover:cursor-pointer transition-colors"
+            className="w-10 h-10 button tertiary"
             onClick={() => showHelp((x) => !x)}
           />
         </Tooltip>
       </div>
-      {helpShown && (
-        <p>
-          First, log into two different Spotify accounts below. Then, simply select a
-          playlist from each account and press the sync button. The playlist on the left
-          will be synced to the playlist on the right.
-        </p>
-      )}
+      {/* <Transition
+        show={helpShown}
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        enter="transition-opacity"
+        as={Fragment}
+      > */}
+      <p className="transition-all" style={helpStyles} ref={helpRef}>
+        First, log into two different Spotify accounts below. Then, simply select a
+        playlist from each account and press the sync button. The playlist on the left
+        will be synced to the playlist on the right.
+      </p>
+      {/* </Transition> */}
     </div>
   );
 };
