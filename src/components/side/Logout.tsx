@@ -10,7 +10,7 @@ import Card from '../Card';
 
 const Logout = () => {
   const side = useContext(SideContext) as SideType;
-  const showLogout = useStore((store) => store.showLogout);
+  const setLoggingOut = useStore((store) => store.setLoggingOut);
   const queryClient = useQueryClient();
 
   const logout = async () => {
@@ -24,7 +24,7 @@ const Logout = () => {
         <div className="button primary" onClick={logout}>
           <p>Logout</p>
         </div>
-        <div className="button secondary" onClick={() => showLogout(side, false)}>
+        <div className="button secondary" onClick={() => setLoggingOut(side, false)}>
           <p>Go back</p>
         </div>
       </div>
