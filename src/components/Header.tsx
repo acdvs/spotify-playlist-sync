@@ -29,19 +29,11 @@ const Header = () => {
           />
         </Tooltip>
       </div>
-      {/* <Transition
-        show={helpShown}
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        enter="transition-opacity"
-        as={Fragment}
-      > */}
       <p className="transition-all" style={helpStyles} ref={helpRef}>
         First, log into two different Spotify accounts below. Then, simply select a
         playlist from each account and press the sync button. The playlist on the left
         will be synced to the playlist on the right.
       </p>
-      {/* </Transition> */}
     </div>
   );
 };
