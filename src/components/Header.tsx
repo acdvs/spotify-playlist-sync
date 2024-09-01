@@ -10,7 +10,7 @@ const Header = () => {
   const helpRef = useRef<HTMLParagraphElement>(null);
 
   const helpStyles = {
-    marginTop: helpActive ? '0px' : `-${helpRef.current?.clientHeight}px`,
+    marginTop: helpActive ? '0px' : `calc(-${helpRef.current?.clientHeight}px - 0.75rem)`,
     opacity: helpActive ? 1 : 0,
   };
 
