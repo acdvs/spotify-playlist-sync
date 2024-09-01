@@ -20,11 +20,11 @@ const Header = () => {
         <h1 className="flex-shrink-0">Spotify Playlist Sync</h1>
         <div className="border-zinc-700 border-b-2 w-full" />
         <Tooltip text="Change sync direction">
-          <RiArrowLeftRightLine className="w-10 h-10 button tertiary" />
+          <RiArrowLeftRightLine className="w-6 h-6 button tertiary plain" />
         </Tooltip>
         <Tooltip text={`${helpActive ? 'Hide' : 'Show'} help`}>
           <RiQuestionLine
-            className="w-10 h-10 button tertiary"
+            className="w-6 h-6 button tertiary plain"
             onClick={() => showHelp((x) => !x)}
           />
         </Tooltip>
