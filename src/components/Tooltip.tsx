@@ -15,7 +15,7 @@ const Tooltip = ({
 
   const onMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     if (tooltipRef.current) {
-      setDelay(setTimeout(() => tooltipRef.current?.classList.remove('hidden'), 500));
+      setDelay(setTimeout(() => tooltipRef.current?.classList.remove('hidden'), 750));
     }
   };
 
