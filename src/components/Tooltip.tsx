@@ -35,7 +35,7 @@ const Tooltip = ({
       </div>
       <div
         ref={tooltipRef}
-        className="px-2 py-1 bg-zinc-800 rounded-lg absolute hidden -translate-x-1/2 left-1/2 drop-shadow-md"
+        className="px-2 py-1 whitespace-nowrap bg-zinc-800 rounded-lg absolute hidden -translate-x-1/2 left-1/2 drop-shadow-md"
       >
         <p>{text}</p>
       </div>
