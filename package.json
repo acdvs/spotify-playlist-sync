@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.18",
+    "@headlessui/react": "^2.1.3",
     "@remixicon/react": "^4.1.1",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "@tanstack/react-query": "^5.20.5",
