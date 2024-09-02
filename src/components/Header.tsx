@@ -32,9 +32,9 @@ const Header = () => {
         className="transition duration-300 ease-out data-[closed]:opacity-0"
       >
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
-        <div className="w-96 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="w-96 max-w-[95vw] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <DialogPanel>
-            <Card filled noAlign className="gap-5">
+            <Card filled noAlign className="gap-5 p-5">
               <DialogTitle className="font-bold">Directions</DialogTitle>
               <p>
                 First, log into two different Spotify accounts below. Then, simply select
