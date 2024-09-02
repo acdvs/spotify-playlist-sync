@@ -10,8 +10,6 @@ const SideContext = ({
   children,
 }: React.PropsWithChildren & {
   side: SideType;
-}) => {
-  return <Context.Provider value={side}>{children}</Context.Provider>;
-};
+}) => <Context.Provider value={side}>{children}</Context.Provider>;
 
 export default SideContext;
