@@ -37,14 +37,14 @@ const Header = () => {
             <Card filled noAlign className="gap-5 p-5">
               <DialogTitle className="font-bold">Directions</DialogTitle>
               <p>
-                First, log into two different Spotify accounts below. Then, simply select
-                a playlist from each account and press the sync button.
+                Log into two different Spotify accounts, select a playlist from each
+                account, and press the sync button.
               </p>
               <p>
-                The playlist on the left will be synced to the playlist on the right. This
-                can be flipped with the button in the top right corner.
+                The first playlist will be synced to the second playlist. This can be
+                flipped with the button in the top right corner.
               </p>
-              <div onClick={() => showHelp(false)} className="button primary self-start">
+              <div onClick={() => showHelp(false)} className="button primary self-center">
                 Got it
               </div>
             </Card>
