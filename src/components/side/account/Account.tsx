@@ -14,7 +14,7 @@ import Profile from './Profile';
 import Loading from '../Loading';
 import Logout from '../Logout';
 
-const SORT_OPTS = ['Z-A', 'None', 'A-Z'];
+const SORT_OPTIONS = ['Z-A', 'None', 'A-Z'];
 
 const Account = () => {
   const side = useContext(SideContext) as SideType;
@@ -51,7 +51,7 @@ const Account = () => {
       <div className="flex text-sm">
         <p className="text-zinc-500">Sorting:&nbsp;</p>
         <p className="button tertiary plain" onClick={toggleSorting}>
-          {SORT_OPTS[sorting + 1]}
+          {SORT_OPTIONS[sorting + 1]}
         </p>
       </div>
       <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
