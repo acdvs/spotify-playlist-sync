@@ -11,7 +11,7 @@ const Profile = ({
   data?: UserProfile;
   playlistCount?: number;
 }) => (
-  <div className="flex justify-between mb-3 ml-3">
+  <div className="flex justify-between mb-3">
     <div className="flex items-center">
       <div className="w-10 aspect-square mr-3">
         <Image
