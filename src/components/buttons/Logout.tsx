@@ -16,7 +16,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <Tooltip text="Logout">
+    <Tooltip className="-mr-3" text="Logout">
       <div onClick={showConfirm}>
         <RiLogoutBoxRLine className="w-10 h-10 button tertiary" />
       </div>
