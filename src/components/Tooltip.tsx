@@ -1,12 +1,15 @@
 'use client';
 
 import { MouseEventHandler, useRef, useState } from 'react';
+import cx from 'classnames';
 
 const Tooltip = ({
   text,
+  className,
   children,
 }: React.PropsWithChildren & {
   text: string;
+  className?: string;
 }) => {
   const [delay, setDelay] = useState<NodeJS.Timeout | null>();
 
@@ -29,7 +32,7 @@ const Tooltip = ({
   };
 
   return (
-    <div className="relative z-50">
+    <div className={cx(className, 'relative z-50')}>
       <div ref={contentRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         {children}
       </div>
