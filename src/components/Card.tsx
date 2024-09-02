@@ -20,7 +20,7 @@ const Card = ({
       'flex flex-col p-7 rounded-lg',
     )}
   >
-    {text && <p className="mb-5 text-zinc-400 text-center">{text}</p>}
+    {text && <p className="mb-5 text-white text-center">{text}</p>}
     {children}
   </div>
 );
