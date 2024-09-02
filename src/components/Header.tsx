@@ -11,8 +11,8 @@ const Header = () => {
   const [helpActive, showHelp] = useState(false);
 
   return (
-    <div className="mb-10">
-      <div className="mb-3 flex gap-5 items-center">
+    <>
+      <div className="mb-8 flex gap-5 items-center">
         <h1 className="flex-shrink-0">Spotify Playlist Sync</h1>
         <div className="border-zinc-700 border-b-2 w-full" />
         <Tooltip text="Change sync direction">
@@ -51,7 +51,7 @@ const Header = () => {
           </DialogPanel>
         </div>
       </Dialog>
-    </div>
+    </>
   );
 };
 
