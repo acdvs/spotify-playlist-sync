@@ -11,9 +11,9 @@ const Profile = ({
   data?: UserProfile;
   playlistCount?: number;
 }) => (
-  <div className="flex justify-between">
+  <div className="flex justify-between gap-8">
     <div className="flex items-center gap-3">
-      <div className="w-10 aspect-square">
+      <div className="w-10 aspect-square flex-shrink-0">
         <Image
           src={data?.images?.[0].url || ''}
           quality={25}
@@ -24,7 +24,7 @@ const Profile = ({
         />
       </div>
       <div>
-        <a href={data?.external_urls?.spotify} target="_blank">
+        <a href={data?.external_urls?.spotify} target="_blank" className="line-clamp-1">
           <p className="button tertiary plain leading-none mb-1">{data?.display_name}</p>
         </a>
         <p className="text-sm text-zinc-400">{playlistCount} playlists</p>
