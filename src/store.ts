@@ -13,6 +13,8 @@ export interface State {
     left: SimplifiedPlaylist | undefined;
     right: SimplifiedPlaylist | undefined;
   };
+  syncDirection: SideType;
+  flipSyncDirection: () => void;
   setActiveSide: (side: SideType) => void;
   setLoggingOut: (side: SideType, x: boolean) => void;
   setPlaylist: (side: SideType, playlist: SimplifiedPlaylist) => void;
@@ -31,6 +33,11 @@ export const useStore = create<State>((set) => ({
     left: undefined,
     right: undefined,
   },
+  syncDirection: 'right',
+  flipSyncDirection: () =>
+    set((state) => ({
+      syncDirection: state.syncDirection === 'left' ? 'right' : 'left',
+    })),
   setActiveSide: (side: SideType) => set(() => ({ activeSide: side })),
   setLoggingOut(side, x) {
     set((state) => ({ loggingOut: { ...state.loggingOut, [side]: x } }));
