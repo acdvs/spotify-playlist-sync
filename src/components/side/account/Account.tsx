@@ -44,7 +44,7 @@ const Account = () => {
   const toggleSorting = () => setSorting((state) => (state === 1 ? -1 : state + 1));
 
   return (
-    <div className="flex flex-col flex-1 lg:h-[70vh] lg:max-h-[750px]">
+    <div className="flex flex-col flex-1 lg:h-[70vh] lg:max-h-[750px] gap-3">
       <Profile data={profile} playlistCount={playlistQuery.data?.pages[0].total} />
       <div className="flex justify-between gap-5">
         <div className="flex text-sm">

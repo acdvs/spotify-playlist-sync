@@ -18,6 +18,10 @@
     @apply text-xl md:text-2xl;
     font-family: 'Montserrat', Arial, sans-serif;
   }
+
+  a {
+    display: block;
+  }
 }
 
 @layer components {
