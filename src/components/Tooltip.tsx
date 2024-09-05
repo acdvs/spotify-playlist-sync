@@ -16,13 +16,13 @@ const Tooltip = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const onMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onMouseEnter = () => {
     if (tooltipRef.current) {
       setDelay(setTimeout(() => tooltipRef.current?.classList.remove('hidden'), 750));
     }
   };
 
-  const onMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onMouseLeave = () => {
     if (tooltipRef.current) {
       tooltipRef.current.classList.add('hidden');
 
@@ -32,13 +32,13 @@ const Tooltip = ({
   };
 
   return (
-    <div className={cx(className, 'relative z-50')}>
+    <div className={cx(className, 'relative')}>
       <div ref={contentRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         {children}
       </div>
       <div
         ref={tooltipRef}
-        className="px-2 py-1 whitespace-nowrap bg-zinc-800 rounded-lg absolute hidden -translate-x-1/2 left-1/2 drop-shadow-md"
+        className="px-3 py-2 whitespace-nowrap bg-zinc-800 rounded-lg hidden absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full drop-shadow-md z-50"
       >
         <p>{text}</p>
       </div>
