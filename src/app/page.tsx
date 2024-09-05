@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Side from '@/components/side/Side.Server';
 import SyncButton from '@/components/buttons/Sync';
+import SyncBar from '@/components/SyncBar';
 
 export default async function Index() {
   return (
@@ -11,6 +12,7 @@ export default async function Index() {
         <Side type="left" />
         <Side type="right" />
       </div>
+      <SyncBar />
     </div>
   );
 }
