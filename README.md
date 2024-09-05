@@ -1,15 +1,15 @@
 ## [Spotify Playlist Sync][website]
 
-A simple tool to sync Spotify playlists to other accounts without publicly sharing or saving.
+A simple tool to sync Spotify playlists to other accounts without publicly sharing, collaborating, or saving.
 
 ### Motivation
 
 With current Spotify playlist sharing functionality, you can either:
 
-- Share a playlist, which performs no action at all
-- Like a playlist, which retains authorship and creates a reference
-- Add a collaborator, which combines authorships
+- Share a playlist, which does nothing special
+- Like a playlist, which retains ownership and creates a reference on your account
+- Add a collaborator, which combines ownership with another account
 
-However, I needed a way to publicize some playlists on my personal Spotify account **without** having my name attached to them in any way. This tool simply makes use of a single Spotify endpoint to copy all songs from one playlist to another, also allowing usage of private playlists on either account.
+However, you aren't able to _transfer_ ownership. Copying the playlist to another account solves this.
 
-[website]: https://adam-davies.me/spotify-playlist-sync
+[website]: https://acdvs.dev/spotify-playlist-sync
