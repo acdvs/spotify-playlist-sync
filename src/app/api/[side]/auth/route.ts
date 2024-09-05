@@ -15,10 +15,13 @@ export async function GET(req: NextRequest, { params }: { params: { side: SideTy
       querystring.stringify({
         response_type: 'code',
         client_id: process.env.SPOTIFY_CLIENT_ID as string,
-        scope:
-          params.side === 'left'
-            ? 'user-read-email user-read-private playlist-read-private'
-            : 'user-read-email user-read-private playlist-modify-public playlist-modify-private',
+        scope: [
+          'user-read-email',
+          'user-read-private',
+          'playlist-read-private',
+          'playlist-modify-public',
+          'playlist-modify-private',
+        ].join(' '),
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         state: JSON.stringify({
           for: params.side,
