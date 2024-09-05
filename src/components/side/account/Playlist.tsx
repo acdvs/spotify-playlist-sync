@@ -34,48 +34,51 @@ const Playlist = ({
         data.id === selectedPlaylist?.id
           ? 'border-green-500 hover:border-green-600'
           : 'border-transparent hover:border-zinc-600',
-        'button p-3 flex justify-between bg-zinc-900 border-2 items-stretch group',
+        'button p-3 flex gap-3 bg-zinc-900 border-2 group',
       )}
       onClick={unowned ? undefined : onClick}
     >
-      <div className="flex max-w-[80%]">
-        <div className="w-10 aspect-square mr-3 bg-zinc-800 flex-shrink-0">
-          {data.images.length > 0 && (
-            <Image
-              src={data.images[0].url}
-              quality={25}
-              width={40}
-              height={40}
-              className="rounded"
-              alt="Playlist collage"
-            />
-          )}
-        </div>
-        <div className="overflow-hidden">
+      <div className="w-10 aspect-square bg-zinc-800 flex-shrink-0">
+        {data.images.length > 0 && (
+          <Image
+            src={data.images[0].url}
+            quality={25}
+            width={40}
+            height={40}
+            className="rounded"
+            alt="Playlist collage"
+          />
+        )}
+      </div>
+      <div className="flex-1">
+        <div className="flex justify-between gap-3">
           <a
             href={data.external_urls.spotify}
             target="_blank"
             onClick={(e) => e.stopPropagation()}
           >
             <p
-              className="button tertiary plain leading-none mb-1 text-ellipsis whitespace-nowrap overflow-hidden"
+              className="h-5 max-w-[200px] button tertiary plain leading-none text-ellipsis whitespace-nowrap overflow-x-hidden"
               title={data.name}
             >
               {data.name}
             </p>
           </a>
-          <p className="text-zinc-400 text-sm">{data.tracks?.total} songs</p>
+          <p className="text-sm text-zinc-600 leading-none">
+            {data.public || unowned ? 'public' : 'private'}
+          </p>
         </div>
-      </div>
-      <div className="flex flex-col justify-between items-end">
-        <p className="text-sm text-zinc-600 leading-none">
-          {data.public || unowned ? 'public' : 'private'}
-        </p>
-        {unowned && (
-          <div title="Not owned">
-            <RiLockLine className="w-4 fill-zinc-600 group-hover:fill-red-500" />
-          </div>
-        )}
+        <div className="flex justify-between">
+          <p className="text-zinc-400 text-sm">{data.tracks?.total} songs</p>
+          {unowned && (
+            <div className="flex items-center gap-1">
+              <RiLockLine className="w-4 fill-zinc-600 group-hover:fill-red-500" />
+              <p className="text-sm hidden group-hover:inline-block group-hover:text-red-500">
+                Not owned
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </li>
   );
