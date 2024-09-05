@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { RiLockLine } from '@remixicon/react';
 import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
@@ -19,14 +19,23 @@ const Playlist = ({
   const side = useContext(SideContext) as SideType;
 
   const selectedPlaylist = useStore((state) => state.playlists[side]);
-  const setSelectedPlaylist = useStore((state) => state.setPlaylist);
+  const setPlaylist = useStore((state) => state.setPlaylist);
+  const syncDirection = useStore((state) => state.syncDirection);
+
+  const receivingSide = side === syncDirection;
+  const notSyncable = receivingSide && data.owner.id !== profileId;
+
+  useEffect(() => {
+    if (notSyncable) {
+      setPlaylist(side);
+    }
+  }, [notSyncable, syncDirection, side, setPlaylist]);
 
   const onClick = () => {
-    setSelectedPlaylist(side, data);
+    if (!notSyncable) {
+      setPlaylist(side, data);
+    }
   };
-
-  const lockUnowned = side === 'right';
-  const notOwned = lockUnowned && data.owner.id !== profileId;
 
   return (
     <li
@@ -36,7 +45,7 @@ const Playlist = ({
           : 'border-transparent hover:border-zinc-600',
         'button p-3 flex gap-3 bg-zinc-900 border-2 group',
       )}
-      onClick={notOwned ? undefined : onClick}
+      onClick={onClick}
     >
       <div className="w-10 aspect-square bg-zinc-800 flex-shrink-0">
         {data.images.length > 0 && (
@@ -65,12 +74,12 @@ const Playlist = ({
             </p>
           </a>
           <p className="text-sm text-zinc-500 leading-none">
-            {data.public || notOwned ? 'public' : 'private'}
+            {data.public ? 'public' : 'private'}
           </p>
         </div>
         <div className="flex justify-between">
           <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
-          {notOwned && (
+          {notSyncable && (
             <div className="flex items-center gap-1 transition-colors">
               <RiLockLine className="w-4 fill-zinc-500 group-hover:fill-red-500" />
               <p className="text-sm text-zinc-500 group-hover:text-red-500">Not owned</p>
