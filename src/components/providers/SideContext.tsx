@@ -6,10 +6,10 @@ import type { SideType } from '@/store';
 export const Context = createContext<SideType | null>(null);
 
 const SideContext = ({
-  side,
+  type,
   children,
 }: React.PropsWithChildren & {
-  side: SideType;
-}) => <Context.Provider value={side}>{children}</Context.Provider>;
+  type: SideType;
+}) => <Context.Provider value={type}>{children}</Context.Provider>;
 
 export default SideContext;
