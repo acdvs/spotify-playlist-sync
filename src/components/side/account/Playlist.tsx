@@ -26,7 +26,7 @@ const Playlist = ({
   };
 
   const lockUnowned = side === 'right';
-  const unowned = lockUnowned && data.owner.id !== profileId;
+  const notOwned = lockUnowned && data.owner.id !== profileId;
 
   return (
     <li
@@ -36,7 +36,7 @@ const Playlist = ({
           : 'border-transparent hover:border-zinc-600',
         'button p-3 flex gap-3 bg-zinc-900 border-2 group',
       )}
-      onClick={unowned ? undefined : onClick}
+      onClick={notOwned ? undefined : onClick}
     >
       <div className="w-10 aspect-square bg-zinc-800 flex-shrink-0">
         {data.images.length > 0 && (
@@ -65,17 +65,17 @@ const Playlist = ({
             </p>
           </a>
           <p className="text-sm text-zinc-600 leading-none">
-            {data.public || unowned ? 'public' : 'private'}
+            {data.public || notOwned ? 'public' : 'private'}
           </p>
         </div>
         <div className="flex justify-between">
           <p className="text-zinc-400 text-sm">{data.tracks?.total} songs</p>
-          {unowned && (
             <div className="flex items-center gap-1">
               <RiLockLine className="w-4 fill-zinc-600 group-hover:fill-red-500" />
               <p className="text-sm hidden group-hover:inline-block group-hover:text-red-500">
                 Not owned
               </p>
+          {notOwned && (
             </div>
           )}
         </div>
