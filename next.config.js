@@ -7,15 +7,13 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'i.scdn.co',
+        hostname: '**.spotifycdn.com',
         port: '',
-        pathname: '/image/**',
       },
       {
         protocol: 'https',
-        hostname: 'mosaic.scdn.co',
+        hostname: '**.scdn.co',
         port: '',
-        pathname: '/**',
       },
     ],
   },
