@@ -1,5 +1,5 @@
 import { RiLoader4Line } from '@remixicon/react';
-import Card from '../Card';
+import Card from '@/components/Card';
 
 const Loading = () => (
   <Card>

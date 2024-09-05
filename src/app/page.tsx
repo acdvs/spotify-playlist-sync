@@ -7,9 +7,9 @@ export default async function Index() {
     <div className="lg:w-[900px] p-6 h-full lg:h-auto">
       <Header />
       <div className="flex flex-row items-center justify-center h-full">
-        <Side side="left" />
         <SyncButton className="mx-8" />
-        <Side side="right" />
+        <Side type="left" />
+        <Side type="right" />
       </div>
     </div>
   );

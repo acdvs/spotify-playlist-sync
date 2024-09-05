@@ -5,8 +5,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
 import { getData } from '@/actions/client';
-import { Context as SideContext } from '../providers/SideContext';
-import Card from '../Card';
+import { Context as SideContext } from '@/components/providers/SideContext';
+import Card from '@/components/Card';
 
 const Logout = () => {
   const side = useContext(SideContext) as SideType;

@@ -1,5 +1,5 @@
-import Card from '../Card';
-import LoginButton from '../buttons/Login';
+import Card from '@/components/Card';
+import LoginButton from '@/components/buttons/Login';
 
 const Login = async () => {
   return (

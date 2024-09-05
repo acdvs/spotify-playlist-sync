@@ -11,8 +11,8 @@ import { getData } from '@/actions/client';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import Playlists from './Playlists';
 import Profile from './Profile';
-import Loading from '../Loading';
-import Logout from '../Logout';
+import Loading from '../cards/Loading';
+import Logout from '../cards/Logout';
 
 const SORT_OPTIONS = ['Z-A', 'None', 'A-Z'];
 
