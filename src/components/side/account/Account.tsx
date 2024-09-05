@@ -1,9 +1,7 @@
 'use client';
 
-import { Fragment, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { Transition } from '@headlessui/react';
-import { RiLoader4Line } from '@remixicon/react';
 import { Page, SimplifiedPlaylist, UserProfile } from '@spotify/web-api-ts-sdk';
 
 import { useStore, SideType } from '@/store';

@@ -5,9 +5,9 @@ import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { RiRefreshLine } from '@remixicon/react';
 import cx from 'classnames';
 
+import type { SideType } from '@/store';
 import { Context as SideContext } from '../providers/SideContext';
 import Tooltip from '../Tooltip';
-import type { SideType } from '@/store';
 
 const RefreshButton = () => {
   const side = useContext(SideContext) as SideType;

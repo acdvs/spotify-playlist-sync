@@ -4,7 +4,6 @@ import cx from 'classnames';
 
 import { useStore } from '@/store';
 import SyncButton from './buttons/Sync';
-import Card from './Card';
 
 const SyncBar = ({ className }: { className?: string }) => {
   const activeSide = useStore((state) => state.activeSide);
