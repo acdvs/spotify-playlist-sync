@@ -9,7 +9,13 @@ import { useStore } from '@/store';
 import { getDiff, sync } from '@/actions/client';
 import Diff from '../Diff';
 
-const SyncButton = ({ className }: { className?: string }) => {
+const SyncButton = ({
+  direction,
+  className,
+}: {
+  direction?: 'row' | 'column';
+  className?: string;
+}) => {
   const queryClient = useQueryClient();
   const playlists = useStore((state) => state.playlists);
   const [syncing, setSyncing] = useState(false);
@@ -42,19 +48,24 @@ const SyncButton = ({ className }: { className?: string }) => {
 
   return (
     <div
-      className={cx(className, 'flex flex-row lg:flex-col justify-center items-center')}
+      className={cx(
+        className,
+        direction === 'column' && 'flex-col',
+        'flex justify-center items-center',
+      )}
     >
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsVisible} />
       <div
         className={cx(
           !syncEnabled && 'disabled',
-          'button tertiary flex flex-col items-center w-16 p-2 mx-5 my-2 lg:my-5',
+          direction === 'column' ? 'my-3' : 'mx-3',
+          'button tertiary plain flex flex-col items-center',
         )}
         onClick={syncEnabled ? onClick : undefined}
       >
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
-          <RiArrowRightCircleLine className="w-10 h-10 rotate-90 lg:rotate-0" />
+          <RiArrowRightCircleLine className="w-10 h-10 rotate-0" />
         ) : (
           <RiRefreshLine className="w-10 h-10 animate-spin" />
         )}
