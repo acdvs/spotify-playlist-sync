@@ -48,31 +48,21 @@ const Account = () => {
   return (
     <div className="flex flex-col flex-1 lg:h-[70vh] lg:max-h-[750px]">
       <Profile data={profile} playlistCount={playlistQuery.data?.pages[0].total} />
-      <div className="flex text-sm">
-        <p className="text-zinc-500">Sorting:&nbsp;</p>
-        <p className="button tertiary plain" onClick={toggleSorting}>
-          {SORT_OPTIONS[sorting + 1]}
-        </p>
+      <div className="flex justify-between gap-5">
+        <div className="flex text-sm">
+          <p className="text-zinc-500">Sorting:&nbsp;</p>
+          <p className="button tertiary plain" onClick={toggleSorting}>
+            {SORT_OPTIONS[sorting + 1]}
+          </p>
+        </div>
+        <div className="max-w-[60%] hidden lg:block">
+          <p className="text-sm text-ellipsis whitespace-nowrap overflow-hidden">
+            <span className="text-zinc-500">Selected:</span>{' '}
+            <span title={selectedPlaylist?.name}>{selectedPlaylist?.name || 'None'}</span>
+          </p>
+        </div>
       </div>
       <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
-      <div className="hidden lg:flex h-5 mt-2 justify-between">
-        <div className="max-w-[80%]">
-          <Transition
-            show={!!selectedPlaylist}
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            enter="transition-opacity"
-            as={Fragment}
-          >
-            <p className="text-sm text-ellipsis whitespace-nowrap overflow-hidden">
-              <span className="text-zinc-500">Selected:</span> {selectedPlaylist?.name}
-            </p>
-          </Transition>
-        </div>
-        {playlistQuery.isFetchingNextPage && (
-          <RiLoader4Line className="w-5 animate-spin" />
-        )}
-      </div>
     </div>
   );
 };
