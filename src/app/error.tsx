@@ -5,11 +5,12 @@ import Card from '@/components/Card';
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <Card
+      filled
       text="Oops! Something went wrong..."
-      className="w-[400px] max-w-[95vw] self-center"
+      className="mx-auto mt-8 max-w-[400px]"
     >
-      <div className="flex self-start mb-5">
-        <p className="mr-3">Error:</p>
+      <div className="flex gap-3 mb-5">
+        <p>Error:</p>
         <p>{error.message}</p>
       </div>
       <div className="button primary" onClick={reset}>
