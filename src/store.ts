@@ -17,7 +17,7 @@ export interface State {
   flipSyncDirection: () => void;
   setActiveSide: (side: SideType) => void;
   setLoggingOut: (side: SideType, x: boolean) => void;
-  setPlaylist: (side: SideType, playlist: SimplifiedPlaylist) => void;
+  setPlaylist: (side: SideType, playlist?: SimplifiedPlaylist) => void;
 }
 
 type Exists<T, U> = { [K in keyof T]: U };
