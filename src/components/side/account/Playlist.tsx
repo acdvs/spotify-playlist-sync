@@ -40,10 +40,9 @@ const Playlist = ({
   return (
     <li
       className={cx(
-        data.id === selectedPlaylist?.id
-          ? 'border-green-500 hover:border-green-600'
-          : 'border-transparent hover:border-zinc-600',
-        'button p-3 flex gap-3 bg-zinc-900 border-2 group',
+        data.id === selectedPlaylist?.id && 'selected',
+        notSyncable && 'locked',
+        'playlist button p-3 flex gap-3 bg-zinc-900 border-2 group',
       )}
       onClick={onClick}
     >
@@ -81,8 +80,8 @@ const Playlist = ({
           <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
           {notSyncable && (
             <div className="flex items-center gap-1 transition-colors">
-              <RiLockLine className="w-4 fill-zinc-500 group-hover:fill-red-500" />
-              <p className="text-sm text-zinc-500 group-hover:text-red-500">Not owned</p>
+              <RiLockLine className="w-4 fill-zinc-500 group-hover:fill-red-600" />
+              <p className="text-sm text-zinc-500 group-hover:text-red-600">Not owned</p>
             </div>
           )}
         </div>

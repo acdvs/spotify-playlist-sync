@@ -89,9 +89,16 @@
     }
   }
 
-  .side-grid {
-    display: grid;
-    @apply grid-rows-[80%_20%] lg:grid-rows-1 lg:grid-cols-[40%_20%_40%];
+  .playlist {
+    @apply border-transparent hover:border-zinc-600;
+
+    &.selected {
+      @apply border-green-500 hover:border-green-600;
+    }
+
+    &.locked {
+      @apply hover:border-red-600;
+    }
   }
 }
 
