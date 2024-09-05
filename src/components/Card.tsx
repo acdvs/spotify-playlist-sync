@@ -15,9 +15,9 @@ const Card = ({
   <div
     className={cx(
       className,
-      filled ? 'bg-zinc-900' : 'border-2 border-zinc-700',
-      noAlign === undefined && 'items-center justify-center',
-      'flex flex-col p-7 rounded-lg',
+      filled ? 'lg:bg-zinc-900' : 'lg:border-2 lg:border-zinc-700',
+      !noAlign && 'items-center justify-center',
+      'flex flex-col flex-1 p-7 rounded-lg',
     )}
   >
     {text && <p className="mb-5 text-white text-center">{text}</p>}

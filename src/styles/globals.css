@@ -15,7 +15,7 @@
   }
 
   h1 {
-    @apply text-2xl;
+    @apply text-xl md:text-2xl;
     font-family: 'Montserrat', Arial, sans-serif;
   }
 }
@@ -23,6 +23,10 @@
 @layer components {
   .button {
     @apply rounded-lg hover:cursor-pointer transition-colors;
+
+    &.primary, &.secondary, &.tab {
+      @apply flex items-center justify-center px-6 py-2 rounded-full font-bold transition-all;
+    }
 
     &.primary {
       @apply border-2 border-zinc-600;
@@ -38,10 +42,6 @@
       &:hover {
         @apply scale-105 bg-zinc-700;
       }
-    }
-
-    &.primary, &.secondary {
-      @apply flex items-center justify-center px-6 py-2 font-bold rounded-full transition-all;
     }
 
     &.tertiary {
@@ -71,6 +71,23 @@
         }
       }
     }
+
+    &.tab {
+      @apply border-2 border-zinc-700 text-sm px-4 py-2 font-bold;
+
+      &:hover {
+        @apply bg-zinc-100/10;
+      }
+
+      &.active {
+        @apply bg-green-600 border-green-600;
+      }
+    }
+  }
+
+  .side-grid {
+    display: grid;
+    @apply grid-rows-[80%_20%] lg:grid-rows-1 lg:grid-cols-[40%_20%_40%];
   }
 }
 

@@ -46,7 +46,7 @@ const Account = () => {
   const toggleSorting = () => setSorting((state) => (state === 1 ? -1 : state + 1));
 
   return (
-    <>
+    <div className="flex flex-col flex-1 lg:h-[70vh] lg:max-h-[750px]">
       <Profile data={profile} playlistCount={playlistQuery.data?.pages[0].total} />
       <div className="flex text-sm">
         <p className="text-zinc-500">Sorting:&nbsp;</p>
@@ -55,7 +55,7 @@ const Account = () => {
         </p>
       </div>
       <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
-      <div className="h-5 mt-2 flex justify-between">
+      <div className="hidden lg:flex h-5 mt-2 justify-between">
         <div className="max-w-[80%]">
           <Transition
             show={!!selectedPlaylist}
@@ -73,7 +73,7 @@ const Account = () => {
           <RiLoader4Line className="w-5 animate-spin" />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
