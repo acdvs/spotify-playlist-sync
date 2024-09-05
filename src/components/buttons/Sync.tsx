@@ -18,8 +18,11 @@ const SyncButton = ({
 }) => {
   const queryClient = useQueryClient();
   const playlists = useStore((state) => state.playlists);
+  const syncDirection = useStore((state) => state.syncDirection);
   const [syncing, setSyncing] = useState(false);
 
+  const side1 = syncDirection === 'right' ? playlists.left?.id : playlists.right?.id;
+  const side2 = syncDirection === 'right' ? playlists.right?.id : playlists.left?.id;
   const bothSelected = !!playlists.left && !!playlists.right;
 
   const {
@@ -27,17 +30,21 @@ const SyncButton = ({
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: ['diff', playlists.left?.id, playlists.right?.id],
-    queryFn: () => getDiff(playlists.left?.id, playlists.right?.id),
+    queryKey: ['diff', side1, side2],
+    queryFn: () => getDiff(side1, side2),
     enabled: bothSelected,
   });
 
   const onClick = async () => {
+    console.log('left', playlists.left);
+    console.log('right', playlists.right);
+    console.log(side1, side2);
+
     setSyncing(true);
-    await sync(playlists.left?.id, playlists.right?.id);
+    await sync(side1, side2);
     setSyncing(false);
 
-    queryClient.refetchQueries({ queryKey: ['right', 'playlists'] });
+    queryClient.refetchQueries({ queryKey: [syncDirection, 'playlists'] });
     refetch();
   };
 
@@ -65,7 +72,9 @@ const SyncButton = ({
       >
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
-          <RiArrowRightCircleLine className="w-10 h-10 rotate-0" />
+          <RiArrowRightCircleLine
+            className={cx(syncDirection === 'left' && 'rotate-180', 'w-10 h-10')}
+          />
         ) : (
           <RiRefreshLine className="w-10 h-10 animate-spin" />
         )}
