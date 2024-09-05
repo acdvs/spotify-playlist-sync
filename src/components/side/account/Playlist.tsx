@@ -46,7 +46,7 @@ const Playlist = ({
             width={40}
             height={40}
             className="rounded"
-            alt="Playlist collage"
+            alt="Playlist cover"
           />
         )}
       </div>
@@ -64,18 +64,16 @@ const Playlist = ({
               {data.name}
             </p>
           </a>
-          <p className="text-sm text-zinc-600 leading-none">
+          <p className="text-sm text-zinc-500 leading-none">
             {data.public || notOwned ? 'public' : 'private'}
           </p>
         </div>
         <div className="flex justify-between">
-          <p className="text-zinc-400 text-sm">{data.tracks?.total} songs</p>
-            <div className="flex items-center gap-1">
-              <RiLockLine className="w-4 fill-zinc-600 group-hover:fill-red-500" />
-              <p className="text-sm hidden group-hover:inline-block group-hover:text-red-500">
-                Not owned
-              </p>
+          <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
           {notOwned && (
+            <div className="flex items-center gap-1 transition-colors">
+              <RiLockLine className="w-4 fill-zinc-500 group-hover:fill-red-500" />
+              <p className="text-sm text-zinc-500 group-hover:text-red-500">Not owned</p>
             </div>
           )}
         </div>
