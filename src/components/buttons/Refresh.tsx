@@ -15,7 +15,9 @@ const RefreshButton = () => {
   const isRefreshing = useIsFetching({ queryKey: [side] }) > 0;
 
   const refetchAccount = () => {
-    queryClient.refetchQueries({ queryKey: [side] });
+    if (!isRefreshing) {
+      queryClient.refetchQueries({ queryKey: [side] });
+    }
   };
 
   return (
@@ -25,7 +27,7 @@ const RefreshButton = () => {
           'w-10 h-10 button tertiary',
           isRefreshing && 'disabled animate-spin',
         )}
-        onClick={!isRefreshing ? refetchAccount : undefined}
+        onClick={refetchAccount}
       />
     </Tooltip>
   );
