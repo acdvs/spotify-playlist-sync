@@ -20,9 +20,9 @@ export async function GET(
     let playlist = await spotifyFetch<Page<PlaylistedTrack>>(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
-        body: JSON.stringify({
+        params: {
           fields: 'items.track.id',
-        }),
+        },
         auth: params.side,
       },
     );
