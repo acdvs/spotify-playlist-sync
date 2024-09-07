@@ -33,7 +33,7 @@ const Playlist = ({
 
   const onClick = () => {
     if (!notSyncable) {
-      setPlaylist(side, data);
+      setPlaylist(side, selectedPlaylist?.id !== data.id ? data : undefined);
     }
   };
 
