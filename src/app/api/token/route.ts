@@ -54,6 +54,8 @@ export async function GET(req: NextRequest) {
       path: '/',
       secure: true,
     });
+  } catch (err) {
+    console.error(err);
   } finally {
     redirect(redirectPath);
   }
