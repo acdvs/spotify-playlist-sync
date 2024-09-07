@@ -40,8 +40,6 @@ export async function _fetch<T>(endpoint: string, options?: FetchOptions): Promi
     }
   }
 
-  console.log(newEndpoint);
-
   const res = await fetch(newEndpoint, options);
 
   if (res.ok) {

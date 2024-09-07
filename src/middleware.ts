@@ -12,7 +12,6 @@ export async function middleware(request: NextRequest) {
   const tokenCookie = request.cookies.get(`token-${side}`);
 
   if (!tokenCookie) {
-    console.log('No token found');
     return Response.json({ status: 403, message: 'Not logged in' });
   }
 
