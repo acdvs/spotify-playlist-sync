@@ -80,7 +80,7 @@ const Playlist = ({
           <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
           {notSyncable && (
             <div className="flex items-center gap-1 transition-colors">
-              <RiLockLine className="w-4 fill-zinc-500 group-hover:fill-red-600" />
+              <RiLockLine className="w-4 h-4 fill-zinc-500 group-hover:fill-red-600" />
               <p className="text-sm text-zinc-500 group-hover:text-red-600">Not owned</p>
             </div>
           )}
