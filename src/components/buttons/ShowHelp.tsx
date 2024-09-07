@@ -11,7 +11,7 @@ const ShowHelp = () => {
 
   return (
     <>
-      <Tooltip text={`${helpActive ? 'Hide' : 'Show'} help`}>
+      <Tooltip text="Show help">
         <RiQuestionLine
           className="w-6 h-6 button tertiary plain"
           onClick={() => showHelp((x) => !x)}
