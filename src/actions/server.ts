@@ -12,12 +12,8 @@ type FetchOptions = RequestInit & {
 };
 
 const spotifyFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
-  let newEndpoint = endpoint.startsWith('/')
-    ? `${process.env.NEXT_PUBLIC_URL}${endpoint}`
-    : endpoint;
-
   if (options?.params) {
-    newEndpoint += '?' + qs.stringify(options.params);
+    endpoint += '?' + qs.stringify(options.params);
     delete options.params;
   }
 
@@ -40,7 +36,7 @@ const spotifyFetch = async <T>(endpoint: string, options?: FetchOptions): Promis
     }
   }
 
-  const res = await fetch(newEndpoint, options);
+  const res = await fetch(endpoint, options);
 
   if (res.ok) {
     const data: T = await res.json();
