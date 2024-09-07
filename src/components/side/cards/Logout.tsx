@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 import { useStore, SideType } from '@/store';
 import { _fetch } from '@/actions/client';
@@ -11,11 +11,11 @@ import Card from '@/components/Card';
 const Logout = () => {
   const side = useContext(SideContext) as SideType;
   const setLoggingOut = useStore((store) => store.setLoggingOut);
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const logout = async () => {
     await _fetch(`/api/${side}/logout`);
-    queryClient.refetchQueries({ queryKey: [side, 'token'] });
+    router.refresh();
   };
 
   return (
