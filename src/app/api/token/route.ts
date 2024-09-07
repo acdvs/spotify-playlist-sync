@@ -2,9 +2,9 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
-import axios from 'axios';
 
 import { AuthState } from '../[side]/auth/route';
+import { _fetch } from '@/actions/server';
 
 const redirectPath = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
@@ -30,24 +30,18 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const tokenRes = await axios.post(
-      'https://accounts.spotify.com/api/token',
-      {
+    const token = await _fetch<AccessToken>('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      params: {
         code: code,
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         grant_type: 'authorization_code',
       },
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization:
-            'Basic ' +
-            Buffer.from(
-              process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET,
-            ).toString('base64'),
-        },
+      auth: 'basic',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-    );
+    });
 
     const newToken = {
       ...tokenRes.data,

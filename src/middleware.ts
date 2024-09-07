@@ -1,5 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
+
 import { AccessToken } from './app/api/token/route';
+import { _fetch } from './actions/server';
 
 export const config = {
   matcher: '/api/:side/(playlists?|profile)',
@@ -36,24 +38,19 @@ export async function middleware(request: NextRequest) {
 
 async function checkAccessToken(accessToken: AccessToken) {
   if (new Date() > new Date(accessToken.expires_at)) {
-    const body = new URLSearchParams();
-    body.append('grant_type', 'refresh_token');
-    body.append('refresh_token', accessToken.refresh_token);
 
     try {
-      const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'post',
-        body,
+      const token = await _fetch<AccessToken>('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        body: new URLSearchParams({
+          grant_type: 'refresh_token',
+          refresh_token: accessToken.refresh_token,
+        }),
+        auth: 'basic',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization:
-            'Basic ' +
-            Buffer.from(
-              process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET,
-            ).toString('base64'),
         },
       });
-      const token = await tokenRes.json();
 
       const newToken = {
         ...token,

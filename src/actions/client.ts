@@ -1,9 +1,14 @@
-import axios from '@/axios';
 import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
 
-export async function getData<T>(endpoint: string) {
-  const res = await axios.get<T>(endpoint, { withCredentials: true });
-  return res.data;
+export async function _fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const res = await fetch(endpoint, options);
+
+  if (res.ok) {
+    const data: T = await res.json();
+    return data;
+  }
+
+  throw res;
 }
 
 export async function getDiff(idLeft?: string, idRight?: string) {
@@ -12,8 +17,8 @@ export async function getDiff(idLeft?: string, idRight?: string) {
   }
 
   const [resLeft, resRight] = await Promise.all([
-    getData<Playlist>(`/api/left/playlist/${idLeft}`),
-    getData<Playlist>(`/api/right/playlist/${idRight}`),
+    _fetch<Playlist>(`/api/left/playlist/${idLeft}`),
+    _fetch<Playlist>(`/api/right/playlist/${idRight}`),
   ]);
 
   const trackIdsLeft = resLeft.items.map((x) => x.track.id);
@@ -35,6 +40,9 @@ export async function getDiff(idLeft?: string, idRight?: string) {
 }
 
 export async function sync(idLeft?: string, idRight?: string) {
-  const playlist = await getData<Playlist>(`/api/left/playlist/${idLeft}`);
-  await axios.put(`/api/right/playlist/${idRight}`, playlist);
+  const playlist = await _fetch<Playlist>(`/api/left/playlist/${idLeft}`);
+  await _fetch(`/api/right/playlist/${idRight}`, {
+    method: 'PUT',
+    body: JSON.stringify(playlist),
+  });
 }

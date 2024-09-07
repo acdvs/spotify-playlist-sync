@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
-import { getData } from '@/actions/client';
+import { _fetch } from '@/actions/client';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import Card from '@/components/Card';
 
@@ -14,7 +14,7 @@ const Logout = () => {
   const queryClient = useQueryClient();
 
   const logout = async () => {
-    await getData(`/api/${side}/logout`);
+    await _fetch(`/api/${side}/logout`);
     queryClient.refetchQueries({ queryKey: [side, 'token'] });
   };
 
