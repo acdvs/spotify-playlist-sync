@@ -43,9 +43,12 @@ export async function getDiff(direction: SideType, idFrom?: string, idTo?: strin
   return { tracksToAdd, tracksToRemove: trackIdsTo };
 }
 
-export async function sync(idLeft?: string, idRight?: string) {
-  const playlist = await selfFetch<Playlist>(`/api/left/playlist/${idLeft}`);
-  await selfFetch(`/api/right/playlist/${idRight}`, {
+export async function sync(direction: SideType, idFrom?: string, idTo?: string) {
+  const fromSide = direction === 'right' ? 'left' : 'right';
+  const toSide = direction === 'right' ? 'right' : 'left';
+
+  const playlist = await selfFetch<Playlist>(`/api/${fromSide}/playlist/${idFrom}`);
+  await selfFetch(`/api/${toSide}/playlist/${idTo}`, {
     method: 'PUT',
     body: JSON.stringify(playlist),
   });

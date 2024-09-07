@@ -41,7 +41,7 @@ const SyncButton = ({
     console.log(idFrom, idTo);
 
     setSyncing(true);
-    await sync(idFrom, idTo);
+    await sync(syncDirection, idFrom, idTo);
     setSyncing(false);
 
     queryClient.refetchQueries({ queryKey: [syncDirection, 'playlists'] });
