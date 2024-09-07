@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import { SideType } from '@/store';
-import { getToken } from '@/actions/server';
+import { getToken } from '@/actions/session';
 import SideContext from '../providers/SideContext';
 import ClientSide from './Side.Client';
 import Login from './cards/Login';

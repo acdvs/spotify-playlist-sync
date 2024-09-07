@@ -1,9 +1,8 @@
 import { NextRequest } from 'next/server';
 import { Page, PlaylistedTrack } from '@spotify/web-api-ts-sdk';
 
-import { _fetch, getToken } from '@/actions/server';
+import apiFetch from '@/actions/server';
 import type { SideType } from '@/store';
-import type { AccessToken } from '@/app/api/token/route';
 
 export interface Playlist {
   items: {
@@ -18,7 +17,7 @@ export async function GET(
   { params }: { params: { side: SideType; id: string } },
 ) {
   try {
-    let playlist = await _fetch<Page<PlaylistedTrack>>(
+    let playlist = await apiFetch<Page<PlaylistedTrack>>(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
         body: JSON.stringify({
@@ -44,7 +43,7 @@ export async function PUT(
     const data: Playlist = await req.json();
 
     const token = (await getToken(params.side)) as AccessToken;
-    const playlist = await _fetch(
+    const playlist = await apiFetch(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
         method: 'PUT',

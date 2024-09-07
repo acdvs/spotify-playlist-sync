@@ -1,17 +1,17 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import qs from 'querystring';
 
 import type { SideType } from '@/store';
 import { AccessToken } from '@/app/api/token/route';
+import { getToken } from './session';
 
 type FetchOptions = RequestInit & {
   params?: Record<string, any>;
   auth?: 'basic' | SideType;
 };
 
-export async function _fetch<T>(endpoint: string, options?: FetchOptions): Promise<T> {
+const apiFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
   let newEndpoint = endpoint.startsWith('/')
     ? `${process.env.NEXT_PUBLIC_URL}${endpoint}`
     : endpoint;
@@ -48,12 +48,6 @@ export async function _fetch<T>(endpoint: string, options?: FetchOptions): Promi
   }
 
   throw res;
-}
+};
 
-export async function getToken(side: SideType): Promise<AccessToken | undefined> {
-  const cookieStore = cookies();
-  const cookie = cookieStore.get(`token-${side}`);
-  const token = cookie && JSON.parse(cookie.value);
-
-  return token;
-}
+export default apiFetch;
