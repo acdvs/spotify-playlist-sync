@@ -21,8 +21,8 @@ const SyncButton = ({
   const syncDirection = useStore((state) => state.syncDirection);
   const [syncing, setSyncing] = useState(false);
 
-  const side1 = syncDirection === 'right' ? playlists.left?.id : playlists.right?.id;
-  const side2 = syncDirection === 'right' ? playlists.right?.id : playlists.left?.id;
+  const idFrom = syncDirection === 'right' ? playlists.left?.id : playlists.right?.id;
+  const idTo = syncDirection === 'right' ? playlists.right?.id : playlists.left?.id;
   const bothSelected = !!playlists.left && !!playlists.right;
 
   const {
@@ -30,18 +30,18 @@ const SyncButton = ({
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: ['diff', side1, side2],
-    queryFn: () => getDiff(side1, side2),
+    queryKey: ['diff', idFrom, idTo],
+    queryFn: () => getDiff(syncDirection, idFrom, idTo),
     enabled: bothSelected,
   });
 
   const onClick = async () => {
     console.log('left', playlists.left);
     console.log('right', playlists.right);
-    console.log(side1, side2);
+    console.log(idFrom, idTo);
 
     setSyncing(true);
-    await sync(side1, side2);
+    await sync(idFrom, idTo);
     setSyncing(false);
 
     queryClient.refetchQueries({ queryKey: [syncDirection, 'playlists'] });
@@ -50,8 +50,8 @@ const SyncButton = ({
 
   const hasDiff =
     !!diff && (diff.tracksToAdd.length > 0 || diff.tracksToRemove.length > 0);
-  const diffsVisible = bothSelected && !isFetching;
-  const syncEnabled = !syncing && diffsVisible && hasDiff;
+  const diffsFound = bothSelected && !isFetching;
+  const syncEnabled = !syncing && diffsFound && hasDiff;
 
   return (
     <div
@@ -61,7 +61,7 @@ const SyncButton = ({
         'flex justify-center items-center',
       )}
     >
-      <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsVisible} />
+      <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
       <div
         className={cx(
           !syncEnabled && 'disabled',
@@ -79,7 +79,7 @@ const SyncButton = ({
           <RiRefreshLine className="w-10 h-10 animate-spin" />
         )}
       </div>
-      <Diff value={diff?.tracksToRemove.length} sign="-" visible={diffsVisible} />
+      <Diff value={diff?.tracksToRemove.length} sign="-" visible={diffsFound} />
     </div>
   );
 };

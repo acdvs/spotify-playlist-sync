@@ -1,4 +1,5 @@
 import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
+import { SideType } from '@/store';
 
 export async function selfFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(endpoint, options);
@@ -11,32 +12,35 @@ export async function selfFetch<T>(endpoint: string, options?: RequestInit): Pro
   throw res;
 }
 
-export async function getDiff(idLeft?: string, idRight?: string) {
-  if (!idLeft || !idRight) {
+export async function getDiff(direction: SideType, idFrom?: string, idTo?: string) {
+  if (!idFrom || !idTo) {
     return { tracksToAdd: [], tracksToRemove: [] };
   }
 
-  const [resLeft, resRight] = await Promise.all([
-    selfFetch<Playlist>(`/api/left/playlist/${idLeft}`),
-    selfFetch<Playlist>(`/api/right/playlist/${idRight}`),
+  const fromSide = direction === 'right' ? 'left' : 'right';
+  const toSide = direction === 'right' ? 'right' : 'left';
+
+  const [fromData, toData] = await Promise.all([
+    selfFetch<Playlist>(`/api/${fromSide}/playlist/${idFrom}`),
+    selfFetch<Playlist>(`/api/${toSide}/playlist/${idTo}`),
   ]);
 
-  const trackIdsLeft = resLeft.items.map((x) => x.track.id);
-  let trackIdsRight = resRight.items.map((x) => x.track.id);
+  const trackIdsFrom = fromData.items.map((x) => x.track.id);
+  let trackIdsTo = toData.items.map((x) => x.track.id);
 
   let tracksToAdd: string[] = [];
 
-  for (const trackIdLeft of trackIdsLeft) {
-    const trackIdx = trackIdsRight.indexOf(trackIdLeft);
+  for (const trackIdFrom of trackIdsFrom) {
+    const trackIdx = trackIdsTo.indexOf(trackIdFrom);
 
     if (trackIdx > -1) {
-      trackIdsRight.splice(trackIdx, 1);
+      trackIdsTo.splice(trackIdx, 1);
     } else {
-      tracksToAdd.push(trackIdLeft);
+      tracksToAdd.push(trackIdFrom);
     }
   }
 
-  return { tracksToAdd, tracksToRemove: trackIdsRight };
+  return { tracksToAdd, tracksToRemove: trackIdsTo };
 }
 
 export async function sync(idLeft?: string, idRight?: string) {
