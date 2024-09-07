@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 import { AccessToken } from './app/api/token/route';
 import { _fetch } from './actions/server';
+import { SideType } from './store';
 
 export const config = {
   matcher: '/api/:side/(playlists?|profile)',
@@ -11,15 +12,16 @@ export async function middleware(request: NextRequest) {
   const side = request.nextUrl.pathname.split('/')[2];
   const tokenCookie = request.cookies.get(`token-${side}`);
 
+  const response = NextResponse.next();
+
   if (!tokenCookie) {
-    return NextResponse.redirect(new URL('/', request.url));
+    console.log('No token found');
+    return response;
   }
 
   try {
     const parsedCookie = JSON.parse(tokenCookie.value);
     const newAccessToken = await checkAccessToken(parsedCookie);
-
-    const response = NextResponse.next();
 
     if (newAccessToken) {
       response.cookies.set(`token-${side}`, JSON.stringify(newAccessToken), {
@@ -32,12 +34,12 @@ export async function middleware(request: NextRequest) {
 
     return response;
   } catch {
-    return NextResponse.redirect(new URL('/', request.url));
+    return response;
   }
 }
 
 async function checkAccessToken(accessToken: AccessToken) {
-  if (new Date() > new Date(accessToken.expires_at)) {
+  if (new Date() > accessToken.expires_at) {
 
     try {
       const token = await _fetch<AccessToken>('https://accounts.spotify.com/api/token', {
@@ -62,7 +64,7 @@ async function checkAccessToken(accessToken: AccessToken) {
 
       return newToken;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
