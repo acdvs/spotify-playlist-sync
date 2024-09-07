@@ -55,12 +55,10 @@ async function checkAccessToken(accessToken: AccessToken) {
       const newToken = {
         ...token,
         refresh_token: accessToken.refresh_token,
-        expires_at: new Date(),
+        expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
       };
 
-      newToken.expires_at.setSeconds(
-        newToken.expires_at.getSeconds() + newToken.expires_in,
-      );
+      console.log('newToken', newToken);
 
       return newToken;
     } catch (err) {

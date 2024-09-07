@@ -44,13 +44,9 @@ export async function GET(req: NextRequest) {
     });
 
     const newToken = {
-      ...tokenRes.data,
-      expires_at: new Date(),
+      ...token,
+      expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
     };
-
-    newToken.expires_at.setSeconds(
-      newToken.expires_at.getSeconds() + newToken.expires_in,
-    );
 
     cookies().set(`token-${side}`, JSON.stringify(newToken), {
       httpOnly: true,
