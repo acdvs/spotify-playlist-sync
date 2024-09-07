@@ -41,18 +41,13 @@ export async function PUT(
 ) {
   try {
     const data: Playlist = await req.json();
-
-    const token = (await getToken(params.side)) as AccessToken;
+    const uris = data.items.map((x) => `spotify:track:${x.track.id}`);
     const playlist = await apiFetch(
       `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
       {
         method: 'PUT',
-        body: JSON.stringify({
-          uris: data.items.map((x) => `spotify:track:${x.track.id}`),
-        }),
-        headers: {
-          Authorization: 'Bearer ' + token.access_token,
-        },
+        body: JSON.stringify({ uris }),
+        auth: params.side,
       },
     );
 
