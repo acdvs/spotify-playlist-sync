@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useStore, SideType } from '@/store';
-import { _fetch } from '@/actions/client';
+import { selfFetch } from '@/actions/client';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import Card from '@/components/Card';
 
@@ -14,7 +14,7 @@ const Logout = () => {
   const router = useRouter();
 
   const logout = async () => {
-    await _fetch(`/api/${side}/logout`);
+    await selfFetch(`/api/${side}/logout`);
     router.refresh();
   };
 

@@ -1,6 +1,6 @@
 import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
 
-export async function _fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+export async function selfFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(endpoint, options);
 
   if (res.ok) {
@@ -17,8 +17,8 @@ export async function getDiff(idLeft?: string, idRight?: string) {
   }
 
   const [resLeft, resRight] = await Promise.all([
-    _fetch<Playlist>(`/api/left/playlist/${idLeft}`),
-    _fetch<Playlist>(`/api/right/playlist/${idRight}`),
+    selfFetch<Playlist>(`/api/left/playlist/${idLeft}`),
+    selfFetch<Playlist>(`/api/right/playlist/${idRight}`),
   ]);
 
   const trackIdsLeft = resLeft.items.map((x) => x.track.id);
@@ -40,8 +40,8 @@ export async function getDiff(idLeft?: string, idRight?: string) {
 }
 
 export async function sync(idLeft?: string, idRight?: string) {
-  const playlist = await _fetch<Playlist>(`/api/left/playlist/${idLeft}`);
-  await _fetch(`/api/right/playlist/${idRight}`, {
+  const playlist = await selfFetch<Playlist>(`/api/left/playlist/${idLeft}`);
+  await selfFetch(`/api/right/playlist/${idRight}`, {
     method: 'PUT',
     body: JSON.stringify(playlist),
   });
