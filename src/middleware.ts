@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
-
 import { refreshToken } from './actions/session';
+
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
 export const config = {
   matcher: '/api/:side/(playlists?|profile)',
@@ -23,7 +24,7 @@ export async function middleware(request: NextRequest) {
       response.cookies.set(`token-${side}`, JSON.stringify(newToken), {
         httpOnly: true,
         maxAge: 60 * 60 * 24,
-        path: '/',
+        path: BASE_PATH,
         secure: true,
       });
     }

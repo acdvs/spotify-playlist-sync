@@ -6,7 +6,7 @@ import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 import { AuthState } from '../[side]/auth/route';
 import spotifyFetch from '@/actions/server';
 
-const redirectPath = process.env.NEXT_PUBLIC_BASE_PATH || '/';
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
 export interface AccessToken extends BasicToken {
   refresh_token: string;
@@ -19,14 +19,14 @@ export async function GET(req: NextRequest) {
   let side: string;
 
   if (!code || !state) {
-    redirect(redirectPath);
+    redirect(BASE_PATH);
   }
 
   const parsedState: AuthState = JSON.parse(state);
   side = parsedState.for;
 
   if (parsedState.secret !== process.env.AUTH_STATE_SECRET) {
-    redirect(redirectPath);
+    redirect(BASE_PATH);
   }
 
   try {
@@ -54,12 +54,12 @@ export async function GET(req: NextRequest) {
     cookies().set(`token-${side}`, JSON.stringify(newToken), {
       httpOnly: true,
       maxAge: 60 * 60 * 24,
-      path: '/',
+      path: BASE_PATH,
       secure: true,
     });
   } catch (err) {
     console.error(err);
   } finally {
-    redirect(redirectPath);
+    redirect(BASE_PATH);
   }
 }
