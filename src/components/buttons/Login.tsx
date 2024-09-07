@@ -6,15 +6,14 @@ import Link from 'next/link';
 import { Context as SideContext } from '../providers/SideContext';
 import type { SideType } from '@/store';
 
-const HOST = process.env.NEXT_PUBLIC_HOST;
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH;
+const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
 
 const LoginButton = () => {
   const side = useContext(SideContext) as SideType;
 
   return (
     <Link
-      href={`${HOST}${BASE_PATH}/api/${side}/auth`}
+      href={`${NEXT_PUBLIC_URL}/api/${side}/auth`}
       className="button primary"
       prefetch={false}
     >
