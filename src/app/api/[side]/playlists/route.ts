@@ -1,14 +1,14 @@
 import { NextRequest } from 'next/server';
 import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
-import apiFetch from '@/actions/server';
+import spotifyFetch from '@/actions/server';
 import type { SideType } from '@/store';
 
 export async function GET(req: NextRequest, { params }: { params: { side: SideType } }) {
   const offset = req.nextUrl.searchParams.get('offset');
 
   try {
-    const playlists = await apiFetch<Page<SimplifiedPlaylist>>(
+    const playlists = await spotifyFetch<Page<SimplifiedPlaylist>>(
       'https://api.spotify.com/v1/me/playlists?',
       {
         params: {

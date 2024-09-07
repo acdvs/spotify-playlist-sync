@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
 import { AuthState } from '../[side]/auth/route';
-import apiFetch from '@/actions/server';
+import spotifyFetch from '@/actions/server';
 
 const redirectPath = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
@@ -30,18 +30,21 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const token = await apiFetch<AccessToken>('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      params: {
-        code: code,
-        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
-        grant_type: 'authorization_code',
+    const token = await spotifyFetch<AccessToken>(
+      'https://accounts.spotify.com/api/token',
+      {
+        method: 'POST',
+        params: {
+          code: code,
+          redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+          grant_type: 'authorization_code',
+        },
+        auth: 'basic',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       },
-      auth: 'basic',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
+    );
 
     const newToken = {
       ...token,

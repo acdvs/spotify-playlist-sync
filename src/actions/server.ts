@@ -11,7 +11,7 @@ type FetchOptions = RequestInit & {
   auth?: 'basic' | SideType;
 };
 
-const apiFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
+const spotifyFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
   let newEndpoint = endpoint.startsWith('/')
     ? `${process.env.NEXT_PUBLIC_URL}${endpoint}`
     : endpoint;
@@ -50,4 +50,4 @@ const apiFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T>
   throw res;
 };
 
-export default apiFetch;
+export default spotifyFetch;

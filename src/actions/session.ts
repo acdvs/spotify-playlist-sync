@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 import { SideType } from '@/store';
 import { AccessToken } from '@/app/api/token/route';
-import apiFetch from './server';
+import spotifyFetch from './server';
 
 export async function getToken(side: SideType): Promise<AccessToken | undefined> {
   const cookieStore = cookies();
@@ -19,7 +19,7 @@ export async function refreshToken(accessToken: AccessToken) {
     console.log('Refreshing token');
 
     try {
-      const token = await apiFetch<AccessToken>(
+      const token = await spotifyFetch<AccessToken>(
         'https://accounts.spotify.com/api/token',
         {
           method: 'POST',

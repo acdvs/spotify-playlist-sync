@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server';
 import { UserProfile } from '@spotify/web-api-ts-sdk';
 
-import apiFetch from '@/actions/server';
+import spotifyFetch from '@/actions/server';
 import type { SideType } from '@/store';
 
 export async function GET(req: NextRequest, { params }: { params: { side: SideType } }) {
   try {
-    const profile = await apiFetch<UserProfile>('https://api.spotify.com/v1/me', {
+    const profile = await spotifyFetch<UserProfile>('https://api.spotify.com/v1/me', {
       auth: params.side,
     });
 
