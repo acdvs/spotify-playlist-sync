@@ -2,7 +2,7 @@
 
 import { useContext, useEffect } from 'react';
 import Image from 'next/image';
-import { RiLockLine } from '@remixicon/react';
+import { RiLockLine, RiMusic2Line } from '@remixicon/react';
 import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import cx from 'classnames';
 
@@ -37,6 +37,20 @@ const Playlist = ({
     }
   };
 
+  const image =
+    data.images?.length > 0 ? (
+      <Image
+        src={data.images[0].url}
+        quality={25}
+        width={40}
+        height={40}
+        className="rounded"
+        alt="Playlist cover"
+      />
+    ) : (
+      <RiMusic2Line className="fill-zinc-500" />
+    );
+
   return (
     <li
       className={cx(
@@ -46,17 +60,8 @@ const Playlist = ({
       )}
       onClick={onClick}
     >
-      <div className="w-10 aspect-square bg-zinc-800 flex-shrink-0">
-        {data.images.length > 0 && (
-          <Image
-            src={data.images[0].url}
-            quality={25}
-            width={40}
-            height={40}
-            className="rounded"
-            alt="Playlist cover"
-          />
-        )}
+      <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 flex-shrink-0">
+        {image}
       </div>
       <div className="flex-1">
         <div className="flex justify-between gap-3">
