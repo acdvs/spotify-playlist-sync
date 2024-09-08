@@ -2,6 +2,8 @@ import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
 import { SideType } from '@/store';
 
 export async function selfFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  endpoint = `${process.env.NEXT_PUBLIC_BASE_PATH}${endpoint}`;
+
   const res = await fetch(endpoint, options);
 
   if (res.ok) {
