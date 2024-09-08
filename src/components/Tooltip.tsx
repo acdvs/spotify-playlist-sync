@@ -1,7 +1,8 @@
 'use client';
 
-import { MouseEventHandler, useRef, useState } from 'react';
-import cx from 'classnames';
+import { useRef, useState } from 'react';
+
+const SPACING = 5;
 
 const Tooltip = ({
   text,
@@ -11,38 +12,66 @@ const Tooltip = ({
   text: string;
   className?: string;
 }) => {
-  const [delay, setDelay] = useState<NodeJS.Timeout | null>();
+  const [delay, setDelay] = useState<NodeJS.Timeout | undefined>();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const onMouseEnter = () => {
-    if (tooltipRef.current) {
-      setDelay(setTimeout(() => tooltipRef.current?.classList.remove('hidden'), 750));
-    }
+    const showTooltip = () => {
+      if (tooltipRef.current && contentRef.current) {
+        tooltipRef.current.classList.remove('hidden');
+        const c = contentRef.current.getBoundingClientRect();
+        const tt = tooltipRef.current.getBoundingClientRect();
+
+        let top = c.top - SPACING - tt.height;
+        let left = c.left + c.width / 2;
+
+        if (top < 0) {
+          top = c.bottom + SPACING;
+        }
+
+        if (left - tt.width / 2 < 0) {
+          left = 0;
+        } else if (left + tt.width / 2 > window.innerWidth) {
+          left = window.innerWidth - tt.width / 2;
+        }
+
+        tooltipRef.current.style.top = `${top}px`;
+        tooltipRef.current.style.left = `${left}px`;
+      }
+    };
+
+    setDelay(setTimeout(showTooltip, 750));
   };
 
   const onMouseLeave = () => {
     if (tooltipRef.current) {
       tooltipRef.current.classList.add('hidden');
 
-      clearTimeout(delay as NodeJS.Timeout);
-      setDelay(null);
+      clearTimeout(delay);
+      setDelay(undefined);
     }
   };
 
   return (
-    <div className={cx(className, 'relative')}>
-      <div ref={contentRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <>
+      <div
+        className={className}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        ref={contentRef}
+      >
         {children}
       </div>
       <div
+        className="absolute hidden px-3 py-2 whitespace-nowrap bg-zinc-800 border-2 border-zinc-700 rounded-lg drop-shadow-md -translate-x-1/2 z-50"
         ref={tooltipRef}
-        className="px-3 py-2 whitespace-nowrap bg-zinc-800 rounded-lg hidden absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full drop-shadow-md z-50"
+        role="tooltip"
       >
-        <p>{text}</p>
+        {text}
       </div>
-    </div>
+    </>
   );
 };
 
