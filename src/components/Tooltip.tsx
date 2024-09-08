@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const SPACING = 5;
 
@@ -12,13 +12,12 @@ const Tooltip = ({
   text: string;
   className?: string;
 }) => {
-  const [delay, setDelay] = useState<NodeJS.Timeout | undefined>();
-
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const onMouseEnter = () => {
-    const showTooltip = () => {
+    timerRef.current = setTimeout(() => {
       if (tooltipRef.current && contentRef.current) {
         tooltipRef.current.classList.remove('hidden');
         const c = contentRef.current.getBoundingClientRect();
@@ -40,17 +39,13 @@ const Tooltip = ({
         tooltipRef.current.style.top = `${top}px`;
         tooltipRef.current.style.left = `${left}px`;
       }
-    };
-
-    setDelay(setTimeout(showTooltip, 750));
+    }, 750);
   };
 
   const onMouseLeave = () => {
     if (tooltipRef.current) {
       tooltipRef.current.classList.add('hidden');
-
-      clearTimeout(delay);
-      setDelay(undefined);
+      clearTimerRef(timerRef);
     }
   };
 
@@ -73,6 +68,14 @@ const Tooltip = ({
       </div>
     </>
   );
+};
+
+const clearTimerRef = (timeout: React.MutableRefObject<NodeJS.Timeout | null>) => {
+  if (timeout.current) {
+    clearTimeout(timeout.current);
+  }
+
+  timeout.current = null;
 };
 
 export default Tooltip;
