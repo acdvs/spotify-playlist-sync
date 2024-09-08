@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, { params }: { params: { side: SideTy
 
   try {
     const playlists = await spotifyFetch<Page<SimplifiedPlaylist>>(
-      'https://api.spotify.com/v1/me/playlists?',
+      'https://api.spotify.com/v1/me/playlists',
       {
         params: {
           offset: offset || 0,
