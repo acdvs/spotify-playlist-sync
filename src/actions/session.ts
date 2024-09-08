@@ -16,8 +16,6 @@ export async function getToken(side: SideType): Promise<AccessToken | undefined>
 
 export async function refreshToken(accessToken: AccessToken) {
   if (new Date() > accessToken.expires_at) {
-    console.log('Refreshing token');
-
     try {
       const token = await spotifyFetch<AccessToken>(
         'https://accounts.spotify.com/api/token',

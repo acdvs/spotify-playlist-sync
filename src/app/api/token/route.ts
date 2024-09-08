@@ -57,8 +57,6 @@ export async function GET(req: NextRequest) {
       path: BASE_PATH,
       secure: true,
     });
-  } catch (err) {
-    console.error(err);
   } finally {
     redirect(BASE_PATH);
   }

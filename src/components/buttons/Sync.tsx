@@ -36,10 +36,6 @@ const SyncButton = ({
   });
 
   const onClick = async () => {
-    console.log('left', playlists.left);
-    console.log('right', playlists.right);
-    console.log(idFrom, idTo);
-
     setSyncing(true);
     await sync(syncDirection, idFrom, idTo);
     setSyncing(false);
