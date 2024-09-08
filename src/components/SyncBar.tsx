@@ -27,10 +27,12 @@ const SyncBar = ({ className }: { className?: string }) => {
           Account 2
         </div>
       </div>
-      <div className="flex justify-between items-center gap-3">
-        <p className="flex-1 line-clamp-2">{playlists.left?.name || 'No selection'}</p>
+      <div className="flex justify-between items-center gap-1">
+        <p className="flex-1 line-clamp-2 break-words">
+          {playlists.left?.name || 'No selection'}
+        </p>
         <SyncButton className="h-full" />
-        <p className="flex-1 text-right line-clamp-2">
+        <p className="flex-1 text-right line-clamp-2 break-words">
           {playlists.right?.name || 'No selection'}
         </p>
       </div>

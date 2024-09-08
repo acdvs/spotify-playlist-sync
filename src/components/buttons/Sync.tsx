@@ -61,7 +61,7 @@ const SyncButton = ({
       <div
         className={cx(
           !syncEnabled && 'disabled',
-          direction === 'column' ? 'my-3' : 'mx-3',
+          direction === 'column' && 'my-3',
           'button tertiary plain flex flex-col items-center',
         )}
         onClick={syncEnabled ? onClick : undefined}
