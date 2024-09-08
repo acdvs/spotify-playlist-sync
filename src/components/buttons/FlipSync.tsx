@@ -12,11 +12,9 @@ const FlipSync = () => {
   const Icon = syncDirection === 'right' ? RiContractRightLine : RiContractLeftLine;
 
   return (
-    <>
-      <Tooltip text="Flip sync direction">
-        <Icon className="w-7 h-7 button tertiary plain" onClick={flipSyncDirection} />
-      </Tooltip>
-    </>
+    <Tooltip text="Flip sync direction">
+      <Icon className="w-6 h-6 button tertiary plain" onClick={flipSyncDirection} />
+    </Tooltip>
   );
 };
 
