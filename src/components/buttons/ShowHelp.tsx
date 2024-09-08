@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { RiQuestionLine } from '@remixicon/react';
+import { RiGithubFill, RiQuestionLine } from '@remixicon/react';
 
 import Tooltip from '../Tooltip';
 import Dialog from '../Dialog';
@@ -26,6 +26,13 @@ const ShowHelp = () => {
           The first playlist will be synced to the second playlist. This can be flipped
           with the button in the top right corner.
         </p>
+        <a
+          href="https://github.com/acdvs/spotify-playlist-sync"
+          target="_blank"
+          className="mx-auto"
+        >
+          <RiGithubFill />
+        </a>
       </Dialog>
     </>
   );
