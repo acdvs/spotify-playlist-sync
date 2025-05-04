@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
 import { SideType } from '@/store';
@@ -45,4 +46,11 @@ export async function refreshToken(accessToken: AccessToken) {
   }
 
   return null;
+}
+
+export async function logout(side: SideType) {
+  const cookieStore = await cookies();
+  cookieStore.delete(`token-${side}`);
+
+  redirect('/');
 }
