@@ -9,13 +9,13 @@ import { useStore } from '@/store';
 import { getDiff, sync } from '@/actions/client';
 import Diff from '../Diff';
 
-const SyncButton = ({
+function SyncButton({
   direction,
   className,
 }: {
   direction?: 'row' | 'column';
   className?: string;
-}) => {
+}) {
   const queryClient = useQueryClient();
   const playlists = useStore((state) => state.playlists);
   const syncDirection = useStore((state) => state.syncDirection);
@@ -78,6 +78,6 @@ const SyncButton = ({
       <Diff value={diff?.tracksToRemove.length} sign="-" visible={diffsFound} />
     </div>
   );
-};
+}
 
 export default SyncButton;

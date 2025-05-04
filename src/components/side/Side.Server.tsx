@@ -8,7 +8,7 @@ import Login from './cards/Login';
 
 const Account = dynamic(() => import('./account/Account'));
 
-const ServerSide = async ({ type }: { type: SideType }) => {
+async function ServerSide({ type }: { type: SideType }) {
   const token = await getToken(type);
 
   return (
@@ -16,6 +16,6 @@ const ServerSide = async ({ type }: { type: SideType }) => {
       <ClientSide>{token ? <Account /> : <Login />}</ClientSide>
     </SideContext>
   );
-};
+}
 
 export default ServerSide;

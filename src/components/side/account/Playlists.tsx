@@ -6,7 +6,7 @@ import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
 import Playlist from './Playlist';
 
-const Playlists = ({
+function Playlists({
   query,
   profileId,
   sorting,
@@ -14,7 +14,7 @@ const Playlists = ({
   query: UseInfiniteQueryResult<InfiniteData<Page<SimplifiedPlaylist>, unknown>, Error>;
   profileId?: string;
   sorting: number;
-}) => {
+}) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -59,6 +59,6 @@ const Playlists = ({
       </div>
     </div>
   );
-};
+}
 
 export default Playlists;

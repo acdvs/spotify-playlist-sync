@@ -9,7 +9,7 @@ import type { SideType } from '@/store';
 import { Context as SideContext } from '../providers/SideContext';
 import Tooltip from '../Tooltip';
 
-const RefreshButton = () => {
+function RefreshButton() {
   const side = useContext(SideContext) as SideType;
   const queryClient = useQueryClient();
   const isRefreshing = useIsFetching({ queryKey: [side] }) > 0;
@@ -31,6 +31,6 @@ const RefreshButton = () => {
       />
     </Tooltip>
   );
-};
+}
 
 export default RefreshButton;

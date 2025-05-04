@@ -7,7 +7,7 @@ import { useStore, SideType } from '@/store';
 import { Context } from '../providers/SideContext';
 import Tooltip from '../Tooltip';
 
-const LogoutButton = () => {
+function LogoutButton() {
   const side = useContext(Context) as SideType;
   const setLoggingOut = useStore((state) => state.setLoggingOut);
 
@@ -22,6 +22,6 @@ const LogoutButton = () => {
       </div>
     </Tooltip>
   );
-};
+}
 
 export default LogoutButton;

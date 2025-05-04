@@ -14,7 +14,7 @@ import Logout from '../cards/Logout';
 
 const SORT_OPTIONS = ['Z-A', 'None', 'A-Z'];
 
-const Account = () => {
+function Account() {
   const side = useContext(SideContext) as SideType;
 
   const selectedPlaylist = useStore((state) => state.playlists[side]);
@@ -63,6 +63,6 @@ const Account = () => {
       <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
     </div>
   );
-};
+}
 
 export default Account;

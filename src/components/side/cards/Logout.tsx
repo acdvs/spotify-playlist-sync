@@ -8,7 +8,7 @@ import { selfFetch } from '@/actions/client';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import Card from '@/components/Card';
 
-const Logout = () => {
+function Logout() {
   const side = useContext(SideContext) as SideType;
   const setLoggingOut = useStore((store) => store.setLoggingOut);
   const router = useRouter();
@@ -30,6 +30,6 @@ const Logout = () => {
       </div>
     </Card>
   );
-};
+}
 
 export default Logout;

@@ -5,7 +5,7 @@ import { RiContractLeftLine, RiContractRightLine } from '@remixicon/react';
 import { useStore } from '@/store';
 import Tooltip from '../Tooltip';
 
-const FlipSync = () => {
+function FlipSync() {
   const syncDirection = useStore((state) => state.syncDirection);
   const flipSyncDirection = useStore((state) => state.flipSyncDirection);
 
@@ -16,6 +16,6 @@ const FlipSync = () => {
       <Icon className="w-6 h-6 button tertiary plain" onClick={flipSyncDirection} />
     </Tooltip>
   );
-};
+}
 
 export default FlipSync;

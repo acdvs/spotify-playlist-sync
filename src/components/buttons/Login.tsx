@@ -8,7 +8,7 @@ import type { SideType } from '@/store';
 
 const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
 
-const LoginButton = () => {
+function LoginButton() {
   const side = useContext(SideContext) as SideType;
 
   return (
@@ -20,6 +20,6 @@ const LoginButton = () => {
       <p>Login</p>
     </Link>
   );
-};
+}
 
 export default LoginButton;

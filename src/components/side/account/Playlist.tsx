@@ -9,13 +9,7 @@ import clsx from 'clsx';
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
 
-const Playlist = ({
-  data,
-  profileId,
-}: {
-  data: SimplifiedPlaylist;
-  profileId?: string;
-}) => {
+function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {
   const side = useContext(SideContext) as SideType;
 
   const selectedPlaylist = useStore((state) => state.playlists[side]);
@@ -93,6 +87,6 @@ const Playlist = ({
       </div>
     </li>
   );
-};
+}
 
 export default Playlist;

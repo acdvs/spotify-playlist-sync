@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useStore } from '@/store';
 import SyncButton from './buttons/Sync';
 
-const SyncBar = ({ className }: { className?: string }) => {
+function SyncBar({ className }: { className?: string }) {
   const activeSide = useStore((state) => state.activeSide);
   const setActiveSide = useStore((state) => state.setActiveSide);
 
@@ -38,6 +38,6 @@ const SyncBar = ({ className }: { className?: string }) => {
       </div>
     </div>
   );
-};
+}
 
 export default SyncBar;

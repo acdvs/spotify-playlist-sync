@@ -6,7 +6,7 @@ import { RiGithubFill, RiQuestionLine } from '@remixicon/react';
 import Tooltip from '../Tooltip';
 import Dialog from '../Dialog';
 
-const ShowHelp = () => {
+function ShowHelp() {
   const [helpActive, showHelp] = useState(false);
 
   return (
@@ -36,6 +36,6 @@ const ShowHelp = () => {
       </Dialog>
     </>
   );
-};
+}
 
 export default ShowHelp;
