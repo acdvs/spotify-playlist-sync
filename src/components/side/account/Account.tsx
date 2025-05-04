@@ -2,10 +2,9 @@
 
 import { useContext, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { Page, SimplifiedPlaylist, UserProfile } from '@spotify/web-api-ts-sdk';
 
 import { useStore, SideType } from '@/store';
-import { selfFetch } from '@/actions/client';
+import { getPlaylists, getProfile } from '@/utils/spotify';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import Playlists from './Playlists';
 import Profile from './Profile';
@@ -23,13 +22,12 @@ function Account() {
 
   const { data: profile, isPending: profilePending } = useQuery({
     queryKey: [side, 'profile'],
-    queryFn: () => selfFetch<UserProfile>(`/api/${side}/profile`),
+    queryFn: () => getProfile(side),
   });
 
   const playlistQuery = useInfiniteQuery({
     queryKey: [side, 'playlists'],
-    queryFn: ({ pageParam }) =>
-      selfFetch<Page<SimplifiedPlaylist>>(`/api/${side}/playlists?offset=${pageParam}`),
+    queryFn: ({ pageParam }) => getPlaylists(side, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) =>
       lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,

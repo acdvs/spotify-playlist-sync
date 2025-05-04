@@ -6,7 +6,7 @@ import { RiArrowRightCircleLine, RiRefreshLine } from '@remixicon/react';
 import clsx from 'clsx';
 
 import { useStore } from '@/store';
-import { getDiff, sync } from '@/actions/client';
+import { getDiff, sync } from '@/utils/spotify';
 import Diff from '../Diff';
 
 function SyncButton({
@@ -31,12 +31,12 @@ function SyncButton({
     refetch,
   } = useQuery({
     queryKey: ['diff', idFrom, idTo],
-    queryFn: () => getDiff(syncRight, idFrom, idTo),
+    queryFn: () => getDiff(syncRight, idFrom as string, idTo as string),
     enabled: bothSelected,
   });
 
   const onClick = async () => {
-    if (!syncEnabled) {
+    if (!syncEnabled || !idFrom || !idTo) {
       return;
     }
 

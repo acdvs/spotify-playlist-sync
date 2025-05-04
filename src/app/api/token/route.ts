@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
 import { AuthState } from '../[side]/auth/route';
-import spotifyFetch from '@/actions/server';
+import spotifyFetch from '@/actions/fetch';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
@@ -29,6 +29,8 @@ export async function GET(req: NextRequest) {
     redirect(BASE_PATH);
   }
 
+  const cookieStore = await cookies();
+
   try {
     const token = await spotifyFetch<AccessToken>(
       'https://accounts.spotify.com/api/token',
@@ -51,7 +53,7 @@ export async function GET(req: NextRequest) {
       expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
     };
 
-    cookies().set(`token-${side}`, JSON.stringify(newToken), {
+    cookieStore.set(`token-${side}`, JSON.stringify(newToken), {
       httpOnly: true,
       maxAge: 60 * 60 * 24,
       path: BASE_PATH,
