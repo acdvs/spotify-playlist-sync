@@ -1,22 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@plugin "tailwind-scrollbar";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --breakpoint-md: 500px;
+  --breakpoint-lg: 900px;
+}
 
 @layer base {
-  h1, h2, h3, h4, h5, h6, p, span, a, div, input, button {
-    font-family: 'Open Sans', Arial, sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  a,
+  div,
+  input,
+  button {
+    font-family: "Open Sans", Arial, sans-serif;
     color: #ffffff;
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     color: #ffffff;
   }
 
   h1 {
     @apply text-xl md:text-2xl;
-    font-family: 'Montserrat', Arial, sans-serif;
+    font-family: "Montserrat", Arial, sans-serif;
   }
 
   a {
@@ -28,7 +46,9 @@
   .button {
     @apply rounded-lg hover:cursor-pointer transition-colors;
 
-    &.primary, &.secondary, &.tab {
+    &.primary,
+    &.secondary,
+    &.tab {
       @apply flex items-center justify-center px-6 py-2 rounded-full font-bold transition-all;
     }
 
@@ -51,7 +71,8 @@
     &.tertiary {
       @apply rounded-none;
 
-      p, span {
+      p,
+      span {
         @apply transition-colors;
       }
 
@@ -62,7 +83,8 @@
       &:not(.disabled):hover {
         @apply text-blue-500 fill-blue-500;
 
-        p, span {
+        p,
+        span {
           @apply text-blue-500;
         }
       }
@@ -70,7 +92,8 @@
       &.disabled {
         @apply text-zinc-700 fill-zinc-700 cursor-default;
 
-        p, span {
+        p,
+        span {
           @apply text-zinc-700;
         }
       }
