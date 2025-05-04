@@ -6,7 +6,7 @@ import type {
 } from '@spotify/web-api-ts-sdk';
 
 import { SideType } from '@/store';
-import spotifyFetch from '../actions/fetch';
+import { sfetch } from '../actions/fetch';
 
 interface Playlist {
   items: {
@@ -17,26 +17,23 @@ interface Playlist {
 }
 
 export function getProfile(side: SideType) {
-  return spotifyFetch<UserProfile>('https://api.spotify.com/v1/me', {
+  return sfetch<UserProfile>('https://api.spotify.com/v1/me', {
     auth: side,
   });
 }
 
 export function getPlaylists(side: SideType, offset: number) {
-  return spotifyFetch<Page<SimplifiedPlaylist>>(
-    'https://api.spotify.com/v1/me/playlists',
-    {
-      params: {
-        offset: offset || 0,
-        limit: 15,
-      },
-      auth: side,
+  return sfetch<Page<SimplifiedPlaylist>>('https://api.spotify.com/v1/me/playlists', {
+    params: {
+      offset: offset || 0,
+      limit: 15,
     },
-  );
+    auth: side,
+  });
 }
 
 export async function getPlaylist(side: SideType, id: string) {
-  const playlist = await spotifyFetch<Page<PlaylistedTrack>>(
+  const playlist = await sfetch<Page<PlaylistedTrack>>(
     `https://api.spotify.com/v1/playlists/${id}/tracks`,
     {
       params: {
@@ -53,7 +50,7 @@ export async function getPlaylist(side: SideType, id: string) {
 export function updatePlaylist(side: SideType, id: string, data: Playlist) {
   const uris = data.items.map((x) => `spotify:track:${x.track.id}`);
 
-  return spotifyFetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+  return sfetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
     method: 'PUT',
     body: JSON.stringify({ uris }),
     auth: side,

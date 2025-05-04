@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 
 import { SideType } from '@/store';
 import { AccessToken } from '@/app/api/token/route';
-import spotifyFetch from './server';
+import { sfetch } from './fetch';
 
 export async function getToken(side: SideType): Promise<AccessToken | undefined> {
   const cookieStore = await cookies();
@@ -18,20 +18,17 @@ export async function getToken(side: SideType): Promise<AccessToken | undefined>
 export async function refreshToken(accessToken: AccessToken) {
   if (new Date() > accessToken.expires_at) {
     try {
-      const token = await spotifyFetch<AccessToken>(
-        'https://accounts.spotify.com/api/token',
-        {
-          method: 'POST',
-          body: new URLSearchParams({
-            grant_type: 'refresh_token',
-            refresh_token: accessToken.refresh_token,
-          }),
-          auth: 'basic',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+      const token = await sfetch<AccessToken>('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        body: new URLSearchParams({
+          grant_type: 'refresh_token',
+          refresh_token: accessToken.refresh_token,
+        }),
+        auth: 'basic',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-      );
+      });
 
       const newToken = {
         ...token,

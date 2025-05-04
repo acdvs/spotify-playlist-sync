@@ -11,7 +11,7 @@ type FetchOptions = RequestInit & {
   auth?: 'basic' | SideType;
 };
 
-const spotifyFetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
+export const sfetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
   if (options?.params) {
     endpoint += '?' + qs.stringify(options.params);
     delete options.params;
@@ -45,5 +45,3 @@ const spotifyFetch = async <T>(endpoint: string, options?: FetchOptions): Promis
 
   throw res;
 };
-
-export default spotifyFetch;
