@@ -18,11 +18,11 @@ function SyncButton({
 }) {
   const queryClient = useQueryClient();
   const playlists = useStore((state) => state.playlists);
-  const syncDirection = useStore((state) => state.syncDirection);
+  const syncRight = useStore((state) => state.syncRight);
   const [syncing, setSyncing] = useState(false);
 
-  const idFrom = syncDirection === 'right' ? playlists.left?.id : playlists.right?.id;
-  const idTo = syncDirection === 'right' ? playlists.right?.id : playlists.left?.id;
+  const idFrom = syncRight ? playlists.left?.id : playlists.right?.id;
+  const idTo = syncRight ? playlists.right?.id : playlists.left?.id;
   const bothSelected = !!playlists.left && !!playlists.right;
 
   const {
@@ -31,16 +31,20 @@ function SyncButton({
     refetch,
   } = useQuery({
     queryKey: ['diff', idFrom, idTo],
-    queryFn: () => getDiff(syncDirection, idFrom, idTo),
+    queryFn: () => getDiff(syncRight, idFrom, idTo),
     enabled: bothSelected,
   });
 
   const onClick = async () => {
+    if (!syncEnabled) {
+      return;
+    }
+
     setSyncing(true);
-    await sync(syncDirection, idFrom, idTo);
+    await sync(syncRight, idFrom, idTo);
     setSyncing(false);
 
-    queryClient.refetchQueries({ queryKey: [syncDirection, 'playlists'] });
+    queryClient.refetchQueries({ queryKey: [syncRight, 'playlists'] });
     refetch();
   };
 
@@ -64,12 +68,12 @@ function SyncButton({
           direction === 'column' && 'my-3',
           'button tertiary plain flex flex-col items-center',
         )}
-        onClick={syncEnabled ? onClick : undefined}
+        onClick={onClick}
       >
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
           <RiArrowRightCircleLine
-            className={clsx(syncDirection === 'left' && 'rotate-180', 'w-10 h-10')}
+            className={clsx(!syncRight && 'rotate-180', 'w-10 h-10')}
           />
         ) : (
           <RiRefreshLine className="w-10 h-10 animate-spin" />

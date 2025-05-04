@@ -1,5 +1,4 @@
 import { Playlist } from '@/app/api/[side]/playlist/[id]/route';
-import { SideType } from '@/store';
 
 export async function selfFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   endpoint = `${process.env.NEXT_PUBLIC_BASE_PATH}${endpoint}`;
@@ -14,13 +13,13 @@ export async function selfFetch<T>(endpoint: string, options?: RequestInit): Pro
   throw res;
 }
 
-export async function getDiff(direction: SideType, idFrom?: string, idTo?: string) {
+export async function getDiff(syncRight: boolean, idFrom?: string, idTo?: string) {
   if (!idFrom || !idTo) {
     return { tracksToAdd: [], tracksToRemove: [] };
   }
 
-  const fromSide = direction === 'right' ? 'left' : 'right';
-  const toSide = direction === 'right' ? 'right' : 'left';
+  const fromSide = syncRight ? 'left' : 'right';
+  const toSide = syncRight ? 'right' : 'left';
 
   const [fromData, toData] = await Promise.all([
     selfFetch<Playlist>(`/api/${fromSide}/playlist/${idFrom}`),
@@ -45,9 +44,9 @@ export async function getDiff(direction: SideType, idFrom?: string, idTo?: strin
   return { tracksToAdd, tracksToRemove: trackIdsTo };
 }
 
-export async function sync(direction: SideType, idFrom?: string, idTo?: string) {
-  const fromSide = direction === 'right' ? 'left' : 'right';
-  const toSide = direction === 'right' ? 'right' : 'left';
+export async function sync(syncRight: boolean, idFrom?: string, idTo?: string) {
+  const fromSide = syncRight ? 'left' : 'right';
+  const toSide = syncRight ? 'right' : 'left';
 
   const playlist = await selfFetch<Playlist>(`/api/${fromSide}/playlist/${idFrom}`);
   await selfFetch(`/api/${toSide}/playlist/${idTo}`, {

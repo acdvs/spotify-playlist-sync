@@ -6,10 +6,10 @@ import { useStore } from '@/store';
 import Tooltip from '../Tooltip';
 
 function FlipSync() {
-  const syncDirection = useStore((state) => state.syncDirection);
+  const syncRight = useStore((state) => state.syncRight);
   const flipSyncDirection = useStore((state) => state.flipSyncDirection);
 
-  const Icon = syncDirection === 'right' ? RiContractRightLine : RiContractLeftLine;
+  const Icon = syncRight ? RiContractRightLine : RiContractLeftLine;
 
   return (
     <Tooltip text="Flip sync direction">

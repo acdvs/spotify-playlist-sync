@@ -14,8 +14,9 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
 
   const selectedPlaylist = useStore((state) => state.playlists[side]);
   const setPlaylist = useStore((state) => state.setPlaylist);
-  const syncDirection = useStore((state) => state.syncDirection);
+  const syncRight = useStore((state) => state.syncRight);
 
+  const syncDirection = syncRight ? 'right' : 'left';
   const receivingSide = side === syncDirection;
   const notSyncable = receivingSide && data.owner.id !== profileId;
 
@@ -23,7 +24,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
     if (notSyncable) {
       setPlaylist(side);
     }
-  }, [notSyncable, syncDirection, side, setPlaylist]);
+  }, [notSyncable, syncRight, side, setPlaylist]);
 
   const onClick = () => {
     if (!notSyncable) {
