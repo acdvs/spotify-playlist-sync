@@ -7,7 +7,7 @@ import { AccessToken } from '@/app/api/token/route';
 import spotifyFetch from './server';
 
 export async function getToken(side: SideType): Promise<AccessToken | undefined> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const cookie = cookieStore.get(`token-${side}`);
   const token = cookie && JSON.parse(cookie.value);
 
