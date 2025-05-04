@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { RiArrowRightCircleLine, RiRefreshLine } from '@remixicon/react';
-import cx from 'classnames';
+import clsx from 'clsx';
 
 import { useStore } from '@/store';
 import { getDiff, sync } from '@/actions/client';
@@ -51,7 +51,7 @@ const SyncButton = ({
 
   return (
     <div
-      className={cx(
+      className={clsx(
         className,
         direction === 'column' && 'flex-col',
         'flex justify-center items-center',
@@ -59,7 +59,7 @@ const SyncButton = ({
     >
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
       <div
-        className={cx(
+        className={clsx(
           !syncEnabled && 'disabled',
           direction === 'column' && 'my-3',
           'button tertiary plain flex flex-col items-center',
@@ -69,7 +69,7 @@ const SyncButton = ({
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
           <RiArrowRightCircleLine
-            className={cx(syncDirection === 'left' && 'rotate-180', 'w-10 h-10')}
+            className={clsx(syncDirection === 'left' && 'rotate-180', 'w-10 h-10')}
           />
         ) : (
           <RiRefreshLine className="w-10 h-10 animate-spin" />

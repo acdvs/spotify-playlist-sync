@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import clsx from 'clsx';
 
 const Diff = ({
   value,
@@ -10,7 +10,7 @@ const Diff = ({
   visible: boolean;
 }) => (
   <p
-    className={cx(
+    className={clsx(
       sign === '+' ? 'text-green-500' : 'text-red-500',
       visible ? 'opacity-100' : 'opacity-0',
       'w-10 text-center font-bold transition-opacity',

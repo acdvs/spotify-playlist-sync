@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { RiLockLine, RiMusic2Line } from '@remixicon/react';
 import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
-import cx from 'classnames';
+import clsx from 'clsx';
 
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
@@ -53,7 +53,7 @@ const Playlist = ({
 
   return (
     <li
-      className={cx(
+      className={clsx(
         data.id === selectedPlaylist?.id && 'selected',
         notSyncable && 'locked',
         'playlist button p-3 flex gap-3 bg-zinc-900 border-2 group',

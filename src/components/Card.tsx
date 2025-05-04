@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import clsx from 'clsx';
 
 const Card = ({
   text,
@@ -13,7 +13,7 @@ const Card = ({
   className?: string;
 }) => (
   <div
-    className={cx(
+    className={clsx(
       className,
       filled ? 'lg:bg-zinc-900' : 'lg:border-2 lg:border-zinc-700',
       !noAlign && 'items-center justify-center',

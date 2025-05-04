@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { RiRefreshLine } from '@remixicon/react';
-import cx from 'classnames';
+import clsx from 'clsx';
 
 import type { SideType } from '@/store';
 import { Context as SideContext } from '../providers/SideContext';
@@ -23,7 +23,7 @@ const RefreshButton = () => {
   return (
     <Tooltip text="Refresh">
       <RiRefreshLine
-        className={cx(
+        className={clsx(
           'w-10 h-10 button tertiary',
           isRefreshing && 'disabled animate-spin',
         )}
