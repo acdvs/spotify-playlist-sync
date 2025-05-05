@@ -37,5 +37,12 @@ interface Props
 
 export function Button({ variant, disabled, asChild, className, ...props }: Props) {
   const Comp = asChild ? Slot : 'button';
-  return <Comp className={variants({ variant, disabled, className })} {...props} />;
+
+  return (
+    <Comp
+      className={variants({ variant, disabled, className })}
+      disabled={!!disabled}
+      {...props}
+    />
+  );
 }
