@@ -26,17 +26,14 @@ function TooltipContent({
 
 function Tooltip({
   text,
-  className,
-  children,
+  ...props
 }: {
   text: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
+} & React.ComponentProps<typeof TooltipTrigger>) {
   return (
     <TooltipProvider>
       <TooltipPrimitive.Root>
-        <TooltipTrigger className={className}>{children}</TooltipTrigger>
+        <TooltipTrigger {...props} />
         <TooltipContent>{text}</TooltipContent>
       </TooltipPrimitive.Root>
     </TooltipProvider>
