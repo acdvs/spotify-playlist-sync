@@ -60,12 +60,12 @@ function SyncButton({
       {syncEnabled && <Diff value={diff?.tracksToAdd.length} sign="+" />}
       <Button className="flex-col" onClick={() => mutate()} disabled={!syncEnabled}>
         <p className="text-sm font-bold">sync</p>
-        {!isPending ? (
+        {isFetching || isPending ? (
+          <RiRefreshLine className="size-10 animate-spin" />
+        ) : (
           <RiArrowRightCircleLine
             className={clsx(!syncRight && 'rotate-180', 'size-10')}
           />
-        ) : (
-          <RiRefreshLine className="size-10 animate-spin" />
         )}
       </Button>
       {syncEnabled && <Diff value={diff?.tracksToRemove.length} sign="-" />}
