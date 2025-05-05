@@ -9,7 +9,10 @@ export interface AuthState {
   secret: string;
 }
 
-export async function GET(req: NextRequest, { params }: { params: { side: SideType } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ side: SideType }> },
+) {
   const { side } = await params;
 
   redirect(
