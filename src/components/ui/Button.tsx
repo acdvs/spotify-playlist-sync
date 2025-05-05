@@ -6,10 +6,11 @@ const variants = cva('inline-flex items-center justify-center', {
     variant: {
       default: 'p-2',
       primary:
-        'px-6 py-2 rounded-full border-2 border-zinc-600 hover:scale-105 hover:border-white',
-      secondary: 'px-6 py-2 rounded-full bg-zinc-800 hover:scale-105 hover:bg-zinc-700',
+        'px-6 py-2 rounded-full border-2 border-zinc-600 hover:scale-105 hover:border-white transition-all',
+      secondary:
+        'px-6 py-2 rounded-full bg-zinc-800 hover:scale-105 hover:bg-zinc-700 transition-all',
       text: 'hover:text-blue-500',
-      tab: 'px-4 py-2 rounded-full border-2 border-zinc-700 text-sm font-bold hover:bg-zinc-100/10 [&.active]:bg-green-600 [&.active]:border-green-600',
+      tab: 'px-4 py-2 rounded-full border-2 border-zinc-700 text-sm font-bold hover:bg-zinc-100/10 [&.active]:bg-green-600 [&.active]:border-green-600 transition-all',
     },
     disabled: {
       false: 'cursor-pointer',
