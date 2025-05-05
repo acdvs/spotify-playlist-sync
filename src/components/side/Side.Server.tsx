@@ -4,7 +4,7 @@ import { SideType } from '@/store';
 import { getToken } from '@/actions/session';
 import SideContext from '../providers/SideContext';
 import ClientSide from './Side.Client';
-import Login from './cards/Login';
+import LoginCard from './cards/Login';
 
 const Account = dynamic(() => import('./account/Account'));
 
@@ -13,7 +13,7 @@ async function ServerSide({ type }: { type: SideType }) {
 
   return (
     <SideContext type={type}>
-      <ClientSide>{token ? <Account /> : <Login />}</ClientSide>
+      <ClientSide>{token ? <Account /> : <LoginCard />}</ClientSide>
     </SideContext>
   );
 }

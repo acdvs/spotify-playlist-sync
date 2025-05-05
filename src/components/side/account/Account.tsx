@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useState } from 'react';
-import { useInfiniteQuery, useIsFetching, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
 import { getPlaylists, getProfile } from '@/utils/spotify';
@@ -9,8 +9,8 @@ import { Context as SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Playlists from './Playlists';
 import Profile from './Profile';
-import Loading from '../cards/Loading';
-import Logout from '../cards/Logout';
+import LoadingCard from '../cards/Loading';
+import LogoutCard from '../cards/Logout';
 import ErrorCard from '../cards/Error';
 
 const SORT_OPTIONS = ['Z-A', 'Default', 'A-Z'];
@@ -36,11 +36,11 @@ function Account() {
   });
 
   if (profileQuery.isPending || playlistQuery.isPending) {
-    return <Loading />;
+    return <LoadingCard />;
   } else if (profileQuery.isError || playlistQuery.isError) {
     return <ErrorCard />;
   } else if (loggingOut) {
-    return <Logout />;
+    return <LogoutCard />;
   }
 
   const toggleSorting = () => setSorting((state) => (state === 1 ? -1 : state + 1));
