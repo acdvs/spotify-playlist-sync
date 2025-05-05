@@ -10,6 +10,8 @@ export interface AuthState {
 }
 
 export async function GET(req: NextRequest, { params }: { params: { side: SideType } }) {
+  const { side } = await params;
+
   redirect(
     'https://accounts.spotify.com/authorize?' +
       querystring.stringify({
@@ -24,7 +26,7 @@ export async function GET(req: NextRequest, { params }: { params: { side: SideTy
         ].join(' '),
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         state: JSON.stringify({
-          for: params.side,
+          for: side,
           secret: process.env.AUTH_STATE_SECRET,
         }),
         show_dialog: true,
