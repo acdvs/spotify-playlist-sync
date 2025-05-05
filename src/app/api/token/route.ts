@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
 import { AuthState } from '../[side]/auth/route';
-import spotifyFetch from '@/actions/fetch';
+import { sfetch } from '@/actions/fetch';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
@@ -31,35 +31,30 @@ export async function GET(req: NextRequest) {
 
   const cookieStore = await cookies();
 
-  try {
-    const token = await spotifyFetch<AccessToken>(
-      'https://accounts.spotify.com/api/token',
-      {
-        method: 'POST',
-        params: {
-          code: code,
-          redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
-          grant_type: 'authorization_code',
-        },
-        auth: 'basic',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+  const token = await sfetch<AccessToken>('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    params: {
+      code: code,
+      redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+      grant_type: 'authorization_code',
+    },
+    auth: 'basic',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
-    const newToken = {
-      ...token,
-      expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
-    };
+  const newToken = {
+    ...token,
+    expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
+  };
 
-    cookieStore.set(`token-${side}`, JSON.stringify(newToken), {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24,
-      path: BASE_PATH,
-      secure: true,
-    });
-  } finally {
-    redirect(BASE_PATH);
-  }
+  cookieStore.set(`token-${side}`, JSON.stringify(newToken), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+    path: BASE_PATH,
+    secure: true,
+  });
+
+  redirect(BASE_PATH);
 }
