@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
 import Playlist from './Playlist';
+import useSortedPlaylists from '@/utils/hooks/use-sorted-playlists';
 
 function Playlists({
   query,
@@ -18,9 +19,11 @@ function Playlists({
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+  const items = useSortedPlaylists(query, sorting);
+
+  const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     if (query.hasNextPage && !query.isFetchingNextPage) {
-      const el = event.currentTarget;
+      const el = e.currentTarget;
       const atBottom = Math.abs(el.scrollHeight - (el.scrollTop + el.clientHeight)) <= 75;
 
       if (atBottom) {
@@ -28,16 +31,6 @@ function Playlists({
       }
     }
   };
-
-  let items = useMemo(() => {
-    let _items = query.data?.pages.flatMap((x) => x.items);
-
-    if (sorting !== 0) {
-      _items?.sort((a, b) => (a.name > b.name ? 0 + sorting : 0 - sorting));
-    }
-
-    return _items;
-  }, [query.data, sorting]);
 
   return (
     <div className="min-h-[100px] h-full py-3 border-y-2 border-zinc-700">

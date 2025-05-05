@@ -11,8 +11,9 @@ import Playlists from './Playlists';
 import Profile from './Profile';
 import Loading from '../cards/Loading';
 import Logout from '../cards/Logout';
+import ErrorCard from '../cards/Error';
 
-const SORT_OPTIONS = ['Z-A', 'None', 'A-Z'];
+const SORT_OPTIONS = ['Z-A', 'Default', 'A-Z'];
 
 function Account() {
   const side = useContext(SideContext) as SideType;
@@ -21,9 +22,7 @@ function Account() {
   const loggingOut = useStore((state) => state.loggingOut[side]);
   const [sorting, setSorting] = useState(0);
 
-  const playlistsFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
-
-  const { data: profile, isPending: profilePending } = useQuery({
+  const profileQuery = useQuery({
     queryKey: [side, 'profile'],
     queryFn: () => getProfile(side),
   });
@@ -36,8 +35,10 @@ function Account() {
       lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,
   });
 
-  if (profilePending || playlistQuery.isPending) {
+  if (profileQuery.isPending || playlistQuery.isPending) {
     return <Loading />;
+  } else if (profileQuery.isError || playlistQuery.isError) {
+    return <ErrorCard />;
   } else if (loggingOut) {
     return <Logout />;
   }
@@ -46,11 +47,18 @@ function Account() {
 
   return (
     <div className="flex flex-col flex-1 lg:h-[70vh] lg:max-h-[750px] gap-3">
-      <Profile data={profile} playlistCount={playlistQuery.data?.pages[0].total} />
+      <Profile
+        {...profileQuery.data}
+        playlistCount={playlistQuery.data?.pages[0].total}
+      />
       <div className="flex justify-between gap-5">
         <div className="flex text-sm">
           <p className="text-zinc-500">Sorting:&nbsp;</p>
-          <Button variant="text" onClick={toggleSorting} disabled={playlistsFetching}>
+          <Button
+            variant="text"
+            onClick={toggleSorting}
+            disabled={playlistQuery.isFetching}
+          >
             {SORT_OPTIONS[sorting + 1]}
           </Button>
         </div>
@@ -61,7 +69,11 @@ function Account() {
           </p>
         </div>
       </div>
-      <Playlists query={playlistQuery} profileId={profile?.id} sorting={sorting} />
+      <Playlists
+        query={playlistQuery}
+        profileId={profileQuery.data?.id}
+        sorting={sorting}
+      />
     </div>
   );
 }
