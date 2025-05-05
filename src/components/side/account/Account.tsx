@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useState } from 'react';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useIsFetching, useQuery } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
 import { getPlaylists, getProfile } from '@/utils/spotify';
@@ -20,6 +20,8 @@ function Account() {
   const selectedPlaylist = useStore((state) => state.playlists[side]);
   const loggingOut = useStore((state) => state.loggingOut[side]);
   const [sorting, setSorting] = useState(0);
+
+  const playlistsFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
 
   const { data: profile, isPending: profilePending } = useQuery({
     queryKey: [side, 'profile'],
@@ -48,7 +50,7 @@ function Account() {
       <div className="flex justify-between gap-5">
         <div className="flex text-sm">
           <p className="text-zinc-500">Sorting:&nbsp;</p>
-          <Button variant="text" onClick={toggleSorting}>
+          <Button variant="text" onClick={toggleSorting} disabled={playlistsFetching}>
             {SORT_OPTIONS[sorting + 1]}
           </Button>
         </div>
