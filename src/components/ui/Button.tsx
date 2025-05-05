@@ -20,7 +20,7 @@ const variants = cva('inline-flex items-center justify-center', {
     {
       variant: 'default',
       disabled: false,
-      class: 'hover:[&_p]:text-blue-500 hover:[&_svg]:fill-blue-500',
+      class: 'hover:[&>p]:text-blue-500 hover:[&_svg]:fill-blue-500',
     },
   ],
   defaultVariants: {
