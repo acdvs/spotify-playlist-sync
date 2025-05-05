@@ -53,7 +53,7 @@ function Account() {
       />
       <div className="flex justify-between gap-5">
         <div className="flex text-sm">
-          <p className="text-zinc-500">Sorting:&nbsp;</p>
+          <p className="mr-1 text-zinc-500">Sorting:</p>
           <Button
             variant="text"
             onClick={toggleSorting}
