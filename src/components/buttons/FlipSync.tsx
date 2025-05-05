@@ -14,7 +14,7 @@ function FlipSync() {
 
   return (
     <Tooltip text="Flip sync direction" asChild>
-      <Button>
+      <Button className="-mx-2">
         <Icon className="size-7" onClick={flipSyncDirection} />
       </Button>
     </Tooltip>

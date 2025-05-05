@@ -13,7 +13,7 @@ function ShowHelp() {
   return (
     <>
       <Tooltip text="Show help" asChild>
-        <Button>
+        <Button className="-mx-2">
           <RiQuestionLine className="size-6" onClick={() => showHelp((x) => !x)} />
         </Button>
       </Tooltip>
