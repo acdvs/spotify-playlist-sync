@@ -12,19 +12,18 @@ import { Button } from '../ui/Button';
 
 function RefreshButton() {
   const side = useContext(SideContext) as SideType;
-  const queryClient = useQueryClient();
-  const isRefreshing = useIsFetching({ queryKey: [side] }) > 0;
 
-  const refetchAccount = () => {
-    if (!isRefreshing) {
-      queryClient.refetchQueries({ queryKey: [side] });
-    }
+  const queryClient = useQueryClient();
+  const isFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
+
+  const refetch = () => {
+    queryClient.refetchQueries({ queryKey: [side, 'playlists'] });
   };
 
   return (
     <Tooltip text="Refresh" asChild>
-      <Button disabled={isRefreshing} onClick={refetchAccount}>
-        <RiRefreshLine className={clsx('size-6', isRefreshing && 'animate-spin')} />
+      <Button disabled={isFetching} onClick={refetch}>
+        <RiRefreshLine className={clsx('size-6', isFetching && 'animate-spin')} />
       </Button>
     </Tooltip>
   );
