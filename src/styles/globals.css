@@ -47,3 +47,7 @@
 @utility scroll-y {
   @apply overflow-y-auto scrollbar scrollbar-track-transparent scrollbar-thumb-zinc-700;
 }
+
+@utility gutter-stable {
+  scrollbar-gutter: stable;
+}
