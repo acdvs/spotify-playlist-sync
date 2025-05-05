@@ -37,15 +37,11 @@ function SyncButton({
   });
 
   const onClick = async () => {
-    if (!syncEnabled || !idFrom || !idTo) {
-      return;
-    }
-
     setSyncing(true);
-    await sync(syncRight, idFrom, idTo);
+    await sync(syncRight, idFrom as string, idTo as string);
     setSyncing(false);
 
-    queryClient.refetchQueries({ queryKey: [syncRight, 'playlists'] });
+    queryClient.refetchQueries({ queryKey: [syncRight ? 'right' : 'left', 'playlists'] });
     refetch();
   };
 
@@ -63,7 +59,11 @@ function SyncButton({
       )}
     >
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
-      <Button className="flex-col" onClick={onClick} disabled={!syncEnabled}>
+      <Button
+        className="flex-col"
+        onClick={onClick}
+        disabled={!syncEnabled || !idFrom || !idTo}
+      >
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
           <RiArrowRightCircleLine
