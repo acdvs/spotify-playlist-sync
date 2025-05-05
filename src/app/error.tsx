@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
@@ -13,9 +14,9 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
         <p>Error:</p>
         <p>{error.message}</p>
       </div>
-      <div className="button primary" onClick={reset}>
-        <p>Go back</p>
-      </div>
+      <Button variant="primary" onClick={reset}>
+        Go back
+      </Button>
     </Card>
   );
 }
