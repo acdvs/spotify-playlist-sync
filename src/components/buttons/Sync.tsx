@@ -57,12 +57,8 @@ function SyncButton({
         'flex justify-center items-center',
       )}
     >
-      <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
-      <Button
-        className="flex-col"
-        onClick={() => mutate()}
-        disabled={!syncEnabled || !idFrom || !idTo}
-      >
+      {syncEnabled && <Diff value={diff?.tracksToAdd.length} sign="+" />}
+      <Button className="flex-col" onClick={() => mutate()} disabled={!syncEnabled}>
         <p className="text-sm font-bold">sync</p>
         {!isPending ? (
           <RiArrowRightCircleLine
@@ -72,7 +68,7 @@ function SyncButton({
           <RiRefreshLine className="size-10 animate-spin" />
         )}
       </Button>
-      <Diff value={diff?.tracksToRemove.length} sign="-" visible={diffsFound} />
+      {syncEnabled && <Diff value={diff?.tracksToRemove.length} sign="-" />}
     </div>
   );
 }

@@ -1,19 +1,10 @@
 import clsx from 'clsx';
 
-function Diff({
-  value,
-  sign,
-  visible,
-}: {
-  value?: number;
-  sign: '+' | '-';
-  visible: boolean;
-}) {
+function Diff({ value, sign }: { value?: number; sign: '+' | '-' }) {
   return (
     <p
       className={clsx(
         sign === '+' ? 'text-green-500' : 'text-red-500',
-        visible ? 'opacity-100' : 'opacity-0',
         'w-10 text-center font-bold transition-opacity',
       )}
     >
