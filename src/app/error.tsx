@@ -1,6 +1,6 @@
 'use client';
 
-import Card from '@/components/Card';
+import Card from '@/components/ui/Card';
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   return (

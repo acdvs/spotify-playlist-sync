@@ -5,7 +5,7 @@ import { RiLogoutBoxRLine } from '@remixicon/react';
 
 import { useStore, SideType } from '@/store';
 import { Context } from '../providers/SideContext';
-import Tooltip from '../Tooltip';
+import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
 
 function LogoutButton() {

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 import type { SideType } from '@/store';
 import { Context as SideContext } from '../providers/SideContext';
-import Tooltip from '../Tooltip';
+import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
 
 function RefreshButton() {

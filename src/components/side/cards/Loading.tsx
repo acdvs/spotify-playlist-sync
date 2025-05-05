@@ -1,5 +1,5 @@
 import { RiLoader4Line } from '@remixicon/react';
-import Card from '@/components/Card';
+import Card from '@/components/ui/Card';
 
 function Loading() {
   return (

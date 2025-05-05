@@ -8,7 +8,7 @@ import {
 } from '@headlessui/react';
 
 import Card from './Card';
-import { Button } from './ui/Button';
+import { Button } from './Button';
 
 function Dialog({
   active,

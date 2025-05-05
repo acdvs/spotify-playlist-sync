@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { logout } from '@/actions/session';
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
-import Card from '@/components/Card';
+import Card from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
 function Logout() {

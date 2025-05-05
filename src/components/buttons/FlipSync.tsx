@@ -3,7 +3,7 @@
 import { RiContractLeftLine, RiContractRightLine } from '@remixicon/react';
 
 import { useStore } from '@/store';
-import Tooltip from '../Tooltip';
+import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
 
 function FlipSync() {

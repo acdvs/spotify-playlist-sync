@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { RiGithubFill, RiQuestionLine } from '@remixicon/react';
 
-import Tooltip from '../Tooltip';
-import Dialog from '../Dialog';
+import Tooltip from '../ui/Tooltip';
+import Dialog from '../ui/Dialog';
 import { Button } from '../ui/Button';
 
 function ShowHelp() {
