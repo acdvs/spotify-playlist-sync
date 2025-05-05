@@ -6,8 +6,10 @@ function Header() {
     <div className="flex gap-5 items-center">
       <h1 className="flex-shrink-0">Spotify Playlist Sync</h1>
       <div className="border-zinc-700 border-b-2 w-full" />
-      <FlipSync />
-      <ShowHelp />
+      <div className="flex -mx-2">
+        <FlipSync />
+        <ShowHelp />
+      </div>
     </div>
   );
 }
