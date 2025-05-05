@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { useStore } from '@/store';
 import { getDiff, sync } from '@/utils/spotify';
 import Diff from '../Diff';
+import { Button } from '../ui/Button';
 
 function SyncButton({
   direction,
@@ -62,23 +63,16 @@ function SyncButton({
       )}
     >
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
-      <div
-        className={clsx(
-          !syncEnabled && 'disabled',
-          direction === 'column' && 'my-3',
-          'button tertiary plain flex flex-col items-center',
-        )}
-        onClick={onClick}
-      >
+      <Button className="flex-col" onClick={onClick} disabled={!syncEnabled}>
         <p className="text-sm font-bold">sync</p>
         {!syncing ? (
           <RiArrowRightCircleLine
-            className={clsx(!syncRight && 'rotate-180', 'w-10 h-10')}
+            className={clsx(!syncRight && 'rotate-180', 'size-10')}
           />
         ) : (
-          <RiRefreshLine className="w-10 h-10 animate-spin" />
+          <RiRefreshLine className="size-10 animate-spin" />
         )}
-      </div>
+      </Button>
       <Diff value={diff?.tracksToRemove.length} sign="-" visible={diffsFound} />
     </div>
   );

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 
 import { useStore } from '@/store';
 import SyncButton from './buttons/Sync';
+import { Button } from './ui/Button';
 
 function SyncBar({ className }: { className?: string }) {
   const activeSide = useStore((state) => state.activeSide);
@@ -14,18 +15,20 @@ function SyncBar({ className }: { className?: string }) {
   return (
     <div className={clsx(className, 'flex lg:hidden gap-3 flex-col')}>
       <div className="flex gap-3">
-        <div
-          className={clsx(activeSide === 'left' && 'active', 'button tab w-full')}
+        <Button
+          variant="tab"
+          className={clsx(activeSide === 'left' && 'active', 'w-full')}
           onClick={() => setActiveSide('left')}
         >
           Account 1
-        </div>
-        <div
-          className={clsx(activeSide === 'right' && 'active', 'button tab w-full')}
+        </Button>
+        <Button
+          variant="tab"
+          className={clsx(activeSide === 'right' && 'active', 'w-full')}
           onClick={() => setActiveSide('right')}
         >
           Account 2
-        </div>
+        </Button>
       </div>
       <div className="flex justify-between items-center gap-1">
         <p className="flex-1 line-clamp-2 break-words">

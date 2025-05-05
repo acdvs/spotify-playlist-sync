@@ -3,6 +3,7 @@ import { UserProfile } from '@spotify/web-api-ts-sdk';
 
 import RefreshButton from '@/components/buttons/Refresh';
 import LogoutButton from '@/components/buttons/Logout';
+import { Button } from '@/components/ui/Button';
 
 function Profile({
   data,
@@ -26,9 +27,9 @@ function Profile({
         </div>
         <div>
           <a href={data?.external_urls?.spotify} target="_blank" className="line-clamp-1">
-            <p className="button tertiary plain leading-none mb-1">
+            <Button variant="text" className="leading-none mb-1">
               {data?.display_name}
-            </p>
+            </Button>
           </a>
           <p className="text-sm text-zinc-500">{playlistCount} playlists</p>
         </div>

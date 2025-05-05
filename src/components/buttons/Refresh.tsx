@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import type { SideType } from '@/store';
 import { Context as SideContext } from '../providers/SideContext';
 import Tooltip from '../Tooltip';
+import { Button } from '../ui/Button';
 
 function RefreshButton() {
   const side = useContext(SideContext) as SideType;
@@ -21,14 +22,10 @@ function RefreshButton() {
   };
 
   return (
-    <Tooltip text="Refresh">
-      <RiRefreshLine
-        className={clsx(
-          'w-10 h-10 button tertiary',
-          isRefreshing && 'disabled animate-spin',
-        )}
-        onClick={refetchAccount}
-      />
+    <Tooltip text="Refresh" asChild>
+      <Button disabled={isRefreshing} onClick={refetchAccount}>
+        <RiRefreshLine className={clsx('size-6', isRefreshing && 'animate-spin')} />
+      </Button>
     </Tooltip>
   );
 }

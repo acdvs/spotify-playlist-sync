@@ -8,6 +8,7 @@ import clsx from 'clsx';
 
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
+import { Button } from '@/components/ui/Button';
 
 function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {
   const side = useContext(SideContext) as SideType;
@@ -27,9 +28,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
   }, [notSyncable, syncRight, side, setPlaylist]);
 
   const onClick = () => {
-    if (!notSyncable) {
-      setPlaylist(side, selectedPlaylist?.id !== data.id ? data : undefined);
-    }
+    setPlaylist(side, selectedPlaylist?.id !== data.id ? data : undefined);
   };
 
   const image =
@@ -47,45 +46,51 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
     );
 
   return (
-    <li
-      className={clsx(
-        data.id === selectedPlaylist?.id && 'selected',
-        notSyncable && 'locked',
-        'playlist button p-3 flex gap-3 bg-zinc-900 border-2 group',
-      )}
-      onClick={onClick}
-    >
-      <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 flex-shrink-0">
-        {image}
-      </div>
-      <div className="flex-1">
-        <div className="flex justify-between gap-3">
-          <a
-            href={data.external_urls.spotify}
-            target="_blank"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p
-              className="h-5 max-w-[200px] button tertiary plain leading-none text-ellipsis whitespace-nowrap overflow-x-hidden"
-              title={data.name}
-            >
-              {data.name}
+    <li>
+      <button
+        className={clsx(
+          data.id === selectedPlaylist?.id
+            ? 'border-green-500 hover:border-green-600'
+            : ' border-transparent hover:border-zinc-600',
+          notSyncable && 'hover:border-red-600',
+          'p-3 w-full rounded-lg flex gap-3 bg-zinc-900 border-2 cursor-pointer group',
+        )}
+        onClick={onClick}
+        disabled={notSyncable}
+      >
+        <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 flex-shrink-0">
+          {image}
+        </div>
+        <div className="flex-1">
+          <div className="flex justify-between gap-3">
+            <Button variant="text" asChild>
+              <a
+                href={data.external_urls.spotify}
+                target="_blank"
+                className="h-5 max-w-[200px] leading-none text-ellipsis whitespace-nowrap overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+                title={data.name}
+              >
+                {data.name}
+              </a>
+            </Button>
+            <p className="text-sm text-zinc-500 leading-none">
+              {data.public ? 'public' : 'private'}
             </p>
-          </a>
-          <p className="text-sm text-zinc-500 leading-none">
-            {data.public ? 'public' : 'private'}
-          </p>
+          </div>
+          <div className="flex justify-between">
+            <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
+            {notSyncable && (
+              <div className="flex items-center gap-1 transition-colors">
+                <RiLockLine className="w-4 h-4 fill-zinc-500 group-hover:fill-red-600" />
+                <p className="text-sm text-zinc-500 group-hover:text-red-600">
+                  Not owned
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex justify-between">
-          <p className="text-zinc-500 text-sm">{data.tracks?.total} songs</p>
-          {notSyncable && (
-            <div className="flex items-center gap-1 transition-colors">
-              <RiLockLine className="w-4 h-4 fill-zinc-500 group-hover:fill-red-600" />
-              <p className="text-sm text-zinc-500 group-hover:text-red-600">Not owned</p>
-            </div>
-          )}
-        </div>
-      </div>
+      </button>
     </li>
   );
 }

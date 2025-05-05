@@ -6,7 +6,9 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/react';
+
 import Card from './Card';
+import { Button } from './ui/Button';
 
 function Dialog({
   active,
@@ -32,9 +34,9 @@ function Dialog({
           <Card filled noAlign className="gap-5 p-5">
             <DialogTitle className="font-bold">{title}</DialogTitle>
             {children}
-            <div onClick={() => show(false)} className="button primary self-center">
+            <Button variant="primary" onClick={() => show(false)} className="self-center">
               Got it
-            </div>
+            </Button>
           </Card>
         </DialogPanel>
       </div>

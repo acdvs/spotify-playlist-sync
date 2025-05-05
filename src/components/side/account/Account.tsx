@@ -6,6 +6,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useStore, SideType } from '@/store';
 import { getPlaylists, getProfile } from '@/utils/spotify';
 import { Context as SideContext } from '@/components/providers/SideContext';
+import { Button } from '@/components/ui/Button';
 import Playlists from './Playlists';
 import Profile from './Profile';
 import Loading from '../cards/Loading';
@@ -47,9 +48,9 @@ function Account() {
       <div className="flex justify-between gap-5">
         <div className="flex text-sm">
           <p className="text-zinc-500">Sorting:&nbsp;</p>
-          <p className="button tertiary plain" onClick={toggleSorting}>
+          <Button variant="text" onClick={toggleSorting}>
             {SORT_OPTIONS[sorting + 1]}
-          </p>
+          </Button>
         </div>
         <div className="max-w-[60%] hidden lg:block">
           <p className="text-sm text-ellipsis whitespace-nowrap overflow-hidden">

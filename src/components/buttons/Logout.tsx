@@ -6,20 +6,21 @@ import { RiLogoutBoxRLine } from '@remixicon/react';
 import { useStore, SideType } from '@/store';
 import { Context } from '../providers/SideContext';
 import Tooltip from '../Tooltip';
+import { Button } from '../ui/Button';
 
 function LogoutButton() {
   const side = useContext(Context) as SideType;
   const setLoggingOut = useStore((state) => state.setLoggingOut);
 
-  const showConfirm = () => {
+  const showConfirm: React.MouseEventHandler<HTMLButtonElement> = () => {
     setLoggingOut(side, true);
   };
 
   return (
-    <Tooltip className="-mr-3" text="Logout">
-      <div onClick={showConfirm}>
-        <RiLogoutBoxRLine className="w-10 h-10 button tertiary" />
-      </div>
+    <Tooltip className="-mr-3" text="Logout" asChild>
+      <Button onClick={showConfirm}>
+        <RiLogoutBoxRLine className="size-6" />
+      </Button>
     </Tooltip>
   );
 }
