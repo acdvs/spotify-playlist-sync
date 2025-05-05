@@ -9,13 +9,15 @@ import clsx from 'clsx';
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
+import { useIsFetching } from '@tanstack/react-query';
 
 function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {
   const side = useContext(SideContext) as SideType;
-
   const selectedPlaylist = useStore((state) => state.playlists[side]);
   const setPlaylist = useStore((state) => state.setPlaylist);
   const syncRight = useStore((state) => state.syncRight);
+
+  const playlistsFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
 
   const syncDirection = syncRight ? 'right' : 'left';
   const receivingSide = side === syncDirection;
@@ -47,7 +49,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
 
   return (
     <li>
-      <button
+      <Button
         className={clsx(
           data.id === selectedPlaylist?.id
             ? 'border-green-500 hover:border-green-600'
@@ -56,7 +58,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
           'p-3 w-full rounded-lg flex gap-3 bg-zinc-900 border-2 cursor-pointer group',
         )}
         onClick={onClick}
-        disabled={notSyncable}
+        disabled={notSyncable || playlistsFetching}
       >
         <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 flex-shrink-0">
           {image}
@@ -90,7 +92,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
             )}
           </div>
         </div>
-      </button>
+      </Button>
     </li>
   );
 }
