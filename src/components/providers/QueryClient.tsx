@@ -9,6 +9,7 @@ function Providers({ children }: { children: React.ReactNode }) {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          retry: 2,
         },
       },
     }),
