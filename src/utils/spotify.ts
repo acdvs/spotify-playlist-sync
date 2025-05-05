@@ -57,13 +57,13 @@ export function updatePlaylist(side: SideType, id: string, data: Playlist) {
   });
 }
 
-export async function getDiff(syncRight: boolean, fromId: string, toId: string) {
+export async function getDiff(syncRight: boolean, fromId?: string, toId?: string) {
   const fromSide = syncRight ? 'left' : 'right';
   const toSide = syncRight ? 'right' : 'left';
 
   const [fromData, toData] = await Promise.all([
-    getPlaylist(fromSide, fromId),
-    getPlaylist(toSide, toId),
+    getPlaylist(fromSide, fromId as string),
+    getPlaylist(toSide, toId as string),
   ]);
 
   const trackIdsFrom = fromData.items.map((x) => x.track.id);
@@ -84,10 +84,10 @@ export async function getDiff(syncRight: boolean, fromId: string, toId: string) 
   return { tracksToAdd, tracksToRemove: trackIdsTo };
 }
 
-export async function sync(syncRight: boolean, fromId: string, toId: string) {
+export async function sync(syncRight: boolean, fromId?: string, toId?: string) {
   const fromSide = syncRight ? 'left' : 'right';
   const toSide = syncRight ? 'right' : 'left';
 
-  const playlist = await getPlaylist(fromSide, fromId);
-  await updatePlaylist(toSide, toId, playlist);
+  const playlist = await getPlaylist(fromSide, fromId as string);
+  await updatePlaylist(toSide, toId as string, playlist);
 }

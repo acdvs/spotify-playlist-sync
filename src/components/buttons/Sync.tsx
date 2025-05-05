@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { RiArrowRightCircleLine, RiRefreshLine } from '@remixicon/react';
 import clsx from 'clsx';
 
 import { useStore } from '@/store';
 import { getDiff, sync } from '@/utils/spotify';
-import Diff from '../Diff';
 import { Button } from '../ui/Button';
+import Diff from '../Diff';
 
 function SyncButton({
   direction,
@@ -20,7 +19,6 @@ function SyncButton({
   const queryClient = useQueryClient();
   const playlists = useStore((state) => state.playlists);
   const syncRight = useStore((state) => state.syncRight);
-  const [syncing, setSyncing] = useState(false);
 
   const idFrom = syncRight ? playlists.left?.id : playlists.right?.id;
   const idTo = syncRight ? playlists.right?.id : playlists.left?.id;
@@ -32,23 +30,24 @@ function SyncButton({
     refetch,
   } = useQuery({
     queryKey: ['diff', idFrom, idTo],
-    queryFn: () => getDiff(syncRight, idFrom as string, idTo as string),
+    queryFn: () => getDiff(syncRight, idFrom, idTo),
     enabled: bothSelected,
   });
 
-  const onClick = async () => {
-    setSyncing(true);
-    await sync(syncRight, idFrom as string, idTo as string);
-    setSyncing(false);
-
-    queryClient.refetchQueries({ queryKey: [syncRight ? 'right' : 'left', 'playlists'] });
-    refetch();
-  };
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => sync(syncRight, idFrom, idTo),
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: [syncRight ? 'right' : 'left', 'playlists'],
+      });
+      refetch();
+    },
+  });
 
   const hasDiff =
     !!diff && (diff.tracksToAdd.length > 0 || diff.tracksToRemove.length > 0);
   const diffsFound = bothSelected && !isFetching;
-  const syncEnabled = !syncing && diffsFound && hasDiff;
+  const syncEnabled = !isPending && diffsFound && hasDiff;
 
   return (
     <div
@@ -61,11 +60,11 @@ function SyncButton({
       <Diff value={diff?.tracksToAdd.length} sign="+" visible={diffsFound} />
       <Button
         className="flex-col"
-        onClick={onClick}
+        onClick={() => mutate()}
         disabled={!syncEnabled || !idFrom || !idTo}
       >
         <p className="text-sm font-bold">sync</p>
-        {!syncing ? (
+        {!isPending ? (
           <RiArrowRightCircleLine
             className={clsx(!syncRight && 'rotate-180', 'size-10')}
           />
