@@ -1,39 +1,41 @@
 'use server';
 
 import qs from 'querystring';
+import { type AccessToken } from '@spotify/web-api-ts-sdk';
 
-import type { SideType } from '@/store';
-import { AccessToken } from '@/app/api/token/route';
+import { type SideType } from '@/store';
 import { getToken } from './session';
 
 type FetchOptions = RequestInit & {
   params?: Record<string, any>;
-  auth?: 'basic' | SideType;
+  side?: SideType;
 };
 
-export const sfetch = async <T>(endpoint: string, options?: FetchOptions): Promise<T> => {
+export const sfetch = async <T>(
+  endpoint: string,
+  side: SideType | null,
+  options?: FetchOptions,
+): Promise<T> => {
+  options = options || {};
+
   if (options?.params) {
     endpoint += '?' + qs.stringify(options.params);
     delete options.params;
   }
 
-  if (options?.auth) {
-    if (options.auth === 'basic') {
-      options.headers = Object.assign(options.headers || {}, {
-        Authorization:
-          'Basic ' +
-          Buffer.from(
-            process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET,
-          ).toString('base64'),
-      });
-    }
-
-    if (options.auth === 'left' || options.auth === 'right') {
-      const token = (await getToken(options.auth)) as AccessToken;
-      options.headers = Object.assign(options.headers || {}, {
-        Authorization: 'Bearer ' + token.access_token,
-      });
-    }
+  if (!side) {
+    options.headers = Object.assign(options.headers || {}, {
+      Authorization:
+        'Basic ' +
+        Buffer.from(
+          process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET,
+        ).toString('base64'),
+    });
+  } else {
+    const token = (await getToken(side)) as AccessToken;
+    options.headers = Object.assign(options.headers || {}, {
+      Authorization: 'Bearer ' + token.access_token,
+    });
   }
 
   const res = await fetch(endpoint, options);

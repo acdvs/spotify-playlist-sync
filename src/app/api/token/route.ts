@@ -1,17 +1,13 @@
 import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
+import { type AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
 import { sfetch } from '@/actions/fetch';
+import { type AccessToken } from '@/actions/session';
 import { type SideType } from '@/store';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
-
-export interface AccessToken extends BasicToken {
-  refresh_token: string;
-  expires_at: Date;
-}
 
 type AuthState = {
   for: SideType;
@@ -36,22 +32,21 @@ export async function GET(req: NextRequest) {
 
   const cookieStore = await cookies();
 
-  const token = await sfetch<AccessToken>('https://accounts.spotify.com/api/token', {
+  const token = await sfetch<BasicToken>('https://accounts.spotify.com/api/token', null, {
     method: 'POST',
     params: {
       code: code,
       redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
       grant_type: 'authorization_code',
     },
-    auth: 'basic',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
 
-  const newToken = {
+  const newToken: AccessToken = {
     ...token,
-    expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
+    expires_at: new Date(new Date().getTime() + token.expires_in * 1000),
   };
 
   cookieStore.set(`token-${side}`, JSON.stringify(newToken), {
