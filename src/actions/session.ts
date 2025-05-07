@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import querystring from 'querystring';
 
 import { SideType } from '@/store';
 import { AccessToken } from '@/app/api/token/route';
@@ -43,6 +44,29 @@ export async function refreshToken(accessToken: AccessToken) {
   }
 
   return null;
+}
+
+export async function login(side: SideType) {
+  redirect(
+    'https://accounts.spotify.com/authorize?' +
+      querystring.stringify({
+        response_type: 'code',
+        client_id: process.env.SPOTIFY_CLIENT_ID,
+        scope: [
+          'user-read-email',
+          'user-read-private',
+          'playlist-read-private',
+          'playlist-modify-public',
+          'playlist-modify-private',
+        ].join(' '),
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+        state: JSON.stringify({
+          for: side,
+          secret: process.env.AUTH_STATE_SECRET,
+        }),
+        show_dialog: true,
+      }),
+  );
 }
 
 export async function logout(side: SideType) {
