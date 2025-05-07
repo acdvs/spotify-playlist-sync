@@ -5,12 +5,15 @@ import clsx from 'clsx';
 import { useStore } from '@/store';
 import SyncButton from './buttons/Sync';
 import { Button } from './ui/Button';
+import { useQueryClient } from '@tanstack/react-query';
+import { UserProfile } from '@spotify/web-api-ts-sdk';
 
 function SyncBar({ className }: { className?: string }) {
-  const activeSide = useStore((state) => state.activeSide);
-  const setActiveSide = useStore((state) => state.setActiveSide);
+  const { playlists, activeSide, setActiveSide } = useStore();
 
-  const playlists = useStore((state) => state.playlists);
+  const queryClient = useQueryClient();
+  const profileLeft = queryClient.getQueryData<UserProfile>(['left', 'profile']);
+  const profileRight = queryClient.getQueryData<UserProfile>(['right', 'profile']);
 
   return (
     <div className={clsx(className, 'flex lg:hidden gap-3 flex-col')}>
@@ -20,14 +23,14 @@ function SyncBar({ className }: { className?: string }) {
           className={clsx(activeSide === 'left' && 'active', 'w-full')}
           onClick={() => setActiveSide('left')}
         >
-          Account 1
+          {profileLeft?.display_name || 'Account 1'}
         </Button>
         <Button
           variant="tab"
           className={clsx(activeSide === 'right' && 'active', 'w-full')}
           onClick={() => setActiveSide('right')}
         >
-          Account 2
+          {profileRight?.display_name || 'Account 2'}
         </Button>
       </div>
       <div className="flex justify-between items-center gap-1">
