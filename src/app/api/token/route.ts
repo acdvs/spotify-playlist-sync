@@ -45,6 +45,6 @@ export async function GET(req: NextRequest) {
     },
   );
 
-  setToken(newToken, side);
+  await setToken(newToken, side);
   redirect(BASE_PATH);
 }
