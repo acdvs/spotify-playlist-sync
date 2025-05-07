@@ -3,8 +3,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 
-import { AuthState } from '../[side]/auth/route';
 import { sfetch } from '@/actions/fetch';
+import { type SideType } from '@/store';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
 
@@ -12,6 +12,11 @@ export interface AccessToken extends BasicToken {
   refresh_token: string;
   expires_at: Date;
 }
+
+type AuthState = {
+  for: SideType;
+  secret: string;
+};
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
