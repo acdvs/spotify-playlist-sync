@@ -20,37 +20,38 @@ export async function getToken(side: SideType): Promise<AccessToken | undefined>
   return token;
 }
 
-export async function refreshToken(accessToken: AccessToken) {
-  if (new Date() > accessToken.expires_at) {
-    try {
-      const token = await sfetch<AccessToken>(
-        'https://accounts.spotify.com/api/token',
-        null,
-        {
-          method: 'POST',
-          body: new URLSearchParams({
-            grant_type: 'refresh_token',
-            refresh_token: accessToken.refresh_token,
-          }),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        },
-      );
+export async function setToken(token: BasicToken, side: SideType) {
+  const cookieStore = await cookies();
+  const newToken: AccessToken = {
+    ...token,
+    expires_at: new Date(new Date().getTime() + token.expires_in * 1000),
+  };
 
-      const newToken = {
-        ...token,
-        refresh_token: accessToken.refresh_token,
-        expires_at: new Date().setSeconds(new Date().getSeconds() + token.expires_in),
-      };
+  cookieStore.set(`token-${side}`, JSON.stringify(newToken), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+    path: process.env.NEXT_PUBLIC_BASE_PATH || '/',
+    secure: true,
+  });
+}
 
-      return newToken;
-    } catch (err) {
-      throw err;
-    }
-  }
+export async function refreshToken(oldToken: AccessToken, side: SideType) {
+  const newToken = await sfetch<BasicToken>(
+    'https://accounts.spotify.com/api/token',
+    null,
+    {
+      method: 'POST',
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: oldToken.refresh_token,
+      }),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  );
 
-  return null;
+  setToken(newToken, side);
 }
 
 export async function login(side: SideType) {
