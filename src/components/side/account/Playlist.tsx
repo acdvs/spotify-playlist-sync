@@ -63,7 +63,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
           {image}
         </div>
         <div className="flex-1">
-          <div className="flex justify-between gap-3">
+          <div className="flex justify-between items-center gap-3">
             <Button variant="text" asChild>
               <a
                 href={data.external_urls.spotify}
