@@ -2,32 +2,31 @@
 
 import { useContext, useEffect } from 'react';
 import Image from 'next/image';
-import { RiLockLine, RiMusic2Line } from '@remixicon/react';
+import { useIsFetching } from '@tanstack/react-query';
 import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
+import { RiLockLine, RiMusic2Line } from '@remixicon/react';
 import clsx from 'clsx';
 
 import { useStore, SideType } from '@/store';
 import { Context as SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
-import { useIsFetching } from '@tanstack/react-query';
 
 function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {
   const side = useContext(SideContext) as SideType;
-  const selectedPlaylist = useStore((state) => state.playlists[side]);
-  const setPlaylist = useStore((state) => state.setPlaylist);
-  const syncRight = useStore((state) => state.syncRight);
+
+  const selectedPlaylist = useStore((state) => state[side].playlist);
+  const { setPlaylist, syncDir } = useStore();
 
   const playlistsFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
 
-  const syncDirection = syncRight ? 'right' : 'left';
-  const receivingSide = side === syncDirection;
+  const receivingSide = side === syncDir;
   const notSyncable = receivingSide && data.owner.id !== profileId;
 
   useEffect(() => {
     if (notSyncable) {
       setPlaylist(side);
     }
-  }, [notSyncable, syncRight, side, setPlaylist]);
+  }, [notSyncable, syncDir, side, setPlaylist]);
 
   const onClick = () => {
     setPlaylist(side, selectedPlaylist?.id !== data.id ? data : undefined);

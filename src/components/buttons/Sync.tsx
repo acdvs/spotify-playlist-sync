@@ -17,12 +17,13 @@ function SyncButton({
   className?: string;
 }) {
   const queryClient = useQueryClient();
-  const playlists = useStore((state) => state.playlists);
-  const syncRight = useStore((state) => state.syncRight);
+  const { left, right, syncDir } = useStore();
+  const store = useStore();
 
-  const idFrom = syncRight ? playlists.left?.id : playlists.right?.id;
-  const idTo = syncRight ? playlists.right?.id : playlists.left?.id;
-  const bothSelected = !!playlists.left && !!playlists.right;
+  const fromDir = syncDir === 'right' ? 'left' : 'right';
+  const idFrom = store[fromDir].playlist?.id;
+  const idTo = store[syncDir].playlist?.id;
+  const bothSelected = !!left.playlist && !!right.playlist;
 
   const {
     data: diff,
@@ -30,15 +31,15 @@ function SyncButton({
     refetch,
   } = useQuery({
     queryKey: ['diff', idFrom, idTo],
-    queryFn: () => getDiff(syncRight, idFrom, idTo),
+    queryFn: () => getDiff(syncDir, idFrom, idTo),
     enabled: bothSelected,
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: () => sync(syncRight, idFrom, idTo),
+    mutationFn: () => sync(syncDir, idFrom, idTo),
     onSuccess: () => {
       queryClient.refetchQueries({
-        queryKey: [syncRight ? 'right' : 'left', 'playlists'],
+        queryKey: [syncDir, 'playlists'],
       });
       refetch();
     },
@@ -64,7 +65,7 @@ function SyncButton({
           <RiRefreshLine className="size-10 animate-spin" />
         ) : (
           <RiArrowRightCircleLine
-            className={clsx(!syncRight && 'rotate-180', 'size-10')}
+            className={clsx(syncDir === 'left' && 'rotate-180', 'size-10')}
           />
         )}
       </Button>

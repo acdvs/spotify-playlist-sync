@@ -3,46 +3,48 @@ import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
 export type SideType = 'left' | 'right';
 
-export interface State {
+type Side = {
+  loggingOut: boolean;
+  displayName?: string;
+  playlist?: SimplifiedPlaylist;
+};
+
+type Values = {
+  syncDir: SideType;
   activeSide: SideType;
-  loggingOut: {
-    left: boolean;
-    right: boolean;
-  };
-  playlists: {
-    left: SimplifiedPlaylist | undefined;
-    right: SimplifiedPlaylist | undefined;
-  };
-  syncRight: boolean;
+  left: Side;
+  right: Side;
+};
+
+type Actions = {
   flipSyncDirection: () => void;
   setActiveSide: (side: SideType) => void;
   setLoggingOut: (side: SideType, x: boolean) => void;
+  setDisplayName: (side: SideType, name?: string) => void;
   setPlaylist: (side: SideType, playlist?: SimplifiedPlaylist) => void;
-}
+};
 
-type Exists<T, U> = { [K in keyof T]: U };
-export type Playlists = Exists<State['playlists'], SimplifiedPlaylist>;
+export const defaultSideValues: Side = {
+  loggingOut: false,
+};
 
-export const useStore = create<State>((set) => ({
+export const useStore = create<Values & Actions>((set) => ({
+  syncDir: 'right',
   activeSide: 'left',
-  loggingOut: {
-    left: false,
-    right: false,
-  },
-  playlists: {
-    left: undefined,
-    right: undefined,
-  },
-  syncRight: true,
+  left: defaultSideValues,
+  right: defaultSideValues,
   flipSyncDirection: () =>
     set((state) => ({
-      syncRight: !state.syncRight,
+      syncDir: state.syncDir === 'right' ? 'left' : 'right',
     })),
   setActiveSide: (side: SideType) => set(() => ({ activeSide: side })),
   setLoggingOut(side, x) {
-    set((state) => ({ loggingOut: { ...state.loggingOut, [side]: x } }));
+    set((state) => ({ [side]: { ...state[side], loggingOut: x } }));
   },
-  setPlaylist(side, playlist) {
-    set((state) => ({ playlists: { ...state.playlists, [side]: playlist } }));
+  setDisplayName(side, x) {
+    set((state) => ({ [side]: { ...state[side], displayName: x } }));
+  },
+  setPlaylist(side, x) {
+    set((state) => ({ [side]: { ...state[side], playlist: x } }));
   },
 }));

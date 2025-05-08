@@ -7,10 +7,9 @@ import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
 
 function FlipSync() {
-  const syncRight = useStore((state) => state.syncRight);
-  const flipSyncDirection = useStore((state) => state.flipSyncDirection);
+  const { syncDir, flipSyncDirection } = useStore();
 
-  const Icon = syncRight ? RiContractRightLine : RiContractLeftLine;
+  const Icon = syncDir === 'right' ? RiContractRightLine : RiContractLeftLine;
 
   return (
     <Tooltip text="Flip sync direction" asChild>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
@@ -18,8 +18,9 @@ const SORT_OPTIONS = ['Z-A', 'Default', 'A-Z'];
 function Account() {
   const side = useContext(SideContext) as SideType;
 
-  const selectedPlaylist = useStore((state) => state.playlists[side]);
-  const loggingOut = useStore((state) => state.loggingOut[side]);
+  const { playlist, loggingOut } = useStore((state) => state[side]);
+  const setDisplayName = useStore((state) => state.setDisplayName);
+
   const [sorting, setSorting] = useState(0);
 
   const profileQuery = useQuery({
@@ -34,6 +35,10 @@ function Account() {
     getNextPageParam: (lastPage) =>
       lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,
   });
+
+  useEffect(() => {
+    setDisplayName(side, profileQuery.data?.display_name);
+  }, [profileQuery.data?.display_name]);
 
   if (profileQuery.isPending || playlistQuery.isPending) {
     return <LoadingCard />;
@@ -65,7 +70,7 @@ function Account() {
         <div className="max-w-[60%] hidden lg:block">
           <p className="text-sm text-ellipsis whitespace-nowrap overflow-hidden">
             <span className="text-zinc-500">Selected:</span>{' '}
-            <span title={selectedPlaylist?.name}>{selectedPlaylist?.name || 'None'}</span>
+            <span title={playlist?.name}>{playlist?.name || 'None'}</span>
           </p>
         </div>
       </div>
