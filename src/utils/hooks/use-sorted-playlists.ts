@@ -1,8 +1,8 @@
-import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
-import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { Page, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
-type Query = UseInfiniteQueryResult<InfiniteData<Page<SimplifiedPlaylist>, unknown>>;
+type Query = ReturnType<typeof useInfiniteQuery<Page<SimplifiedPlaylist>>>;
 
 const useSortedPlaylists = (query: Query, sorting: number) => {
   return useMemo(() => {
