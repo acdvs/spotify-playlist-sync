@@ -1,10 +1,8 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useContext, useState } from 'react';
 
 import { useStore, SideType } from '@/store';
-import { getPlaylists, getProfile } from '@/utils/spotify';
 import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Playlists from './Playlists';
@@ -12,6 +10,8 @@ import Profile from './Profile';
 import LoadingCard from '../cards/Loading';
 import LogoutCard from '../cards/Logout';
 import ErrorCard from '../cards/Error';
+import useProfile from '@/utils/hooks/use-profile';
+import usePlaylists from '@/utils/hooks/use-playlists';
 
 const SORT_OPTIONS = ['Z-A', 'Default', 'A-Z'];
 
@@ -19,26 +19,10 @@ function Account() {
   const side = useContext(SideContext) as SideType;
 
   const { playlist, loggingOut } = useStore((state) => state[side]);
-  const setDisplayName = useStore((state) => state.setDisplayName);
-
   const [sorting, setSorting] = useState(0);
 
-  const profileQuery = useQuery({
-    queryKey: [side, 'profile'],
-    queryFn: () => getProfile(side),
-  });
-
-  const playlistQuery = useInfiniteQuery({
-    queryKey: [side, 'playlists'],
-    queryFn: ({ pageParam }) => getPlaylists(side, pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
-      lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,
-  });
-
-  useEffect(() => {
-    setDisplayName(side, profileQuery.data?.display_name);
-  }, [profileQuery.data?.display_name]);
+  const profileQuery = useProfile();
+  const playlistQuery = usePlaylists();
 
   if (profileQuery.isPending || playlistQuery.isPending) {
     return <LoadingCard />;
