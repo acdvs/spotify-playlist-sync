@@ -3,10 +3,16 @@
 import { createContext } from 'react';
 import type { SideType } from '@/store';
 
-export const Context = createContext<SideType | null>(null);
+export const SideContext = createContext<SideType | null>(null);
 
-function SideContext({ type, children }: { type: SideType; children: React.ReactNode }) {
-  return <Context.Provider value={type}>{children}</Context.Provider>;
+function SideContextProvider({
+  type,
+  children,
+}: {
+  type: SideType;
+  children: React.ReactNode;
+}) {
+  return <SideContext value={type}>{children}</SideContext>;
 }
 
-export default SideContext;
+export default SideContextProvider;

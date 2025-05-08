@@ -5,7 +5,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { useStore, SideType } from '@/store';
 import { getPlaylists, getProfile } from '@/utils/spotify';
-import { Context as SideContext } from '@/components/providers/SideContext';
+import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Playlists from './Playlists';
 import Profile from './Profile';

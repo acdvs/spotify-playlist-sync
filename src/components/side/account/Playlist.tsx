@@ -8,7 +8,7 @@ import { RiLockLine, RiMusic2Line } from '@remixicon/react';
 import clsx from 'clsx';
 
 import { useStore, SideType } from '@/store';
-import { Context as SideContext } from '@/components/providers/SideContext';
+import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 
 function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {

@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 import { type SideType } from '@/store';
 import { login } from '@/actions/session';
-import { Context as SideContext } from '../providers/SideContext';
+import { SideContext } from '../providers/SideContext';
 import { Button } from '../ui/Button';
 
 function LoginButton() {

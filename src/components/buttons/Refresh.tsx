@@ -6,7 +6,7 @@ import { RiRefreshLine } from '@remixicon/react';
 import clsx from 'clsx';
 
 import type { SideType } from '@/store';
-import { Context as SideContext } from '../providers/SideContext';
+import { SideContext } from '../providers/SideContext';
 import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
 

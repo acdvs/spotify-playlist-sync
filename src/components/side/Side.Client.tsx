@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import clsx from 'clsx';
 
 import { SideType, useStore } from '@/store';
-import { Context as SideContext } from '../providers/SideContext';
+import { SideContext } from '../providers/SideContext';
 
 function ClientSide({ children }: { children: React.ReactNode }) {
   const side = useContext(SideContext) as SideType;
