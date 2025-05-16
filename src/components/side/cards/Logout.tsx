@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 import { logout } from '@/actions/session';
 import { useStore, SideType } from '@/store';
-import { Context as SideContext } from '@/components/providers/SideContext';
+import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 

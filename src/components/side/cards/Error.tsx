@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { logout } from '@/actions/session';
 import { SideType } from '@/store';
-import { Context as SideContext } from '@/components/providers/SideContext';
+import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 
