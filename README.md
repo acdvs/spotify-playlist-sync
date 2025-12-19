@@ -12,4 +12,4 @@ With current Spotify playlist sharing functionality, you can either:
 
 However, you aren't able to _transfer_ ownership. Copying the playlist to another account solves this.
 
-[website]: https://spotify-playlist-sync.acdvs.dev
+[website]: https://spotify.acdvs.dev
