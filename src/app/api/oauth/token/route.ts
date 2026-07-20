@@ -6,8 +6,6 @@ import { sfetch } from '@/actions/fetch';
 import { setToken } from '@/actions/session';
 import { type SideType } from '@/store';
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '/';
-
 type AuthState = {
   for: SideType;
   secret: string;
@@ -19,14 +17,14 @@ export async function GET(req: NextRequest) {
   let side: SideType;
 
   if (!code || !state) {
-    redirect(BASE_PATH);
+    redirect('/');
   }
 
   const parsedState: AuthState = JSON.parse(state);
   side = parsedState.for;
 
   if (parsedState.secret !== process.env.AUTH_STATE_SECRET) {
-    redirect(BASE_PATH);
+    redirect('/');
   }
 
   const newToken = await sfetch<BasicToken>(
@@ -46,5 +44,5 @@ export async function GET(req: NextRequest) {
   );
 
   await setToken(newToken, side);
-  redirect(BASE_PATH);
+  redirect('/');
 }
