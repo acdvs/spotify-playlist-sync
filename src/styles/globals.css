@@ -44,5 +44,6 @@
 }
 
 @utility scroll-y {
-  @apply overflow-y-auto scrollbar scrollbar-track-transparent scrollbar-thumb-zinc-700;
+  overflow-y: auto;
+  @apply scrollbar scrollbar-track-transparent scrollbar-thumb-zinc-700;
 }
