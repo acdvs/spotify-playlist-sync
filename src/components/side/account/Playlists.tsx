@@ -5,7 +5,6 @@ import type {
   InfiniteData,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
-import { useRef } from 'react';
 import useSortedPlaylists from '@/utils/hooks/use-sorted-playlists';
 import Playlist from './Playlist';
 
@@ -21,12 +20,9 @@ function Playlists({
   profileId?: string;
   sorting: number;
 }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
-
   const items = useSortedPlaylists(query, sorting);
 
-  const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
+  const onScroll = (e: React.UIEvent<HTMLElement>) => {
     if (query.hasNextPage && !query.isFetchingNextPage) {
       const el = e.currentTarget;
       const atBottom =
@@ -40,21 +36,14 @@ function Playlists({
 
   return (
     <div className="min-h-25 h-full py-3 border-y-2 border-zinc-700">
-      <div
-        className="h-full -mr-4 scroll-y scrollbar-gutter-stable"
-        ref={wrapRef}
+      <ul
+        className="h-full flex flex-col gap-3 border-zinc-700 scroll-y scrollbar-thin pr-2"
         onScroll={onScroll}
       >
-        <ul className="flex flex-col gap-3 border-zinc-700" ref={listRef}>
-          {items?.map((playlist) => (
-            <Playlist
-              key={playlist?.id}
-              data={playlist}
-              profileId={profileId}
-            />
-          ))}
-        </ul>
-      </div>
+        {items?.map((playlist) => (
+          <Playlist key={playlist?.id} data={playlist} profileId={profileId} />
+        ))}
+      </ul>
     </div>
   );
 }
