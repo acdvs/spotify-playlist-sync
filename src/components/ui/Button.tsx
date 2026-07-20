@@ -36,7 +36,13 @@ interface Props
   asChild?: boolean;
 }
 
-export function Button({ variant, disabled, asChild, className, ...props }: Props) {
+export function Button({
+  variant,
+  disabled,
+  asChild,
+  className,
+  ...props
+}: Props) {
   const Comp = asChild ? Slot : 'button';
 
   return (

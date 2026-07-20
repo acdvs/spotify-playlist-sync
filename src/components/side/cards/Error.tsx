@@ -1,13 +1,13 @@
 'use client';
 
-import { useContext } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 
 import { logout } from '@/actions/session';
-import { SideType } from '@/store';
 import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
+import type { SideType } from '@/store';
 
 function ErrorCard() {
   const side = useContext(SideContext) as SideType;

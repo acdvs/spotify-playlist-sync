@@ -1,10 +1,9 @@
 'use client';
 
-import { useContext } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-
-import { SideType } from '@/store';
+import { useContext } from 'react';
 import { SideContext } from '@/components/providers/SideContext';
+import type { SideType } from '@/store';
 import { getPlaylists } from '../spotify';
 
 const usePlaylists = () => {
@@ -14,8 +13,12 @@ const usePlaylists = () => {
     queryKey: [side, 'playlists'],
     queryFn: ({ pageParam }) => getPlaylists(side, pageParam),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
-      lastPage.next ? parseInt(new URL(lastPage.next).searchParams.get('offset')!) : null,
+    getNextPageParam: (lastPage) => {
+      const offset = lastPage.next
+        ? new URL(lastPage.next).searchParams.get('offset')
+        : '0';
+      return lastPage.next ? Number(offset) : null;
+    },
   });
 
   return playlistQuery;

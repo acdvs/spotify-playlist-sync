@@ -5,8 +5,8 @@ import clsx from 'clsx';
 
 import { useStore } from '@/store';
 import useSync from '@/utils/hooks/use-sync';
-import { Button } from '../ui/Button';
 import Diff from '../Diff';
+import { Button } from '../ui/Button';
 
 function SyncButton({
   direction,

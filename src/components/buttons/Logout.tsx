@@ -1,12 +1,12 @@
 'use client';
 
-import { useContext } from 'react';
 import { RiLogoutBoxRLine } from '@remixicon/react';
+import { useContext } from 'react';
 
-import { useStore, SideType } from '@/store';
+import { type SideType, useStore } from '@/store';
 import { SideContext } from '../providers/SideContext';
-import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
+import Tooltip from '../ui/Tooltip';
 
 function LogoutButton() {
   const side = useContext(SideContext) as SideType;

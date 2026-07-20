@@ -1,13 +1,12 @@
 'use server';
 
-import qs from 'querystring';
-import { type AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
+import qs from 'node:querystring';
 
-import { type SideType } from '@/store';
-import { AccessToken, getToken, refreshToken } from './session';
+import type { SideType } from '@/store';
+import { type AccessToken, getToken, refreshToken } from './session';
 
 type FetchOptions = RequestInit & {
-  params?: Record<string, any>;
+  params?: Record<string, string | number>;
   side?: SideType;
 };
 
@@ -28,7 +27,9 @@ export const sfetch = async <T>(
       Authorization:
         'Basic ' +
         Buffer.from(
-          process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET,
+          process.env.SPOTIFY_CLIENT_ID +
+            ':' +
+            process.env.SPOTIFY_CLIENT_SECRET,
         ).toString('base64'),
     });
   } else {

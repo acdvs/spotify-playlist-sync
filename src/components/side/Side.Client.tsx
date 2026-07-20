@@ -1,9 +1,9 @@
 'use client';
 
-import { useContext } from 'react';
 import clsx from 'clsx';
+import { useContext } from 'react';
 
-import { SideType, useStore } from '@/store';
+import { type SideType, useStore } from '@/store';
 import { SideContext } from '../providers/SideContext';
 
 function ClientSide({ children }: { children: React.ReactNode }) {
@@ -11,7 +11,9 @@ function ClientSide({ children }: { children: React.ReactNode }) {
   const activeSide = useStore((state) => state.activeSide);
 
   return (
-    <div className={clsx('flex flex-1 lg:block', activeSide !== side && 'hidden')}>
+    <div
+      className={clsx('flex flex-1 lg:block', activeSide !== side && 'hidden')}
+    >
       {children}
     </div>
   );

@@ -1,14 +1,13 @@
 'use client';
 
 import {
-  Dialog as HUIDialog,
   DialogBackdrop,
   DialogPanel,
   DialogTitle,
+  Dialog as HUIDialog,
 } from '@headlessui/react';
-
-import Card from './Card';
 import { Button } from './Button';
+import Card from './Card';
 
 function Dialog({
   active,
@@ -34,7 +33,11 @@ function Dialog({
           <Card filled noAlign className="gap-5 p-5">
             <DialogTitle className="font-bold">{title}</DialogTitle>
             {children}
-            <Button variant="primary" onClick={() => show(false)} className="self-center">
+            <Button
+              variant="primary"
+              onClick={() => show(false)}
+              className="self-center"
+            >
               Got it
             </Button>
           </Card>

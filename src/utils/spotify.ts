@@ -5,7 +5,7 @@ import type {
   UserProfile,
 } from '@spotify/web-api-ts-sdk';
 
-import { SideType } from '@/store';
+import type { SideType } from '@/store';
 import { sfetch } from '../actions/fetch';
 
 export function getProfile(side: SideType) {
@@ -40,7 +40,11 @@ export async function getPlaylist(side: SideType, id: string) {
   return playlist;
 }
 
-export function updatePlaylist(side: SideType, id: string, data: Page<PlaylistedTrack>) {
+export function updatePlaylist(
+  side: SideType,
+  id: string,
+  data: Page<PlaylistedTrack>,
+) {
   const uris = data.items.map((x) => `spotify:track:${x.track.id}`);
 
   return sfetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, side, {
@@ -49,7 +53,11 @@ export function updatePlaylist(side: SideType, id: string, data: Page<Playlisted
   });
 }
 
-export async function getDiff(syncDir: SideType, fromId?: string, toId?: string) {
+export async function getDiff(
+  syncDir: SideType,
+  fromId?: string,
+  toId?: string,
+) {
   const fromSide = syncDir === 'right' ? 'left' : 'right';
 
   const [fromData, toData] = await Promise.all([
@@ -58,9 +66,9 @@ export async function getDiff(syncDir: SideType, fromId?: string, toId?: string)
   ]);
 
   const trackIdsFrom = fromData.items.map((x) => x.track.id);
-  let trackIdsTo = toData.items.map((x) => x.track.id);
+  const trackIdsTo = toData.items.map((x) => x.track.id);
 
-  let tracksToAdd: string[] = [];
+  const tracksToAdd: string[] = [];
 
   for (const trackIdFrom of trackIdsFrom) {
     const trackIdx = trackIdsTo.indexOf(trackIdFrom);

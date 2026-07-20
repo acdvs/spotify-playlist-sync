@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 @plugin "tailwind-scrollbar";
 
@@ -10,7 +10,6 @@
 }
 
 @layer base {
-
   h1,
   h2,
   h3,
@@ -46,8 +45,4 @@
 
 @utility scroll-y {
   @apply overflow-y-auto scrollbar scrollbar-track-transparent scrollbar-thumb-zinc-700;
-}
-
-@utility gutter-stable {
-  scrollbar-gutter: stable;
 }

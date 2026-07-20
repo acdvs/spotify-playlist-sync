@@ -1,14 +1,14 @@
 'use client';
 
-import { useContext } from 'react';
-import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { RiRefreshLine } from '@remixicon/react';
+import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { useContext } from 'react';
 
 import type { SideType } from '@/store';
 import { SideContext } from '../providers/SideContext';
-import Tooltip from '../ui/Tooltip';
 import { Button } from '../ui/Button';
+import Tooltip from '../ui/Tooltip';
 
 function RefreshButton() {
   const side = useContext(SideContext) as SideType;
@@ -23,7 +23,9 @@ function RefreshButton() {
   return (
     <Tooltip text="Refresh" asChild>
       <Button disabled={isFetching} onClick={refetch}>
-        <RiRefreshLine className={clsx('size-6', isFetching && 'animate-spin')} />
+        <RiRefreshLine
+          className={clsx('size-6', isFetching && 'animate-spin')}
+        />
       </Button>
     </Tooltip>
   );

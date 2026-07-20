@@ -1,10 +1,9 @@
 import dynamic from 'next/dynamic';
-
-import { SideType } from '@/store';
 import { getToken } from '@/actions/session';
+import type { SideType } from '@/store';
 import SideContext from '../providers/SideContext';
-import ClientSide from './Side.Client';
 import LoginCard from './cards/Login';
+import ClientSide from './Side.Client';
 
 const Account = dynamic(() => import('./account/Account'));
 

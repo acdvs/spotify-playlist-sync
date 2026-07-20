@@ -1,18 +1,20 @@
 'use server';
 
-import qs from 'querystring';
-import { redirect } from 'next/navigation';
+import qs from 'node:querystring';
+import type { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 import { cookies } from 'next/headers';
-import { type AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
+import { redirect } from 'next/navigation';
 
-import { SideType } from '@/store';
+import type { SideType } from '@/store';
 import { sfetch } from './fetch';
 
 export type AccessToken = {
   expires_at: Date;
 } & BasicToken;
 
-export async function getToken(side: SideType): Promise<AccessToken | undefined> {
+export async function getToken(
+  side: SideType,
+): Promise<AccessToken | undefined> {
   const cookieStore = await cookies();
   const cookie = cookieStore.get(`token-${side}`);
   const token = cookie && JSON.parse(cookie.value);
@@ -24,7 +26,7 @@ export async function setToken(token: BasicToken, side: SideType) {
   const cookieStore = await cookies();
   const newToken: AccessToken = {
     ...token,
-    expires_at: new Date(new Date().getTime() + token.expires_in * 1000),
+    expires_at: new Date(Date.now() + token.expires_in * 1000),
   };
 
   cookieStore.set(`token-${side}`, JSON.stringify(newToken), {

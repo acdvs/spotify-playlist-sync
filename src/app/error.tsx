@@ -3,12 +3,18 @@
 import { Button } from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 
-export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+export default function ErrorPage({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   return (
     <Card
       filled
       text="Oops! Something went wrong..."
-      className="mx-auto mt-8 max-w-[400px]"
+      className="mx-auto mt-8 max-w-100"
     >
       <div className="flex gap-3 mb-5">
         <p>Error:</p>

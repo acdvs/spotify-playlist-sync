@@ -1,10 +1,10 @@
-import { NextRequest } from 'next/server';
+import type { AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
 import { redirect } from 'next/navigation';
-import { type AccessToken as BasicToken } from '@spotify/web-api-ts-sdk';
+import type { NextRequest } from 'next/server';
 
 import { sfetch } from '@/actions/fetch';
 import { setToken } from '@/actions/session';
-import { type SideType } from '@/store';
+import type { SideType } from '@/store';
 
 type AuthState = {
   for: SideType;
@@ -13,15 +13,14 @@ type AuthState = {
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
-  let state = req.nextUrl.searchParams.get('state');
-  let side: SideType;
+  const state = req.nextUrl.searchParams.get('state');
 
   if (!code || !state) {
     redirect('/');
   }
 
   const parsedState: AuthState = JSON.parse(state);
-  side = parsedState.for;
+  const side: SideType = parsedState.for;
 
   if (parsedState.secret !== process.env.AUTH_STATE_SECRET) {
     redirect('/');
@@ -34,7 +33,7 @@ export async function GET(req: NextRequest) {
       method: 'POST',
       params: {
         code: code,
-        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI || '',
         grant_type: 'authorization_code',
       },
       headers: {

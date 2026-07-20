@@ -1,10 +1,9 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-
-import { SideType, useStore } from '@/store';
+import { useContext, useEffect } from 'react';
 import { SideContext } from '@/components/providers/SideContext';
+import { type SideType, useStore } from '@/store';
 import { getProfile } from '../spotify';
 
 const useProfile = () => {
@@ -18,7 +17,7 @@ const useProfile = () => {
 
   useEffect(() => {
     setDisplayName(side, profileQuery.data?.display_name);
-  }, [profileQuery.data?.display_name]);
+  }, [side, profileQuery.data?.display_name, setDisplayName]);
 
   return profileQuery;
 };

@@ -1,7 +1,7 @@
-import Header from '@/components/Header';
-import Side from '@/components/side/Side.Server';
 import SyncButton from '@/components/buttons/Sync';
+import Header from '@/components/Header';
 import SyncBar from '@/components/SyncBar';
+import Side from '@/components/side/Side.Server';
 
 export default async function Index() {
   return (

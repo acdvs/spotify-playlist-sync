@@ -1,8 +1,7 @@
+import type { UserProfile } from '@spotify/web-api-ts-sdk';
 import Image from 'next/image';
-import { UserProfile } from '@spotify/web-api-ts-sdk';
-
-import RefreshButton from '@/components/buttons/Refresh';
 import LogoutButton from '@/components/buttons/Logout';
+import RefreshButton from '@/components/buttons/Refresh';
 import { Button } from '@/components/ui/Button';
 
 function Profile({
@@ -27,7 +26,12 @@ function Profile({
           />
         </div>
         <div>
-          <a href={external_urls?.spotify} target="_blank" className="line-clamp-1">
+          <a
+            href={external_urls?.spotify}
+            target="_blank"
+            className="line-clamp-1"
+            rel="noopener"
+          >
             <Button variant="text" className="leading-none mb-1">
               {display_name}
             </Button>

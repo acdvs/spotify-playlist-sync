@@ -1,23 +1,29 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
-import Image from 'next/image';
-import { useIsFetching } from '@tanstack/react-query';
-import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { RiLockLine, RiMusic2Line } from '@remixicon/react';
+import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
+import { useIsFetching } from '@tanstack/react-query';
 import clsx from 'clsx';
-
-import { useStore, SideType } from '@/store';
+import Image from 'next/image';
+import { useContext, useEffect } from 'react';
 import { SideContext } from '@/components/providers/SideContext';
 import { Button } from '@/components/ui/Button';
+import { type SideType, useStore } from '@/store';
 
-function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: string }) {
+function Playlist({
+  data,
+  profileId,
+}: {
+  data: SimplifiedPlaylist;
+  profileId?: string;
+}) {
   const side = useContext(SideContext) as SideType;
 
   const selectedPlaylist = useStore((state) => state[side].playlist);
   const { setPlaylist, syncDir } = useStore();
 
-  const playlistsFetching = useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
+  const playlistsFetching =
+    useIsFetching({ queryKey: [side, 'playlists'] }) > 0;
 
   const receivingSide = side === syncDir;
   const notSyncable = receivingSide && data.owner.id !== profileId;
@@ -26,7 +32,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
     if (notSyncable) {
       setPlaylist(side);
     }
-  }, [notSyncable, syncDir, side, setPlaylist]);
+  }, [notSyncable, side, setPlaylist]);
 
   const onClick = () => {
     setPlaylist(side, selectedPlaylist?.id !== data.id ? data : undefined);
@@ -59,7 +65,7 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
         onClick={onClick}
         disabled={notSyncable || playlistsFetching}
       >
-        <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 flex-shrink-0">
+        <div className="flex justify-center items-center w-10 aspect-square bg-zinc-800 shrink-0">
           {image}
         </div>
         <div className="flex-1">
@@ -68,9 +74,10 @@ function Playlist({ data, profileId }: { data: SimplifiedPlaylist; profileId?: s
               <a
                 href={data.external_urls.spotify}
                 target="_blank"
-                className="h-5 max-w-[200px] leading-none text-ellipsis whitespace-nowrap overflow-hidden"
+                className="h-5 max-w-50 leading-none text-ellipsis whitespace-nowrap overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
                 title={data.name}
+                rel="noopener"
               >
                 {data.name}
               </a>

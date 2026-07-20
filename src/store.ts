@@ -1,5 +1,5 @@
+import type { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { create } from 'zustand';
-import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 
 export type SideType = 'left' | 'right';
 

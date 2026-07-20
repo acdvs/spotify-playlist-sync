@@ -1,5 +1,5 @@
-import Card from '@/components/ui/Card';
 import LoginButton from '@/components/buttons/Login';
+import Card from '@/components/ui/Card';
 
 async function LoginCard() {
   return (
